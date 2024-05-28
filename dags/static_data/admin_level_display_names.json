@@ -1,0 +1,1352 @@
+{
+    "ago": {
+        "name": "Angola",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "municipality",
+        "adm3": "commune",
+        "source": "ine"
+    },
+    "aia": {
+        "name": "Anguilla",
+        "adm0": "national",
+        "source": "gdam"
+    },
+    "alb": {
+        "name": "Angola",
+        "adm0": "country",
+        "adm1": "county",
+        "adm2": "municipality",
+        "adm3": "locality",
+        "source": "unhcr"
+    },
+    "and": {
+        "name": "Andorra",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "are": {
+        "name": "United Arab Emirates",
+        "adm0": "country",
+        "adm1": "emirate",
+        "source": "uaemca"
+    },
+    "arg": {
+        "name": "Argentina",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "department",
+        "source": "unhcr"
+    },
+    "arm": {
+        "name": "Armenia",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "unofficial",
+        "source": "ga"
+    },
+    "atg": {
+        "name": "Antigua and Barbuda",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "aus": {
+        "name": "Australia",
+        "adm0": "country",
+        "adm1": "sub-division",
+        "source": "no cod data"
+    },
+    "aut": {
+        "name": "Austria",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "aze": {
+        "name": "Azerbaijan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "bdi": {
+        "name": "Burundi",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "commune",
+        "source": "igebu"
+    },
+    "bel": {
+        "name": "Belgium",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "commune",
+        "source": "no cod data"
+    },
+    "ben": {
+        "name": "Benin",
+        "adm0": "country",
+        "adm1": "oblast",
+        "source": "ocha"
+    },
+    "bfa": {
+        "name": "Burkina Faso",
+        "adm0": "country",
+        "adm1": "region",
+        "adm2": "province",
+        "adm3": "department",
+        "source": "igb"
+    },
+    "bgd": {
+        "name": "Bangladesh",
+        "adm0": "country",
+        "adm1": "regions",
+        "adm2": "division",
+        "adm3": "district",
+        "source": "bbs"
+    },
+    "bgr": {
+        "name": "Bulgaria",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "district",
+        "adm3": "municipality",
+        "source": "unicef"
+    },
+    "bhr": {
+        "name": "Bahrain",
+        "adm0": "country",
+        "adm1": "governorate",
+        "source": "wfp"
+    },
+    "bhs": {
+        "name": "The Bahamas",
+        "adm0": "country",
+        "adm1": "district",
+        "source": "gadm"
+    },
+    "bih": {
+        "name": "Bosnia and Herzegovina",
+        "adm0": "country",
+        "adm1": "federal",
+        "adm2": "municipality",
+        "source": "osm"
+    },
+    "blr": {
+        "name": "Belarus",
+        "adm0": "country",
+        "adm1": "oblast",
+        "source": "unicef"
+    },
+    "blz": {
+        "name": "Belize",
+        "adm0": "country",
+        "adm1": "district",
+        "source": "gadm"
+    },
+    "bmu": {
+        "name": "Bermuda",
+        "adm0": "country",
+        "adm1": "parish",
+        "adm2": "municipality",
+        "source": "gadm"
+    },
+    "bol": {
+        "name": "Bolivia",
+        "adm0": "country",
+        "adm1": "department",
+        "adm2": "municipality",
+        "source": "geobol"
+    },
+    "bra": {
+        "name": "Brazil",
+        "adm0": "country",
+        "adm1": "state",
+        "adm2": "municipality",
+        "source": "ibge"
+    },
+    "brb": {
+        "name": "Barbados",
+        "adm1": "parish",
+        "source": "gadm"
+    },
+    "brn": {
+        "name": "Brunei",
+        "adm0": "country",
+        "adm1": "district",
+        "source": "no cod data"
+    },
+    "btn": {
+        "name": "Bhutan",
+        "adm0": "country",
+        "adm1": "dzongkhag",
+        "source": "ocha"
+    },
+    "bwa": {
+        "name": "Botswana",
+        "adm0": "country",
+        "adm1": "district",
+        "adm2": "village",
+        "adm3": "locality",
+        "source": "unfrpa"
+    },
+    "caf": {
+        "name": "Central African Republic",
+        "adm0": "country",
+        "adm1": "prefecture",
+        "adm2": "sub-prefecture",
+        "adm3": "sub-prefecture",
+        "adm4": "bangui",
+        "source": "acted"
+    },
+    "can": {
+        "name": "Canada",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "territory",
+        "source": "no cod data"
+    },
+    "che": {
+        "name": "Switzerland",
+        "adm0": "country",
+        "adm1": "canton",
+        "source": "no cod data"
+    },
+    "chl": {
+        "name": "Chile",
+        "adm0": "country",
+        "adm1": "region",
+        "adm2": "province",
+        "adm3": "",
+        "source": "bcn"
+    },
+    "chn": {
+        "name": "China",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "municipality",
+        "source": "roap"
+    },
+    "civ": {
+        "name": "C\u00f4te d'Ivoire",
+        "adm0": "country",
+        "adm1": "district",
+        "adm2": "region",
+        "adm3": "department",
+        "source": "cntig"
+    },
+    "cmr": {
+        "name": "Cameroon",
+        "adm0": "country",
+        "adm1": "region",
+        "adm2": "department",
+        "adm3": "arrondissement",
+        "source": "osm"
+    },
+    "cod": {
+        "name": "Democratic Republic of the Congo",
+        "adm0": "country",
+        "adm1": "provinces",
+        "adm2": "territories",
+        "source": "rgc"
+    },
+    "cog": {
+        "name": "Congo-Brazzaville",
+        "adm0": "country",
+        "adm1": "department",
+        "adm2": "district",
+        "source": "gaul"
+    },
+    "cok": {
+        "name": "Cook Islands",
+        "adm0": "country",
+        "adm1": "island",
+        "source": "no cod data"
+    },
+    "col": {
+        "name": "Colombia",
+        "adm0": "country",
+        "adm1": "department",
+        "adm2": "municipality",
+        "source": "dane"
+    },
+    "com": {
+        "name": "Comoros",
+        "adm0": "country",
+        "adm1": "island",
+        "source": "cosep"
+    },
+    "cpv": {
+        "name": "Cape Verde",
+        "adm0": "country",
+        "adm1": "municipality",
+        "adm2": "parish",
+        "source": "salb"
+    },
+    "cri": {
+        "name": "Costa Rica",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "canton",
+        "adm3": "district",
+        "source": "nso"
+    },
+    "cub": {
+        "name": "Cuba",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "municipality",
+        "source": "gadm"
+    },
+    "cym": {
+        "name": "Cayman Islands",
+        "adm0": "country",
+        "adm1": "district",
+        "source": "gadm"
+    },
+    "cyp": {
+        "name": "Cyprus",
+        "adm0": "country",
+        "adm1": "district",
+        "adm2": "commune",
+        "source": "no cod data"
+    },
+    "cze": {
+        "name": "Czechia",
+        "adm0": "country",
+        "adm1": "region",
+        "adm2": "district",
+        "adm3": "municipality",
+        "adm4": "community",
+        "source": "no cod data"
+    },
+    "deu": {
+        "name": "Germany",
+        "adm0": "country",
+        "adm1": "land",
+        "source": "no cod data"
+    },
+    "dji": {
+        "name": "Djibouti",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "dma": {
+        "name": "Dominica",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ocha"
+    },
+    "dnk": {
+        "name": "Denmark",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "dom": {
+        "name": "Dominican Republic",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "onde"
+    },
+    "dza": {
+        "name": "Algeria",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "unhcr"
+    },
+    "ecu": {
+        "name": "Ecuador",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "inec"
+    },
+    "egy": {
+        "name": "Egypt",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "capmas"
+    },
+    "eri": {
+        "name": "Eritrea",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ocha"
+    },
+    "esp": {
+        "name": "Spain",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "est": {
+        "name": "Estonia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "eth": {
+        "name": "Ethiopia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "bofed"
+    },
+    "fin": {
+        "name": "Finland",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "fji": {
+        "name": "Fiji",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "pcrafi"
+    },
+    "flk": {
+        "name": "Falkland Islands",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "fra": {
+        "name": "France",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "fro": {
+        "name": "Faroe Islands",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "fsm": {
+        "name": "Federated States of Micronesia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "fsmds"
+    },
+    "gab": {
+        "name": "Gabon",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "salb"
+    },
+    "gbr": {
+        "name": "United Kingdom",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "geo": {
+        "name": "Georgia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "nsog"
+    },
+    "ggy": {
+        "name": "Guernsey",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "gha": {
+        "name": "Ghana",
+        "adm0": "country",
+        "adm1": "region",
+        "adm2": "districts",
+        "source": "gss"
+    },
+    "gib": {
+        "name": "Gibraltar",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "gin": {
+        "name": "Guinea",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "wfp"
+    },
+    "gmb": {
+        "name": "The Gambia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ndma"
+    },
+    "gnb": {
+        "name": "Guinea-Bissau",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "salb"
+    },
+    "gnq": {
+        "name": "Equatorial Guinea",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "grc": {
+        "name": "Greece",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "eurogeographics"
+    },
+    "grd": {
+        "name": "Grenada",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "grl": {
+        "name": "Greenland",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "gtm": {
+        "name": "Guatemala",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "cnprd"
+    },
+    "guy": {
+        "name": "Guyana",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "dlp"
+    },
+    "hnd": {
+        "name": "Honduras",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "seplan"
+    },
+    "hrv": {
+        "name": "Croatia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "hti": {
+        "name": "Haiti",
+        "adm0": "country",
+        "adm1": "department",
+        "adm2": "commune",
+        "adm3": "communal section",
+        "source": "cnigs"
+    },
+    "hun": {
+        "name": "Hungary",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "osm"
+    },
+    "idn": {
+        "name": "Indonesia",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "city, district, regency",
+        "adm3": "sub-district",
+        "adm4": "village",
+        "source": "bps"
+    },
+    "imn": {
+        "name": "Isle of Man",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "ind": {
+        "name": "India",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "iot": {
+        "name": "British Indian Ocean Territory",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "irl": {
+        "name": "Ireland",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "irn": {
+        "name": "Iran",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "unhcr"
+    },
+    "irq": {
+        "name": "Iraq",
+        "adm0": "country",
+        "adm1": "governorate",
+        "adm2": "district",
+        "adm3": "sub-district",
+        "source": "icso"
+    },
+    "isl": {
+        "name": "Iceland",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "isr": {
+        "name": "Israel",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "ita": {
+        "name": "Italy",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "jam": {
+        "name": "Jamaica",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "jey": {
+        "name": "Jersey",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "jor": {
+        "name": "Jordan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "jpn": {
+        "name": "Japan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ocha"
+    },
+    "kaz": {
+        "name": "Kazakhstan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "unhcr"
+    },
+    "ken": {
+        "name": "Kenya",
+        "adm0": "country",
+        "adm1": "county",
+        "adm2": "sub-county",
+        "source": "iebc"
+    },
+    "kgz": {
+        "name": "Kyrgyzstan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "meskr"
+    },
+    "khm": {
+        "name": "Cambodia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "wfp"
+    },
+    "kir": {
+        "name": "Kiribati",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "spcsdd"
+    },
+    "kna": {
+        "name": "Saint Kitts and Nevis",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "kor": {
+        "name": "South Korea",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "kwt": {
+        "name": "Kuwait",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "lao": {
+        "name": "Laos",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ngd"
+    },
+    "lbn": {
+        "name": "Lebanon",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "cdr"
+    },
+    "lbr": {
+        "name": "Liberia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "unmil"
+    },
+    "lby": {
+        "name": "Libya",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "iom"
+    },
+    "lca": {
+        "name": "Saint Lucia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "dpp"
+    },
+    "lie": {
+        "name": "Liechtenstein",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "lka": {
+        "name": "Sri Lanka",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "sdsl"
+    },
+    "lso": {
+        "name": "Lesotho",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "fmlg"
+    },
+    "ltu": {
+        "name": "Lithuania",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "lux": {
+        "name": "Luxembourg",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "lva": {
+        "name": "Latvia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "mar": {
+        "name": "Morocco",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "hcp"
+    },
+    "mco": {
+        "name": "Monaco",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "mda": {
+        "name": "Moldova",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "unhcr"
+    },
+    "mdg": {
+        "name": "Madagascar",
+        "adm0": "country",
+        "adm1": "region",
+        "adm2": "district",
+        "adm3": "commune",
+        "adm4": "fokontany",
+        "source": "bngrc"
+    },
+    "mdv": {
+        "name": "Maldives",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "grm"
+    },
+    "mex": {
+        "name": "Mexico",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "inegi"
+    },
+    "mhl": {
+        "name": "Marshall Islands",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "spcsdd"
+    },
+    "mkd": {
+        "name": "North Macedonia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ntus"
+    },
+    "mli": {
+        "name": "Mali",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "dnct"
+    },
+    "mlt": {
+        "name": "Malta",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "mmr": {
+        "name": "Myanmar",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "mimu"
+    },
+    "mne": {
+        "name": "Montenegro",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "mng": {
+        "name": "Mongolia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "nsom"
+    },
+    "moz": {
+        "name": "Mozambique",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "district",
+        "adm3": "posto",
+        "source": "ine"
+    },
+    "mrt": {
+        "name": "Mauritania",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ansade"
+    },
+    "msr": {
+        "name": "Montserrat",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "mus": {
+        "name": "Mauritius",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "sm"
+    },
+    "mwi": {
+        "name": "Malawi",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "nsom"
+    },
+    "mys": {
+        "name": "Malaysia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "unhcr"
+    },
+    "nam": {
+        "name": "Namibia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "nsa"
+    },
+    "ner": {
+        "name": "Niger",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ignn"
+    },
+    "nga": {
+        "name": "Nigeria",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "uncs"
+    },
+    "nic": {
+        "name": "Nicaragua",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "niu": {
+        "name": "Niue",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "nld": {
+        "name": "Netherlands",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "nor": {
+        "name": "Norway",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "npl": {
+        "name": "Nepal",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "sdn"
+    },
+    "nru": {
+        "name": "Nauru",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "nzl": {
+        "name": "New Zealand",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "omn": {
+        "name": "Oman",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "pak": {
+        "name": "Pakistan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "wfp"
+    },
+    "pcn": {
+        "name": "Pitcairn Islands",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "per": {
+        "name": "Peru",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ign"
+    },
+    "phl": {
+        "name": "The Philippines",
+        "adm0": "country",
+        "adm1": "region",
+        "adm2": "provinces",
+        "adm3": "municipalities",
+        "source": "psa"
+    },
+    "plw": {
+        "name": "Palau",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "png": {
+        "name": "Papua New Guinea",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "pngnso"
+    },
+    "pol": {
+        "name": "Poland",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "prg"
+    },
+    "prk": {
+        "name": "North Korea",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "wfp"
+    },
+    "prt": {
+        "name": "Portugal",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "pry": {
+        "name": "Paraguay",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "dgeec"
+    },
+    "qat": {
+        "name": "Qatar",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "qpsa"
+    },
+    "rou": {
+        "name": "Romania",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ancpi"
+    },
+    "rus": {
+        "name": "Russia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "rwa": {
+        "name": "Rwanda",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "nisr"
+    },
+    "sau": {
+        "name": "Saudi Arabia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "sdn": {
+        "name": "Sudan",
+        "adm0": "country",
+        "adm1": "state",
+        "adm2": "district",
+        "source": "imwg"
+    },
+    "sen": {
+        "name": "Senegal",
+        "adm0": "country",
+        "adm1": "region",
+        "adm2": "department",
+        "adm3": "arrondissement",
+        "source": "gs"
+    },
+    "sgp": {
+        "name": "Singapore",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "sgs": {
+        "name": "South Georgia and the South Sandwich Islands",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "shn": {
+        "name": "Saint Helena, Ascension and Tristan da Cunha",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "slb": {
+        "name": "Solomon Islands",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "sinso"
+    },
+    "sle": {
+        "name": "Sierra Leone",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gsl"
+    },
+    "slv": {
+        "name": "El Salvador",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "smr": {
+        "name": "San Marino",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "som": {
+        "name": "Somalia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ocha"
+    },
+    "srb": {
+        "name": "Serbia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "ssd": {
+        "name": "South Sudan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "imwg"
+    },
+    "stp": {
+        "name": "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "sur": {
+        "name": "Syrian Arab Republic",
+        "adm0": "country",
+        "adm1": "district",
+        "adm2": "resort",
+        "source": "gadm"
+    },
+    "svk": {
+        "name": "Slovakia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "geoportal"
+    },
+    "svn": {
+        "name": "Slovenia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "swe": {
+        "name": "Sweden",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "swz": {
+        "name": "Eswatini",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "cso"
+    },
+    "syc": {
+        "name": "Seychelles",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "snbs"
+    },
+    "syr": {
+        "name": "Syria",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "unocha"
+    },
+    "tca": {
+        "name": "Turks and Caicos Islands",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "tcd": {
+        "name": "Chad",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "inseedt"
+    },
+    "tgo": {
+        "name": "Togo",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gaul"
+    },
+    "tha": {
+        "name": "Thailand",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "rtsd"
+    },
+    "tjk": {
+        "name": "Tajikistan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "asprt"
+    },
+    "tkl": {
+        "name": "Tokelau",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "tkm": {
+        "name": "Turkmenistan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "tls": {
+        "name": "East Timor",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "who"
+    },
+    "ton": {
+        "name": "Tonga",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "spcsdddl"
+    },
+    "tto": {
+        "name": "Trinidad and Tobago",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "tun": {
+        "name": "Tunisia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "inst"
+    },
+    "tur": {
+        "name": "Turkey",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gcm"
+    },
+    "tuv": {
+        "name": "Tuvalu",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "twn": {
+        "name": "Taiwan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "tza": {
+        "name": "Tanzania",
+        "adm0": "country",
+        "adm1": "region",
+        "adm2": "district",
+        "adm3": "ward",
+        "source": "tnbs"
+    },
+    "uga": {
+        "name": "Uganda",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ubs"
+    },
+    "ukr": {
+        "name": "Ukraine",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "sspec"
+    },
+    "ury": {
+        "name": "Uruguay",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "usa": {
+        "name": "United States",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "uzb": {
+        "name": "Uzbekistan",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ocha"
+    },
+    "vat": {
+        "name": "Vatican City",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "vct": {
+        "name": "Saint Vincent and the Grenadines",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "ven": {
+        "name": "Venezuela",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "ine"
+    },
+    "vgb": {
+        "name": "British Virgin Islands",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gadm"
+    },
+    "vnm": {
+        "name": "Vietnam",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "gvn"
+    },
+    "vut": {
+        "name": "Vanuatu",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "spc"
+    },
+    "wsm": {
+        "name": "Samoa",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "xkx": {
+        "name": "Kosovo",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "no cod data"
+    },
+    "yem": {
+        "name": "Yemen",
+        "adm0": "country",
+        "adm1": "governorate",
+        "adm2": "district",
+        "adm3": "sub-district",
+        "source": "cso"
+    },
+    "zaf": {
+        "name": "South Africa",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "samdb"
+    },
+    "zmb": {
+        "name": "Zambia",
+        "adm0": "country",
+        "adm1": "province",
+        "source": "dmmu"
+    },
+    "zwe": {
+        "name": "Zimbabwe",
+        "adm0": "country",
+        "adm1": "province",
+        "adm2": "district",
+        "adm3": "ward",
+        "source": "zimstat"
+    }
+}

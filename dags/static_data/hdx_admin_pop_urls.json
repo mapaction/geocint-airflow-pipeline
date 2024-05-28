@@ -1,0 +1,460 @@
+[
+    {
+      "country_code": "afg",
+      "source_name": "ocha-afghanistan",
+      "val": [
+        {
+          "name": "afg_admpop_adm1_2021_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/17acb541-9431-409a-80a8-50eda7e8ebab/resource/dc7a5656-d557-404f-8b1d-494c7bbd0112/download/afg_admpop_adm1_2021_v2.csv",
+          "ma_file_name": "afg_popu_pop_tab_s3_ocha3w_pp_population_ad1_2021"
+        },
+        {
+          "name": "afg_popadm_adm0_2021_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/17acb541-9431-409a-80a8-50eda7e8ebab/resource/e6e0195f-704a-4797-bc2c-f74058821346/download/afg_popadm_adm0_2021_v2.csv",
+          "ma_file_name": "afg_popu_pop_tab_s3_ocha3w_pp_population_ad0_2021"
+        }
+      ]
+    },
+    {
+      "country_code": "bdi",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "bdi_admpop_2022_adm0_v3.csv",
+          "download_url": "https://data.humdata.org/dataset/61e643bc-e36d-4106-8815-4b952fc40e9c/resource/12224ae8-ff12-4933-8c05-7840b23fa346/download/bdi_admpop_2022_adm0_v3.csv",
+          "ma_file_name": "bdi_popu_pop_tab_s3_unfpa_pp_population_ad0_2022"
+        },
+        {
+          "name": "bdi_admpop_2022_adm1_v3.csv",
+          "download_url": "https://data.humdata.org/dataset/61e643bc-e36d-4106-8815-4b952fc40e9c/resource/094c1e77-8ff0-42d5-94fa-4940a3da08e2/download/bdi_admpop_2022_adm1_v3.csv",
+          "ma_file_name": "bdi_popu_pop_tab_s3_unfpa_pp_population_ad1_2022"
+        },
+        {
+          "name": "bdi_admpop_2022_adm2_v3.csv",
+          "download_url": "https://data.humdata.org/dataset/61e643bc-e36d-4106-8815-4b952fc40e9c/resource/caf569e5-177b-4a6f-abc9-b01e8bf85c43/download/bdi_admpop_2022_adm2_v3.csv",
+          "ma_file_name": "bdi_popu_pop_tab_s3_unfpa_pp_population_ad2_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "bgd",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "bgd_admpop_adm0_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/fdf0606c-8a3b-421a-b3e8-903301e5b2ff/resource/1c543545-dae9-48ee-8b3c-33a15e9e3df6/download/bgd_admpop_adm0_2022.csv",
+          "ma_file_name": "bgd_popu_pop_tab_s3_unfpa_pp_population_ad0_2022"
+        },
+        {
+          "name": "bgd_admpop_adm1_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/fdf0606c-8a3b-421a-b3e8-903301e5b2ff/resource/333171ff-5d91-4074-a7be-ca43e1dfb8a1/download/bgd_admpop_adm1_2022.csv",
+          "ma_file_name": "bgd_popu_pop_tab_s3_unfpa_pp_population_ad1_2022"
+        },
+        {
+          "name": "bgd_admpop_adm2_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/fdf0606c-8a3b-421a-b3e8-903301e5b2ff/resource/43bfa9fd-f571-4973-9f31-91093e1e6142/download/bgd_admpop_adm2_2022.csv",
+          "ma_file_name": "bgd_popu_pop_tab_s3_unfpa_pp_population_ad2_2022"
+        },
+        {
+          "name": "bgd_admpop_adm3_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/fdf0606c-8a3b-421a-b3e8-903301e5b2ff/resource/f23d4da2-e473-4960-9d94-37df92c8d044/download/bgd_admpop_adm3_2022.csv",
+          "ma_file_name": "bgd_popu_pop_tab_s3_unfpa_pp_population_ad3_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "cmr",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "cmr_admpop_adm0_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/e8db7923-6cd2-4974-ad57-14a157978cfd/resource/75d2954c-8f50-47d1-b48f-8d6dc589b663/download/cmr_admpop_adm0_2022.csv",
+          "ma_file_name": "cmr_popu_pop_tab_s3_unfpa_pp_population_ad0_2022"
+        },
+        {
+          "name": "cmr_admpop_adm1_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/e8db7923-6cd2-4974-ad57-14a157978cfd/resource/defc78ec-0afc-4b59-a770-7a4c869a4b4c/download/cmr_admpop_adm1_2022.csv",
+          "ma_file_name": "cmr_popu_pop_tab_s3_unfpa_pp_population_ad1_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "cod",
+      "source_name": "ocha-dr-congo",
+      "val": [
+        {
+          "name": "cod_admpop_adm0_2020.csv",
+          "download_url": "https://data.humdata.org/dataset/d1160fa9-1d58-4f96-9df5-edbff2e80895/resource/fa85e725-30c5-4f9a-aefc-2e8db0db36fa/download/cod_admpop_adm0_2020.csv",
+          "ma_file_name": "cod_popu_pop_tab_s3_ocha3w_pp_population_ad0_2020"
+        },
+        {
+          "name": "cod_admpop_adm1_2020.csv",
+          "download_url": "https://data.humdata.org/dataset/d1160fa9-1d58-4f96-9df5-edbff2e80895/resource/44bafdcb-e234-4fa2-9d1a-278715384408/download/cod_admpop_adm1_2020.csv",
+          "ma_file_name": "cod_popu_pop_tab_s3_ocha3w_pp_population_ad1_2020"
+        },
+        {
+          "name": "cod_admpop_adm2_2020.csv",
+          "download_url": "https://data.humdata.org/dataset/d1160fa9-1d58-4f96-9df5-edbff2e80895/resource/bf8edc01-c28a-470d-9720-cb2d9435dfdf/download/cod_admpop_adm2_2020.csv",
+          "ma_file_name": "cod_popu_pop_tab_s3_ocha3w_pp_population_ad2_2020"
+        }
+      ]
+    },
+    {
+      "country_code": "eth",
+      "source_name": "ocha-ethiopia",
+      "val": [
+        {
+          "name": "eth_admpop_adm0_2022_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/3d9b037f-5112-4afd-92a7-190a9082bd80/resource/4af389d5-b8db-4fa1-ab7c-b5119fc049df/download/eth_admpop_adm0_2022_v2.csv",
+          "ma_file_name": "eth_popu_pop_tab_s3_ocha3w_pp_population_ad0_2022"
+        },
+        {
+          "name": "eth_admpop_adm1_2022_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/3d9b037f-5112-4afd-92a7-190a9082bd80/resource/2ec96e53-b38f-4994-9a8c-5bbaa4c49e82/download/eth_admpop_adm1_2022_v2.csv",
+          "ma_file_name": "eth_popu_pop_tab_s3_ocha3w_pp_population_ad1_2022"
+        },
+        {
+          "name": "eth_admpop_adm2_2022_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/3d9b037f-5112-4afd-92a7-190a9082bd80/resource/bfb57304-3e22-498f-8a82-a345a8976852/download/eth_admpop_adm2_2022_v2.csv",
+          "ma_file_name": "eth_popu_pop_tab_s3_ocha3w_pp_population_ad2_2022"
+        },
+        {
+          "name": "eth_admpop_adm3_2022_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/3d9b037f-5112-4afd-92a7-190a9082bd80/resource/3f8150d4-6d5d-4659-a0a8-586e4689ae65/download/eth_admpop_adm3_2022_v2.csv",
+          "ma_file_name": "eth_popu_pop_tab_s3_ocha3w_pp_population_ad3_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "hti",
+      "source_name": "ocha-fiss",
+      "val": [
+        {
+          "name": "hti_admpop_adm1_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/95ba5281-fd76-4d3a-ae29-247e1ff26447/resource/c2bbfc4a-d000-47fd-82d9-a74e44d7aa22/download/hti_admpop_adm1_2022.csv",
+          "ma_file_name": "hti_popu_pop_tab_s3_ocha3w_pp_population_ad1_2022"
+        },
+        {
+          "name": "hti_admpop_adm2_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/95ba5281-fd76-4d3a-ae29-247e1ff26447/resource/9221c325-b8ea-46fc-bcac-d3e183078581/download/hti_admpop_adm2_2022.csv",
+          "ma_file_name": "hti_popu_pop_tab_s3_ocha3w_pp_population_ad2_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "idn",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "idn_admpop_adm0_2020_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/7e00297b-7b5b-4a98-932d-509f298fd8a8/resource/615f2158-a0fd-45f1-8c91-0f0ccb8470b5/download/idn_admpop_adm0_2020_v2.csv",
+          "ma_file_name": "idn_popu_pop_tab_s3_unfpa_pp_population_ad0_2020"
+        },
+        {
+          "name": "idn_admpop_adm1_2020_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/7e00297b-7b5b-4a98-932d-509f298fd8a8/resource/a7cabb5c-7a17-44ec-ae60-1481594e5857/download/idn_admpop_adm1_2020_v2.csv",
+          "ma_file_name": "idn_popu_pop_tab_s3_unfpa_pp_population_ad1_2020"
+        },
+        {
+          "name": "idn_admpop_adm2_2020_v3.csv",
+          "download_url": "https://data.humdata.org/dataset/7e00297b-7b5b-4a98-932d-509f298fd8a8/resource/8f6f09d2-95f7-42dc-b6f1-aead319607f3/download/idn_admpop_adm2_2020_v3.csv",
+          "ma_file_name": "idn_popu_pop_tab_s3_unfpa_pp_population_ad2_2020"
+        }
+      ]
+    },
+    {
+      "country_code": "ken",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "ken_admpop_adm0_2019.csv",
+          "download_url": "https://data.humdata.org/dataset/26801642-7088-4149-9605-6ae282897937/resource/ce9a60f1-f0df-42bc-910c-5761e6c0ba81/download/ken_admpop_adm0_2019.csv",
+          "ma_file_name": "ken_popu_pop_tab_s3_unfpa_pp_population_ad0_2019"
+        },
+        {
+          "name": "ken_admpop_adm1_2019.csv",
+          "download_url": "https://data.humdata.org/dataset/26801642-7088-4149-9605-6ae282897937/resource/d4fed43d-8abe-48d2-987a-35c101292af3/download/ken_admpop_adm1_2019.csv",
+          "ma_file_name": "ken_popu_pop_tab_s3_unfpa_pp_population_ad1_2019"
+        }
+      ]
+    },
+    {
+      "country_code": "mdg",
+      "source_name": "ocha-rosea",
+      "val": [
+        {
+          "name": "mdg_admpop_adm0_2018.csv",
+          "download_url": "https://data.humdata.org/dataset/0b6ce366-8651-43aa-8c36-9f3fdc8d6b4f/resource/0b408418-286e-47bc-a037-384e5de98dd2/download/mdg_admpop_adm0_2018.csv",
+          "ma_file_name": "mdg_popu_pop_tab_s3_ocha3w_pp_population_ad0_2018"
+        },
+        {
+          "name": "mdg_admpop_adm1_2018.csv",
+          "download_url": "https://data.humdata.org/dataset/0b6ce366-8651-43aa-8c36-9f3fdc8d6b4f/resource/36a0fd53-78b9-4b3f-9c2e-f7beb0dbf705/download/mdg_admpop_adm1_2018.csv",
+          "ma_file_name": "mdg_popu_pop_tab_s3_ocha3w_pp_population_ad1_2018"
+        },
+        {
+          "name": "mdg_admpop_adm2_2018.csv",
+          "download_url": "https://data.humdata.org/dataset/0b6ce366-8651-43aa-8c36-9f3fdc8d6b4f/resource/5ecd33f3-87f2-4606-9174-92caaab408ea/download/mdg_admpop_adm2_2018.csv",
+          "ma_file_name": "mdg_popu_pop_tab_s3_ocha3w_pp_population_ad2_2018"
+        },
+        {
+          "name": "mdg_admpop_adm3_2018.csv",
+          "download_url": "https://data.humdata.org/dataset/0b6ce366-8651-43aa-8c36-9f3fdc8d6b4f/resource/f08856d0-fbaf-4354-8430-db5b0e2832d3/download/mdg_admpop_adm3_2018.csv",
+          "ma_file_name": "mdg_popu_pop_tab_s3_ocha3w_pp_population_ad3_2018"
+        },
+        {
+          "name": "mdg_admpop_adm4_2018.csv",
+          "download_url": "https://data.humdata.org/dataset/0b6ce366-8651-43aa-8c36-9f3fdc8d6b4f/resource/3a24802f-bcf5-4e60-9c08-63b93f88aea4/download/mdg_admpop_adm4_2018.csv",
+          "ma_file_name": "mdg_popu_pop_tab_s3_ocha3w_pp_population_ad4_2018"
+        }
+      ]
+    },
+    {
+      "country_code": "mmr",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "mmr_admpop_adm0_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/6db7ad28-a1e6-444c-b5d8-7eb1094f3575/resource/8fdae780-3a71-4cfb-b449-f55cc3e5b524/download/mmr_admpop_adm0_2022.csv",
+          "ma_file_name": "mmr_popu_pop_tab_s3_unfpa_pp_population_ad0_2022"
+        },
+        {
+          "name": "mmr_admpop_adm1_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/6db7ad28-a1e6-444c-b5d8-7eb1094f3575/resource/8f083523-151b-4868-a272-4f41d546e72b/download/mmr_admpop_adm1_2022.csv",
+          "ma_file_name": "mmr_popu_pop_tab_s3_unfpa_pp_population_ad1_2022"
+        },
+        {
+          "name": "mmr_admpop_adm2_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/6db7ad28-a1e6-444c-b5d8-7eb1094f3575/resource/d749dc6d-2ace-4ee8-872f-9cfe281d9ae3/download/mmr_admpop_adm2_2022.csv",
+          "ma_file_name": "mmr_popu_pop_tab_s3_unfpa_pp_population_ad2_2022"
+        },
+        {
+          "name": "mmr_admpop_adm3_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/6db7ad28-a1e6-444c-b5d8-7eb1094f3575/resource/c70ff13b-8832-4df2-9cdd-4e352c7074d2/download/mmr_admpop_adm3_2022.csv",
+          "ma_file_name": "mmr_popu_pop_tab_s3_unfpa_pp_population_ad3_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "moz",
+      "source_name": "ocha-rosea",
+      "val": [
+        {
+          "name": "moz_admpop_adm0_2017_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/46b79d47-0667-4baa-8d69-468b208855ed/resource/269426ce-bfab-4a33-afce-4f879890a62e/download/moz_admpop_adm0_2017_v2.csv",
+          "ma_file_name": "moz_popu_pop_tab_s3_ocha3w_pp_population_ad0_2017"
+        },
+        {
+          "name": "moz_admpop_adm1_2017_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/46b79d47-0667-4baa-8d69-468b208855ed/resource/4a576d7d-a8d3-4ec1-8be3-f2bc94c785e6/download/moz_admpop_adm1_2017_v2.csv",
+          "ma_file_name": "moz_popu_pop_tab_s3_ocha3w_pp_population_ad1_2017"
+        },
+        {
+          "name": "moz_admpop_adm2_2017_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/46b79d47-0667-4baa-8d69-468b208855ed/resource/173abc7f-810a-4022-89dd-c9a9fa40a490/download/moz_admpop_adm2_2017_v2.csv",
+          "ma_file_name": "moz_popu_pop_tab_s3_ocha3w_pp_population_ad2_2017"
+        }
+      ]
+    },
+    {
+      "country_code": "nga",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "nga_admpop_adm0_2020.csv",
+          "download_url": "https://data.humdata.org/dataset/a7c3de5e-ff27-4746-99cd-05f2ad9b1066/resource/4710c51c-813b-481f-bb4e-ffb593e6f126/download/nga_admpop_adm0_2020.csv",
+          "ma_file_name": "nga_popu_pop_tab_s3_unfpa_pp_population_ad0_2020"
+        },
+        {
+          "name": "nga_admpop_adm1_2020.csv",
+          "download_url": "https://data.humdata.org/dataset/a7c3de5e-ff27-4746-99cd-05f2ad9b1066/resource/d9fc551a-b5e4-4bed-9d0d-b047b6961817/download/nga_admpop_adm1_2020.csv",
+          "ma_file_name": "nga_popu_pop_tab_s3_unfpa_pp_population_ad1_2020"
+        },
+        {
+          "name": "nga_admpop_adm2_2020.csv",
+          "download_url": "https://data.humdata.org/dataset/a7c3de5e-ff27-4746-99cd-05f2ad9b1066/resource/562e7757-0683-4d61-87bd-a7c94af2ee38/download/nga_admpop_adm2_2020.csv",
+          "ma_file_name": "nga_popu_pop_tab_s3_unfpa_pp_population_ad2_2020"
+        }
+      ]
+    },
+    {
+      "country_code": "npl",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "npl_admpop_adm0_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/e71f53d9-2339-4df5-b76e-397957ec65dc/resource/20ca4f0f-a371-43fa-92ae-a5ffcd5a225d/download/npl_admpop_adm0_2022.csv",
+          "ma_file_name": "npl_popu_pop_tab_s3_unfpa_pp_population_ad0_2022"
+        },
+        {
+          "name": "npl_admpop_adm1_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/e71f53d9-2339-4df5-b76e-397957ec65dc/resource/f188f906-1647-4655-908f-a6e75bd655f5/download/npl_admpop_adm1_2022.csv",
+          "ma_file_name": "npl_popu_pop_tab_s3_unfpa_pp_population_ad1_2022"
+        },
+        {
+          "name": "npl_admpop_adm2_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/e71f53d9-2339-4df5-b76e-397957ec65dc/resource/57161f46-c404-4784-a952-a6e5ba2ed625/download/npl_admpop_adm2_2022.csv",
+          "ma_file_name": "npl_popu_pop_tab_s3_unfpa_pp_population_ad2_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "pak",
+      "source_name": "ocha-fiss",
+      "val": [
+        {
+          "name": "pak_admpop_adm0_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/9d48b019-3dd3-4284-ac11-200a70370447/resource/c431290c-8acb-4c12-8d89-628b4bf13a3e/download/pak_admpop_adm0_v2.csv",
+          "ma_file_name": "pak_popu_pop_tab_s3_ocha3w_pp_population_ad0"
+        },
+        {
+          "name": "pak_admpop_adm1_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/9d48b019-3dd3-4284-ac11-200a70370447/resource/16394872-79a8-4292-bc7c-037bb7038084/download/pak_admpop_adm1_v2.csv",
+          "ma_file_name": "pak_popu_pop_tab_s3_ocha3w_pp_population_ad1"
+        },
+        {
+          "name": "pak_admpop_adm2_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/9d48b019-3dd3-4284-ac11-200a70370447/resource/2fe439f1-8c17-4d5b-92d4-909858fc233b/download/pak_admpop_adm2_v2.csv",
+          "ma_file_name": "pak_popu_pop_tab_s3_ocha3w_pp_population_ad2"
+        },
+        {
+          "name": "pak_admpop_adm3.csv",
+          "download_url": "https://data.humdata.org/dataset/9d48b019-3dd3-4284-ac11-200a70370447/resource/a0b9fd68-9880-4cb0-8df8-74c093888f1b/download/pak_admpop_adm3.csv",
+          "ma_file_name": "pak_popu_pop_tab_s3_ocha3w_pp_population_ad3"
+        }
+      ]
+    },
+    {
+      "country_code": "per",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "per_admpop_adm0_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/0d8f2f78-cb46-4eb8-94eb-100b5388c3ff/resource/134e3a1e-c8dc-4838-bf69-eeab1b3b3e79/download/per_admpop_adm0_2022.csv",
+          "ma_file_name": "per_popu_pop_tab_s3_unfpa_pp_population_ad0_2022"
+        },
+        {
+          "name": "per_admpop_adm1_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/0d8f2f78-cb46-4eb8-94eb-100b5388c3ff/resource/077810c2-b1d7-445e-bf98-acad5504bab0/download/per_admpop_adm1_2022.csv",
+          "ma_file_name": "per_popu_pop_tab_s3_unfpa_pp_population_ad1_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "phl",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "phl_admpop_adm0_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/5a466c38-32a2-47de-ba36-70530505df98/resource/76aa2e54-90f2-455a-9135-b2401c7fdeb1/download/phl_admpop_adm0_2022.csv",
+          "ma_file_name": "phl_popu_pop_tab_s3_unfpa_pp_population_ad0_2022"
+        },
+        {
+          "name": "phl_admpop_adm1_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/5a466c38-32a2-47de-ba36-70530505df98/resource/f80291eb-3e22-4716-bc1a-b046de27d067/download/phl_admpop_adm1_2022.csv",
+          "ma_file_name": "phl_popu_pop_tab_s3_unfpa_pp_population_ad1_2022"
+        },
+        {
+          "name": "phl_admpop_adm2_2022_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/5a466c38-32a2-47de-ba36-70530505df98/resource/04cad68c-f7fb-43b0-94bf-af78eea7f982/download/phl_admpop_adm2_2022_v2.csv",
+          "ma_file_name": "phl_popu_pop_tab_s3_unfpa_pp_population_ad2_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "sdn",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "sdn_admpop_adm0_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/f4d30e65-a162-437a-a35d-d81b99723bd6/resource/f46869a8-8a6e-42b5-8b60-bffd27915571/download/sdn_admpop_adm0_2022.csv",
+          "ma_file_name": "sdn_popu_pop_tab_s3_unfpa_pp_population_ad0_2022"
+        },
+        {
+          "name": "sdn_admpop_adm1_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/f4d30e65-a162-437a-a35d-d81b99723bd6/resource/3002fea7-81c6-4781-b73c-00e4c41c52ac/download/sdn_admpop_adm1_2022.csv",
+          "ma_file_name": "sdn_popu_pop_tab_s3_unfpa_pp_population_ad1_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "sen",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "sen_admpop_adm0_2020_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/c686be28-1858-44e9-a44b-598ce32ca20b/resource/f67a21b7-3377-4200-b286-e92c9448b291/download/sen_admpop_adm0_2020_v2.csv",
+          "ma_file_name": "sen_popu_pop_tab_s3_unfpa_pp_population_ad0_2020"
+        },
+        {
+          "name": "sen_admpop_adm1_2020_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/c686be28-1858-44e9-a44b-598ce32ca20b/resource/85ba6660-fad2-4e49-b9b3-9ecb754d5700/download/sen_admpop_adm1_2020_v2.csv",
+          "ma_file_name": "sen_popu_pop_tab_s3_unfpa_pp_population_ad1_2020"
+        }
+      ]
+    },
+    {
+      "country_code": "som",
+      "source_name": "ocha-somalia",
+      "val": [
+        {
+          "name": "som_pplp_adm0_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/6cac9c64-2716-4809-9e82-440839d421f6/resource/2357ee7e-1874-46fe-8875-1a85596b6ab7/download/som_pplp_adm0_v2.csv",
+          "ma_file_name": "som_popu_pop_tab_s3_ocha3w_pp_population_ad0"
+        },
+        {
+          "name": "som_pplp_adm1_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/6cac9c64-2716-4809-9e82-440839d421f6/resource/ba86a46c-f922-4f8f-a213-ad9dbd5154c8/download/som_pplp_adm1_v2.csv",
+          "ma_file_name": "som_popu_pop_tab_s3_ocha3w_pp_population_ad1"
+        },
+        {
+          "name": "som_pplp_adm2_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/6cac9c64-2716-4809-9e82-440839d421f6/resource/a63d9729-c8fa-4456-a3fd-11034dd2117b/download/som_pplp_adm2_v2.csv",
+          "ma_file_name": "som_popu_pop_tab_s3_ocha3w_pp_population_ad2"
+        }
+      ]
+    },
+    {
+      "country_code": "ssd",
+      "source_name": "ocha-south-sudan",
+      "val": [
+        {
+          "name": "ssd_admpop_adm0_2022_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/5116cb9f-5db8-4f56-9766-735d88dcbbfa/resource/de6f609b-fba3-4088-8cd4-b870f79a7e01/download/ssd_admpop_adm0_2022_v2.csv",
+          "ma_file_name": "ssd_popu_pop_tab_s3_ocha3w_pp_population_ad0_2022"
+        },
+        {
+          "name": "ssd_admpop_adm1_2022_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/5116cb9f-5db8-4f56-9766-735d88dcbbfa/resource/7a5243b5-9b54-4453-a30e-044e79417e1f/download/ssd_admpop_adm1_2022_v2.csv",
+          "ma_file_name": "ssd_popu_pop_tab_s3_ocha3w_pp_population_ad1_2022"
+        },
+        {
+          "name": "ssd_admpop_adm2_2022_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/5116cb9f-5db8-4f56-9766-735d88dcbbfa/resource/209b6acb-99d0-4055-878e-e1a68618abe1/download/ssd_admpop_adm2_2022_v2.csv",
+          "ma_file_name": "ssd_popu_pop_tab_s3_ocha3w_pp_population_ad2_2022"
+        }
+      ]
+    },
+    {
+      "country_code": "zwe",
+      "source_name": "unfpa",
+      "val": [
+        {
+          "name": "zwe_admpop_adm0_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/4acece15-fd70-455f-b1b7-c63cf0793352/resource/58ea973d-4ab3-4aee-8e3e-6347be70e892/download/zwe_admpop_adm0_2022.csv",
+          "ma_file_name": "zwe_popu_pop_tab_s3_unfpa_pp_population_ad0_2022"
+        },
+        {
+          "name": "zwe_admpop_adm1_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/4acece15-fd70-455f-b1b7-c63cf0793352/resource/65bb7e44-aa18-4a5c-9da8-b145530478c2/download/zwe_admpop_adm1_2022.csv",
+          "ma_file_name": "zwe_popu_pop_tab_s3_unfpa_pp_population_ad1_2022"
+        },
+        {
+          "name": "zwe_admpop_adm2_2022.csv",
+          "download_url": "https://data.humdata.org/dataset/4acece15-fd70-455f-b1b7-c63cf0793352/resource/9ac14133-8f69-4edf-820f-042d0f93af25/download/zwe_admpop_adm2_2022.csv",
+          "ma_file_name": "zwe_popu_pop_tab_s3_unfpa_pp_population_ad2_2022"
+        }
+      ]
+    }
+  ]
+  
