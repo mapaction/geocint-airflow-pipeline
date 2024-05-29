@@ -27,7 +27,7 @@ def create_mapaction_pipeline(country_name, config):
     data_out_directory = f"data/output/country_extractions/{country_code}"
     cmf_directory = f"data/cmfs/{country_code}"
     docker_worker_working_dir = "/opt/airflow"
-    bash_script_path = f"{docker_worker_working_dir}/dags/scripts/bash"
+    # bash_script_path = f"{docker_worker_working_dir}/dags/scripts/bash"
     country_geojson_filename = f"{docker_worker_working_dir}/dags/static_data/countries/{country_code}.json"
 
     default_args = {
@@ -65,19 +65,21 @@ def create_mapaction_pipeline(country_name, config):
             print("//// downloading geodar data in data/input/geodar")
             download_shapefile_zip()
 
-        @task.bash()
+        @task()
         def transform_dams() -> str:
             """ Development complete """
+            from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
             input_shp_name = f"{docker_worker_working_dir}/data/input/geodar/dams/GeoDAR_v11_dams.shp"
             output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_dam_pt_s1_geodar_pp_dam"
-            return f"{bash_script_path}/mapaction_extract_country_from_shp.sh {country_geojson_filename} {input_shp_name} {output_name}"
-        
-        @task.bash()
+            _clip_by_country(country_geojson_filename, input_shp_name, output_name)     
+
+        @task()
         def transform_reservoirs() -> str:
             """ Development complete """
+            from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
             input_shp_name = f"{docker_worker_working_dir}//data/input/geodar/reservoirs/GeoDAR_v11_reservoirs.shp"
             output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_py_s3_geodar_pp_reservoir"
-            return f"{bash_script_path}/mapaction_extract_country_from_shp.sh {country_geojson_filename} {input_shp_name} {output_name}"
+            _clip_by_country(country_geojson_filename, input_shp_name, output_name)
         
         @task()
         def oceans_and_seas():
@@ -88,7 +90,7 @@ def create_mapaction_pipeline(country_name, config):
         def hyrdrorivers():
             """ Development complete """
             from pipline_lib.extraction import extract_data
-            extract_data("dags/static_data/hydrorivers.zip", f'data/output/{country_code}', f'221_phys/{country_code}_phys_riv_ln_s1_hydrosheds_pp_rivers')
+            extract_data("dags/static_data/hydrorivers.zip", f'data/output/country_extractions/{country_code}', f'221_phys/{country_code}_phys_riv_ln_s1_hydrosheds_pp_rivers')
         
         @task()
         def download_world_admin_boundaries():
@@ -157,10 +159,11 @@ def create_mapaction_pipeline(country_name, config):
         def ocha_admin_boundaries():
             """ Development complete """
             from pipline_lib.ocha_admin_boundaries import \
-                ocha_admin_boundaries as _ocha_admin_boundaries
+                process_country_file as _ocha_admin_boundaries
 
             print("////", data_in_directory, data_out_directory, cmf_directory)
-            _ocha_admin_boundaries(country_code, data_in_directory, data_out_directory)
+
+            _ocha_admin_boundaries(country_geojson_filename)
 
         @task()
         def healthsites():
@@ -177,12 +180,13 @@ def create_mapaction_pipeline(country_name, config):
             print("////", data_in_directory, data_out_directory, cmf_directory)
             _ne_10m_roads(data_in_directory)
 
-        @task.bash()
+        @task()
         def transform_ne_10m_roads() -> str:
-            """ Usure if dev complete - outputs empty for Moz. """
+            """ Usure if dev complete"""
+            from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
             input_shp_name = f"{docker_worker_working_dir}/{data_in_directory}/ne_10m_roads/ne_10m_roads.shp"
             output_name = f"{docker_worker_working_dir}/{data_out_directory}/232_tran/{country_code}_tran_rds_ln_s0_naturalearth_pp_roads"
-            return f"{bash_script_path}/mapaction_extract_country_from_shp.sh {country_geojson_filename} {input_shp_name} {output_name}"
+            _clip_by_country(country_geojson_filename, input_shp_name, output_name)
 
         @task()
         def ne_10m_populated_places():
@@ -192,13 +196,14 @@ def create_mapaction_pipeline(country_name, config):
             _ne_10m_populated_places(data_in_directory)
             # TODO: extract from shapefile
 
-        @task.bash()
+        @task()
         def transform_ne_10m_populated_places() -> str:
-            """ Development complete, but no output, so possible bugs """
+            """ Development complete"""
+            from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
             input_shp_name = f"{docker_worker_working_dir}/{data_in_directory}/ne_10m_populated_places/ne_10m_populated_places.shp"
             output_name = f"{docker_worker_working_dir}/{data_out_directory}/229_stle/{country_code}_stle_stl_pt_s0_naturalearth_pp_maincities"
-            return f"{bash_script_path}/mapaction_extract_country_from_shp.sh {country_geojson_filename} {input_shp_name} {output_name}"
-
+            _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+        
         @task()
         def ne_10m_rivers_lake_centerlines():
             """ Development complete """
@@ -207,14 +212,14 @@ def create_mapaction_pipeline(country_name, config):
             _ne_10m_rivers_lake_centerlines(country_code, data_in_directory,
                                             data_out_directory)
 
-        @task.bash()
+        @task
         def transform_ne_10m_rivers_lake_centerlines() -> str:
-            """ Development complete, but no features, so bgs?"""
+            """ Development complete"""
+            from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
             input_shp_name = f"{docker_worker_working_dir}/{data_in_directory}/ne_10m_lakes/ne_10m_lakes.shp"
             output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_riv_ln_s0_naturalearth_pp_rivers"
-            return f"{bash_script_path}/mapaction_extract_country_from_shp.sh {country_geojson_filename} {input_shp_name} {output_name}"
-
-
+            _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+            
         @task()
         def power_plants():
             """ Development complete """
