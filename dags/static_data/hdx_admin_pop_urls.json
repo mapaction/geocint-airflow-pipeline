@@ -16,6 +16,27 @@
       ]
     },
     {
+      "country_code": "blz",
+      "source_name": "statistical-institute-of-belize",
+      "val": [
+        {
+          "name": "blz_adm0_pop_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/5c23364e-8e2c-4927-a357-16a83228fb43/resource/791ece93-6dc4-46af-b96e-493db1830cb2/download/blz_adm0_pop_v2.csv",
+          "ma_file_name": "blz_popu_pop_tab_s3_sib_pp_population_ad0_2022"
+        },
+        {
+          "name": "blz_adm1_pop_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/5c23364e-8e2c-4927-a357-16a83228fb43/resource/5236a4e1-130a-4aef-994a-d6f9c302042b/download/blz_adm1_pop_v2.csv",
+          "ma_file_name": "blz_popu_pop_tab_s3_sib_pp_population_ad1_2022"
+        },
+        {
+          "name": "blz_adm2_pop_v2.csv",
+          "download_url": "https://data.humdata.org/dataset/5c23364e-8e2c-4927-a357-16a83228fb43/resource/74c80cee-019e-43e0-a2f2-d1d58b375a04/download/blz_adm2_pop_v2.csv",
+          "ma_file_name": "blz_popu_pop_tab_s3_sib_pp_population_ad2_2022"
+        }
+      ]
+    },
+    {
       "country_code": "bdi",
       "source_name": "unfpa",
       "val": [

@@ -24,9 +24,9 @@ def download_shapefile_zip(api_key, country, country_code):
         if response:
             # Get the filename from the response URL
             filename = f"{country_code}.zip"
-            save_directory = f"./data/input/mapaction/healthsites/{country_code}" 
-            extract_dir = f"./data/mid/mapaction/healthsites/{country_code}"
-            out_dir = f"./data/output/country_extractions/{country_code}/215_heal"
+            save_directory = f"data/input/mapaction/healthsites/{country_code}" 
+            extract_dir = f"data/mid/mapaction/healthsites/{country_code}"
+            out_dir = f"data/output/country_extractions/{country_code}/215_heal"
             
             logging.info(f"Filename - {filename} ------ save dir - {save_directory}")
             

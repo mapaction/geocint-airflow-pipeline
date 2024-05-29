@@ -11,4 +11,4 @@ def download_hdx_admin_pop(country_code: str, data_out_dir: str) -> None:
                 if x['country_code'] == country_code][0]
         url = data['val'][0]['download_url']
         filename = data['val'][0]['name']
-        make_dir_download_file(url, data_out_dir + "/hdx_admin_pop", filename)
+        make_dir_download_file(url, data_out_dir, filename)

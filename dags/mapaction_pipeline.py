@@ -8,7 +8,7 @@ from airflow.decorators import dag, task
 from dotenv import load_dotenv
 from pipline_lib.countires_iso import COUNTRIES
 
-load_dotenv()  # your .env should be in the /dags dir, not the project root.
+load_dotenv("/opt/airflow/dags/.env")  # your .env should be in the /dags dir, not the project root.
 
 # This is a way to create a different pipeline for every country, so they
 # (hopefully) run in parallel. This is called "dynamic DAG generation" in the docs.
@@ -17,6 +17,7 @@ configs = COUNTRIES
 #  around correctly (is passing "moz" to both Afgan and Moz pipelines?)
 
 S3_BUCKET = os.environ.get("S3_BUCKET")
+HS_API_KEY = os.environ.get("HS_API_KEY")
 
 def create_mapaction_pipeline(country_name, config):
 
@@ -54,7 +55,6 @@ def create_mapaction_pipeline(country_name, config):
             """ Development complete """
             from pipline_lib.download_hdx_admin_pop import \
                 download_hdx_admin_pop as download_pop
-
             print("////", data_in_directory, data_out_directory, cmf_directory)
             download_pop(country_code, data_in_directory)
 
@@ -68,14 +68,14 @@ def create_mapaction_pipeline(country_name, config):
         @task.bash()
         def transform_dams() -> str:
             """ Development complete """
-            input_shp_name = f"{docker_worker_working_dir}/{data_in_directory}/geodar/dams/GeoDAR_v11_dams.shp"
+            input_shp_name = f"{docker_worker_working_dir}/data/input/geodar/dams/GeoDAR_v11_dams.shp"
             output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_dam_pt_s1_geodar_pp_dam"
             return f"{bash_script_path}/mapaction_extract_country_from_shp.sh {country_geojson_filename} {input_shp_name} {output_name}"
         
         @task.bash()
         def transform_reservoirs() -> str:
             """ Development complete """
-            input_shp_name = f"{docker_worker_working_dir}/{data_in_directory}/geodar/reservoirs/GeoDAR_v11_reservoirs.shp"
+            input_shp_name = f"{docker_worker_working_dir}//data/input/geodar/reservoirs/GeoDAR_v11_reservoirs.shp"
             output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_py_s3_geodar_pp_reservoir"
             return f"{bash_script_path}/mapaction_extract_country_from_shp.sh {country_geojson_filename} {input_shp_name} {output_name}"
         
@@ -167,7 +167,8 @@ def create_mapaction_pipeline(country_name, config):
             """ Development complete (extraction already done as API is by country) """
             from pipline_lib.process_healthsites import extract_and_download as _extract_and_download
             print("////", data_in_directory, data_out_directory, cmf_directory)
-            _extract_and_download(os.environ.get("HS_API_KEY"), country_geojson_filename)
+            print(f"//////// API KEY ////////// {HS_API_KEY}")
+            _extract_and_download(HS_API_KEY, country_geojson_filename)
 
         @task()
         def ne_10m_roads():

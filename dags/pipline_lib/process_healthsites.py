@@ -3,6 +3,7 @@ import sys
 import json
 import subprocess
 import logging
+from pipline_lib.download_healthsites import download_shapefile_zip
 
 logger = logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -11,7 +12,7 @@ def extract_and_download(api_key, file_path):
 
     country_name, country_code = extract_country_name(file_path)
     if country_name and country_code:
-        download_healthsites(country_name, country_code, api_key)
+        download_shapefile_zip(country_name, country_code, api_key)
 
 def extract_country_name(file_path):
     with open(file_path, 'r') as file:
@@ -29,7 +30,3 @@ def extract_country_name(file_path):
         except json.JSONDecodeError:
             print(f"Error: JSON decode error in file {file_path}")
     return None, None
-
-   
-def download_healthsites(country_name, country_code, api_key):
-    subprocess.run(['python', 'scripts/download_healthsites.py', api_key, country_name, country_code])
