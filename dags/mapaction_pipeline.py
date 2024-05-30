@@ -56,7 +56,7 @@ def create_mapaction_pipeline(country_name, config):
             from pipline_lib.download_hdx_admin_pop import \
                 download_hdx_admin_pop as download_pop
             print("////", data_in_directory, data_out_directory, cmf_directory)
-            download_pop(country_code, data_in_directory)
+            download_pop(country_code, data_out_directory)
 
         @task()
         def download_geodar_data():
@@ -64,6 +64,14 @@ def create_mapaction_pipeline(country_name, config):
             from pipline_lib.download_geodar_data import download_shapefile_zip
             print("//// downloading geodar data in data/input/geodar")
             download_shapefile_zip()
+
+        @task()
+        def download_railway_data():
+            # """ Development complete """
+            # TODO: need to find a suitable source for this 
+            # from pipline_lib.download_from_url import download_file
+            # download_file("http://geonode.wfp.org/geoserver/wfs?format_options=charset%3AUTF-8&typename=geonode%3Awld_trs_railways_wfp&outputFormat=SHAPE-ZIP&version=1.0.0&service=WFS&request=GetFeature&hdx=hdx", 'data/input/railway')
+            pass
 
         @task()
         def transform_dams() -> str:
@@ -112,6 +120,13 @@ def create_mapaction_pipeline(country_name, config):
         def transform_world_costline_data():
             from pipline_lib.extraction import extract_data
             extract_data("data/input/world_coastline", 'data/output/world', 'wrl_elev_cst_ln_s0_un_pp_coastline')
+
+        @task()
+        def extract_country_national_coastline():
+            from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
+            input_shp_name = f"{docker_worker_working_dir}//data/output/world/wrl_elev_cst_ln_s0_un_pp_coastline.shp"
+            output_name = f"{docker_worker_working_dir}/{data_out_directory}/211_elev/{country_code}_elev_cst_ln_s0_un_pp_coastline"
+            _clip_by_country(country_geojson_filename, input_shp_name, output_name)
 
         @task()
         def elevation():
@@ -164,6 +179,14 @@ def create_mapaction_pipeline(country_name, config):
             print("////", data_in_directory, data_out_directory, cmf_directory)
 
             _ocha_admin_boundaries(country_geojson_filename)
+
+        @task()
+        def transform_admin_linework():
+            from pipline_lib.admin_linework import process_admin_boundaries as _process_admin_boundaries
+            poly_dir = f"{docker_worker_working_dir}/{data_in_directory}/ocha_admin_boundaries/Shapefiles"
+            output_dir = f"{docker_worker_working_dir}/{data_out_directory}"
+            print("////", poly_dir, output_dir)
+            _process_admin_boundaries(country_code, poly_dir, output_dir)
 
         @task()
         def healthsites():
@@ -315,7 +338,7 @@ def create_mapaction_pipeline(country_name, config):
             print("country data::")
             print(country_data)
             output_dir = f"{docker_worker_working_dir}/{data_out_directory}/221_phys"
-            output_name_shp = f"{output_dir}/{country_code}_phys_lak_py_s0_naturalearth_pp_waterbodies"
+            output_name_shp = f"{output_dir}/{country_code}_phys_lak_py_s0_naturalearth_pp_waterbodies.shp"
             os.makedirs(output_dir, exist_ok=True)
             country_data.to_file(output_name_shp)
             # TODO: needs more testing - no features in output shapefile
@@ -490,6 +513,10 @@ def create_mapaction_pipeline(country_name, config):
         transform_world_admin_boundaries_inst = transform_world_admin_boundaries()
         download_world_coastline_data_inst = download_world_coastline_data()
         transform_world_costline_data_inst = transform_world_costline_data()
+        extract_country_national_coastline_inst = extract_country_national_coastline()
+        transform_admin_linework_inst = transform_admin_linework()
+        ocha_admin_boundaries_inst = ocha_admin_boundaries()
+        # download_railway_data_inst = download_railway_data()
         # gmted2010_inst = gmted2010()
         # transform_gmted2010_inst = transform_gmted2010()
 
@@ -532,17 +559,19 @@ def create_mapaction_pipeline(country_name, config):
                  ne_10m_populated_place_inst,
                  ne_10m_roads_inst,
                  healthsites(),
-                 ocha_admin_boundaries(),
                  download_hdx_admin_pop(),
                  mapaction_export(),
                  worldpop1km(),
                  worldpop100m(),
                  elevation(),
+                 ocha_admin_boundaries_inst,
                  download_geodar_data_inst,
                  oceans_and_seas_inst,
                  hyrdrorivers_inst,
                  download_world_admin_boundaries_inst,
                  download_world_coastline_data_inst,
+                 extract_country_national_coastline_inst,
+                 # download_railway_data_inst,
                  # gmted2010_inst,
 
 
@@ -592,7 +621,8 @@ def create_mapaction_pipeline(country_name, config):
         download_geodar_data_inst >> transform_dams_inst
         download_geodar_data_inst >> transform_reservoirs_inst
         download_world_admin_boundaries_inst >> transform_world_admin_boundaries_inst
-        download_world_coastline_data_inst >> transform_world_costline_data_inst
+        download_world_coastline_data_inst >> transform_world_costline_data_inst >> extract_country_national_coastline_inst
+        ocha_admin_boundaries_inst >> transform_admin_linework_inst
 
         [#transform_gmted2010_inst,
          transform_ne_10m_lakes_inst,
@@ -605,7 +635,9 @@ def create_mapaction_pipeline(country_name, config):
          transform_dams_inst,
          transform_reservoirs_inst,
          transform_world_admin_boundaries_inst,
-         transform_world_costline_data_inst] >> datasets_ckan_descriptions_inst
+         transform_world_costline_data_inst,
+         extract_country_national_coastline_inst,
+         transform_admin_linework_inst] >> datasets_ckan_descriptions_inst
 
 
     return dag  # Required call to wrap up pipeline definition.
