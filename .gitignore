@@ -161,7 +161,7 @@ cython_debug/
 .idea/
 
 cache
+config
 .env
 data
-dags/static_data/hydrorivers.zip
-dags/static_data/oceans_and_seas.zip
+dags/static_data/downloaded_data

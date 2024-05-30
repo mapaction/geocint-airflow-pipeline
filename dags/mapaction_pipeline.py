@@ -92,13 +92,13 @@ def create_mapaction_pipeline(country_name, config):
         @task()
         def oceans_and_seas():
             from pipline_lib.extraction import extract_data
-            extract_data("dags/static_data/oceans_and_seas.zip", 'data/output/world', 'wrl_phys_ocn_py_s0_marineregions_pp_oceans.shp')
+            extract_data("dags/static_data/downloaded_data/oceans_and_seas.zip", 'data/output/world', 'wrl_phys_ocn_py_s0_marineregions_pp_oceans.shp')
 
         @task()
         def hyrdrorivers():
             """ Development complete """
             from pipline_lib.extraction import extract_data
-            extract_data("dags/static_data/hydrorivers.zip", f'data/output/country_extractions/{country_code}', f'221_phys/{country_code}_phys_riv_ln_s1_hydrosheds_pp_rivers')
+            extract_data("dags/static_data/downloaded_data/hydrorivers.zip", f'data/output/country_extractions/{country_code}', f'221_phys/{country_code}_phys_riv_ln_s1_hydrosheds_pp_rivers')
         
         @task()
         def download_world_admin_boundaries():
@@ -129,11 +129,61 @@ def create_mapaction_pipeline(country_name, config):
             _clip_by_country(country_geojson_filename, input_shp_name, output_name)
 
         @task()
-        def elevation():
-            from pipline_lib.srtm_30m import download_srtm_30
-            # download_srtm_30("Mozambique")  # Commented for development as slow to run
-            # TODO: this downloads ?30m SRTM, but also need to download 90 and 250m
-            # TODO: not currently doing any processing here. May need to grid and output
+        def download_elevation90():
+            # from pipline_lib.srtm_30m import download_srtm_30
+            # # download_srtm_30("Mozambique")  # Commented for development as slow to run
+            # # TODO: this downloads ?30m SRTM, but also need to download 90 and 250m
+            # # TODO: not currently doing any processing here. May need to grid and output
+            from pipline_lib.Srtm90_30_class import SRTMDownloader
+            downloader = SRTMDownloader(country_geojson_filename, data_out_directory, data_out_directory, use_30m=False)
+            downloader.download_srtm()
+
+        @task()
+        def transform_elevation90():
+            # from pipline_lib.srtm_30m import download_srtm_30
+            # # download_srtm_30("Mozambique")  # Commented for development as slow to run
+            # # TODO: this downloads ?30m SRTM, but also need to download 90 and 250m
+            # # TODO: not currently doing any processing here. May need to grid and output
+            from pipline_lib.Srtm90_30_class import SRTMDownloader
+            downloader = SRTMDownloader(country_geojson_filename, data_out_directory, data_out_directory, use_30m=False)
+            downloader.process_files(data_in_directory)
+
+        @task()
+        def download_elevation30():
+            # from pipline_lib.srtm_30m import download_srtm_30
+            # # download_srtm_30("Mozambique")  # Commented for development as slow to run
+            # # TODO: this downloads ?30m SRTM, but also need to download 90 and 250m
+            # # TODO: not currently doing any processing here. May need to grid and output
+            from pipline_lib.Srtm90_30_class import SRTMDownloader
+            downloader = SRTMDownloader(country_geojson_filename, data_in_directory, data_out_directory, use_30m=True)
+            downloader.download_srtm()
+
+        @task()
+        def transform_elevation30():
+            # from pipline_lib.srtm_30m import download_srtm_30
+            # # download_srtm_30("Mozambique")  # Commented for development as slow to run
+            # # TODO: this downloads ?30m SRTM, but also need to download 90 and 250m
+            # # TODO: not currently doing any processing here. May need to grid and output
+            from pipline_lib.Srtm90_30_class import SRTMDownloader
+            downloader = SRTMDownloader(country_geojson_filename, data_in_directory, data_out_directory, use_30m=True)
+            downloader.process_files(data_in_directory)
+        
+        @task()
+        def download_gmdted250():
+            from pipline_lib.Drt250_class import GMTEDDownloader
+            downloader = GMTEDDownloader(country_geojson_filename, data_in_directory, data_out_directory)
+            downloader.download_gmted_full()
+        @task()
+        def transform_gmdted250():
+            from pipline_lib.Drt250_class import GMTEDDownloader
+            downloader = GMTEDDownloader(country_geojson_filename, data_in_directory, data_out_directory)
+            downloader.process_files(data_in_directory)
+        
+        @task()
+        def create_feather_task():
+            from pipline_lib.Feather_class import FeatherCreator
+            feather_creator = FeatherCreator(data_out_directory)
+            feather_creator.create_feathers()
 
         @task()
         def gmted2010():
@@ -459,27 +509,27 @@ def create_mapaction_pipeline(country_name, config):
             downloader = OSMRailwayStationDataDownloader(country_geojson_filename,crs_project=4326,crs_global=4326, country_code=country_code)
             downloader.download_and_process_data()
             
-        @task()
+        @task(trigger_rule="one_success")
         def datasets_ckan_descriptions():
             pass
 
-        @task()
+        @task(trigger_rule="one_success")
         def cmf_metadata_list_all():
             pass
 
-        @task()
+        @task(trigger_rule="one_success")
         def upload_cmf_all():
             pass
 
-        @task()
+        @task(trigger_rule="one_success")
         def upload_datasets_all():
             pass
 
-        @task()
+        @task(trigger_rule="one_success")
         def create_completeness_report():
             pass
 
-        @task()
+        @task(trigger_rule="one_success")
         def send_slack_message():
             pass
 
@@ -516,9 +566,14 @@ def create_mapaction_pipeline(country_name, config):
         extract_country_national_coastline_inst = extract_country_national_coastline()
         transform_admin_linework_inst = transform_admin_linework()
         ocha_admin_boundaries_inst = ocha_admin_boundaries()
+        download_elevation90_inst = download_elevation90()
+        transform_elevation90_inst = transform_elevation90()
+        download_elevation30_inst = download_elevation30()
+        transform_elevation30_inst = transform_elevation30()
+        download_gmdted250_inst = download_gmdted250()
+        transform_gmdted250_inst = transform_gmdted250()
+        transform_feather_inst = create_feather_task()
         # download_railway_data_inst = download_railway_data()
-        # gmted2010_inst = gmted2010()
-        # transform_gmted2010_inst = transform_gmted2010()
 
         # OSM definitions
         osm_roads_inst = osm_roads()
@@ -563,7 +618,6 @@ def create_mapaction_pipeline(country_name, config):
                  mapaction_export(),
                  worldpop1km(),
                  worldpop100m(),
-                 elevation(),
                  ocha_admin_boundaries_inst,
                  download_geodar_data_inst,
                  oceans_and_seas_inst,
@@ -572,8 +626,6 @@ def create_mapaction_pipeline(country_name, config):
                  download_world_coastline_data_inst,
                  extract_country_national_coastline_inst,
                  # download_railway_data_inst,
-                 # gmted2010_inst,
-
 
                 # osm inst
                 osm_roads_inst,
@@ -603,14 +655,13 @@ def create_mapaction_pipeline(country_name, config):
 
                 >>
 
-                [upload_datasets_all(), upload_cmf_all(), create_completeness_report()]
+                [upload_cmf_all(), create_completeness_report(), upload_datasets_all()]
 
                 >>
 
                 send_slack_message()
         )
 
-        # gmted2010_inst >> transform_gmted2010_inst
         ne_10m_lakes_inst >> transform_ne_10m_lakes_inst
         ourairports_inst >> transform_ourairports_inst
         ne_10m_roads_inst >> transform_ne_10m_roads_inst
@@ -623,9 +674,12 @@ def create_mapaction_pipeline(country_name, config):
         download_world_admin_boundaries_inst >> transform_world_admin_boundaries_inst
         download_world_coastline_data_inst >> transform_world_costline_data_inst >> extract_country_national_coastline_inst
         ocha_admin_boundaries_inst >> transform_admin_linework_inst
+        download_gmdted250_inst >> transform_gmdted250_inst
+        download_elevation90_inst >> transform_elevation90_inst
+        download_elevation30_inst >> transform_elevation30_inst
+        ocha_admin_boundaries_inst >> transform_feather_inst
 
-        [#transform_gmted2010_inst,
-         transform_ne_10m_lakes_inst,
+        [transform_ne_10m_lakes_inst,
          transform_ne_10m_roads_inst,
          transform_ourairports_inst,
          transform_ne_10m_populated_places_inst,
@@ -637,7 +691,11 @@ def create_mapaction_pipeline(country_name, config):
          transform_world_admin_boundaries_inst,
          transform_world_costline_data_inst,
          extract_country_national_coastline_inst,
-         transform_admin_linework_inst] >> datasets_ckan_descriptions_inst
+         transform_admin_linework_inst,
+         transform_gmdted250_inst,
+         transform_elevation90_inst,
+         transform_elevation30_inst,
+         transform_feather_inst] >> upload_datasets_all()
 
 
     return dag  # Required call to wrap up pipeline definition.
