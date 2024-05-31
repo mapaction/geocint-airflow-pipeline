@@ -3,6 +3,7 @@ import pandas
 import geopandas
 from airflow.decorators import task
 from dotenv import load_dotenv
+from webdav3.client import Client
 
 load_dotenv("/opt/airflow/dags/.env")  # your .env should be in the /dags dir, not the project root.
 
@@ -712,9 +713,41 @@ def cmf_metadata_list_all(**kwargs):
 def upload_cmf_all(**kwargs):
     pass
 
-@task(trigger_rule="all_done")
+@task(trigger_rule='all_done')
 def upload_datasets_all(**kwargs):
-    pass
+    # Define Nextcloud WebDAV options using environment variables
+    options = {
+        'webdav_hostname': os.getenv('WEBDAV_HOSTNAME'),
+        'webdav_login': os.getenv('WEBDAV_LOGIN'),
+        'webdav_password': os.getenv('WEBDAV_PASSWORD')
+    }
+
+    # Create a client instance
+    client = Client(options)
+
+    # Define source folder and target folder in Nextcloud
+    source_folder = kwargs['data_out_directory']  # Local source folder
+    country_code = kwargs['country_code']
+    target_folder = f"DataPipeline/{country_code}"  # Remote target folder on Nextcloud
+
+    def upload_directory(local_dir, remote_dir):
+        # Ensure the remote directory exists
+        if not client.check(remote_dir):
+            client.mkdir(remote_dir)
+
+        for item in os.listdir(local_dir):
+            local_path = os.path.join(local_dir, item)
+            remote_path = f"{remote_dir}/{item}"
+
+            if os.path.isdir(local_path):
+                # If the item is a directory, upload it recursively
+                upload_directory(local_path, remote_path)
+            else:
+                # If the item is a file, upload it
+                client.upload_sync(remote_path=remote_path, local_path=local_path)
+
+    # Start the upload process
+    upload_directory(source_folder, target_folder)
 
 @task(trigger_rule="all_done")
 def create_completeness_report(**kwargs):

@@ -4,7 +4,7 @@ USER root
 
 RUN sudo apt update && apt-get install software-properties-common -y
 
-RUN sudo apt-get install -y build-essential binutils libproj-dev gdal-bin libgdal-dev proj-bin geos-bin
+RUN sudo apt-get install -y build-essential binutils libproj-dev gdal-bin libgdal-dev proj-bin geos-bin gdal
 
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
 ENV C_INCLUDE_PATH=/usr/include/gdal
