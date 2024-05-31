@@ -5,24 +5,24 @@ import geemap
 from shapely.geometry import box
 from osgeo import gdal
 
-class GMTEDDownloader:
-    def __init__(self, country_geojson_filename, data_in_directory, data_out_directory):
+class SRTMDownloader:
+    def __init__(self, country_geojson_filename, data_in_directory, data_out_directory, use_30m=False):
         self.project_id = 'ma-ediakatos'
         self.country_geojson_filename = country_geojson_filename
         self.data_out_directory = os.path.join(data_out_directory, '211_elev')
-        self.data_in_directory = os.path.join(data_in_directory, "gmted")
+        self.use_30m = use_30m
+        self.data_in_directory = os.path.join(data_in_directory, 'strm_30' if use_30m else 'srtm_90')
         ee.Authenticate()
         ee.Initialize(project=self.project_id)
-        self.download_and_process_data()
 
-    def download_gmted_full(self):
+    def download_srtm(self):
         gdf = gpd.read_file(self.country_geojson_filename)
         country_name = os.path.splitext(os.path.basename(self.country_geojson_filename))[0].lower()
         geo_json_geometry = geemap.geojson_to_ee(gdf.__geo_interface__)
-        gmted = ee.Image("USGS/GMTED2010_FULL")
-        resolution = 250
-        tile_split = 4
-        gmted_clipped = gmted.clip(geo_json_geometry)
+        srtm = ee.Image('USGS/SRTMGL1_003') if self.use_30m else ee.Image('CGIAR/SRTM90_V4')
+        resolution = 30 if self.use_30m else 90
+        tile_split = 8 if self.use_30m else 4
+        srtm_clipped = srtm.clip(geo_json_geometry)
         country_input_dir = self.data_in_directory
         os.makedirs(country_input_dir, exist_ok=True)
         tiles = self.split_bbox(gdf.total_bounds, n=tile_split)
@@ -30,9 +30,9 @@ class GMTEDDownloader:
         for idx, tile in enumerate(tiles):
             coords = [[[p[0], p[1]] for p in tile.exterior.coords]]
             region = ee.Geometry.Polygon(coords)
-            output_file = os.path.join(country_input_dir, f'{country_name}_tile_{idx+1}_gmted_{resolution}m.tif')
+            output_file = os.path.join(country_input_dir, f'{country_name}_tile_{idx+1}_elev_hsh_ras_s3_srtm_pp_{resolution}m.tif')
             try:
-                geemap.ee_export_image(gmted_clipped, filename=output_file, scale=resolution, region=region, file_per_band=False)
+                geemap.ee_export_image(srtm_clipped, filename=output_file, scale=resolution, region=region, file_per_band=False)
                 print(f"Successfully downloaded {output_file}")
             except Exception as e:
                 print(f"Error downloading {output_file}: {e}")
@@ -48,15 +48,14 @@ class GMTEDDownloader:
                 resolution = parts[-1].split('.')[0]
 
                 if iso_code not in iso_files:
-                    iso_files[iso_code] = {resolution: []}
+                    iso_files[iso_code] = {'30m': [], '90m': []}
 
                 iso_files[iso_code][resolution].append(os.path.join(data_in_directory, filename))
 
         for iso_code, resolutions in iso_files.items():
             for resolution, files in resolutions.items():
                 if files:
-                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_gmted_{resolution}.tif")
-                    os.makedirs(output_file, exist_ok=True)
+                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_elev_hsh_ras_s3_srtm_pp_{resolution}.tif")
                     print(f"Merging files for {iso_code} at {resolution} resolution into {output_file}")
                     self.merge_files(files, output_file)
 
