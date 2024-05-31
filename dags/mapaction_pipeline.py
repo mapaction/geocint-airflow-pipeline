@@ -50,7 +50,7 @@ def create_mapaction_pipeline(country_name, config):
         ######################################
         ######## Task groups #################
         ######################################
-        with TaskGroup(group_id=f"download_tasks") as download_group:
+        with TaskGroup(group_id=f"download_and_transform_tasks") as download_and_transform_group:
             with dag:
                 ######################################
                 ######## Variable definitions ########
@@ -101,22 +101,29 @@ def create_mapaction_pipeline(country_name, config):
                 osm_canal_inst = osm_canal(**task_args)
                 osm_railway2_inst = osm_railway2(**task_args)
 
-                ne_10m_lakes_inst,
-                ourairports_inst,
-                ne_10m_roads_inst,
-                ne_10m_populated_place_inst,
-                ne_10m_rivers_lake_centerlines_inst,
-                power_plants_inst,
-                worldports_inst,
-                download_geodar_data_inst,  
-                download_world_admin_boundaries_inst,
-                download_world_coastline_data_inst,
-                ocha_admin_boundaries_inst,
+                ######################################
+                ######## Tranform definitions ########
+                ######################################
+                transform_ne_10m_roads_inst = transform_ne_10m_roads(**task_args)
+                transform_ne_10m_populated_places_inst = transform_ne_10m_populated_places(**task_args)
+                transform_ne_10m_rivers_lake_centerlines_inst = transform_ne_10m_rivers_lake_centerlines(**task_args)
+                transform_power_plants_inst = transform_power_plants(**task_args)
+                transform_worldports_inst = transform_worldports(**task_args)
+                transform_ourairports_inst = transform_ourairports(**task_args)
+                transform_gmdted250_inst = transform_gmdted250(**task_args)
+                transform_feather_inst = create_feather_task(**task_args)
+                transform_elevation30_inst = transform_elevation30(**task_args)
+                transform_elevation90_inst = transform_elevation90(**task_args)
+                transform_world_costline_data_inst = transform_world_costline_data(**task_args)
+                extract_country_national_coastline_inst = extract_country_national_coastline(**task_args)
+                transform_admin_linework_inst = transform_admin_linework(**task_args)
+                transform_world_admin_boundaries_inst = transform_world_admin_boundaries(**task_args)
+                transform_dams_inst = transform_dams(**task_args)
+                transform_reservoirs_inst = transform_reservoirs(**task_args)
+                transform_ne_10m_lakes_inst = transform_ne_10m_lakes(**task_args)
+
                 oceans_and_seas_inst,
                 hyrdrorivers_inst,
-                download_gmdted250_inst,
-                download_elevation90_inst,
-                download_elevation30_inst,
                 download_healthsites_inst,
                 download_worldpop1km_inst,
                 download_worldpop100m_inst,
@@ -140,29 +147,6 @@ def create_mapaction_pipeline(country_name, config):
                 osm_canal_inst,
                 osm_railway2_inst
 
-        with TaskGroup(group_id=f"transform_tasks") as transform_group:
-            with dag:
-                ######################################
-                ######## Tranform definitions ########
-                ######################################
-                transform_ne_10m_roads_inst = transform_ne_10m_roads(**task_args)
-                transform_ne_10m_populated_places_inst = transform_ne_10m_populated_places(**task_args)
-                transform_ne_10m_rivers_lake_centerlines_inst = transform_ne_10m_rivers_lake_centerlines(**task_args)
-                transform_power_plants_inst = transform_power_plants(**task_args)
-                transform_worldports_inst = transform_worldports(**task_args)
-                transform_ourairports_inst = transform_ourairports(**task_args)
-                transform_gmdted250_inst = transform_gmdted250(**task_args)
-                transform_feather_inst = create_feather_task(**task_args)
-                transform_elevation30_inst = transform_elevation30(**task_args)
-                transform_elevation90_inst = transform_elevation90(**task_args)
-                transform_world_costline_data_inst = transform_world_costline_data(**task_args)
-                extract_country_national_coastline_inst = extract_country_national_coastline(**task_args)
-                transform_admin_linework_inst = transform_admin_linework(**task_args)
-                transform_world_admin_boundaries_inst = transform_world_admin_boundaries(**task_args)
-                transform_dams_inst = transform_dams(**task_args)
-                transform_reservoirs_inst = transform_reservoirs(**task_args)
-                transform_ne_10m_lakes_inst = transform_ne_10m_lakes(**task_args)
-
                 # Direct Download-Transform dependencies
                 ne_10m_lakes_inst >> transform_ne_10m_lakes_inst
                 ourairports_inst >> transform_ourairports_inst
@@ -183,7 +167,7 @@ def create_mapaction_pipeline(country_name, config):
                 download_world_coastline_data_inst >> transform_world_costline_data_inst >> extract_country_national_coastline_inst
 
                 # Multiple Download Inputs to One Transform
-                ocha_admin_boundaries_inst >> [transform_admin_linework_inst, transform_feather_inst]
+                ocha_admin_boundaries_inst >> [transform_admin_linework_inst, transform_feather_inst]       
 
         with TaskGroup(group_id=f"export_tasks") as export_group:
             with dag:
@@ -196,11 +180,11 @@ def create_mapaction_pipeline(country_name, config):
 
                 # Set dependencies for each export task
                 for export_task in [mapaction_export_s3_task, upload_cmf_all_task, upload_datasets_all_task, datasets_ckan_descriptions_task, create_completeness_report_task, send_slack_message_task]:
-                    transform_group >> export_task
+                    download_and_transform_group >> export_task
                     export_task.trigger_rule = TriggerRule.ALL_DONE
 
          # Linking task groups
-        make_data_dirs_task >> download_group >> transform_group >> export_group
+        make_data_dirs_task >> download_and_transform_group >> export_group
 
     return dag
 
