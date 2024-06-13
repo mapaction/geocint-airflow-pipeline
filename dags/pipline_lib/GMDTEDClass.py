@@ -9,8 +9,8 @@ class GMTEDDownloader:
     def __init__(self, country_geojson_filename, data_in_directory, data_out_directory):
         self.project_id = 'ma-ediakatos'
         self.country_geojson_filename = country_geojson_filename
-        self.data_out_directory = os.path.join(data_out_directory, '211_elev')
-        self.data_in_directory = os.path.join(data_in_directory, "gmted")
+        self.data_out_directory = data_out_directory
+        self.data_in_directory = data_in_directory
         ee.Authenticate()
         ee.Initialize(project=self.project_id)
 
@@ -20,7 +20,7 @@ class GMTEDDownloader:
         geo_json_geometry = geemap.geojson_to_ee(gdf.__geo_interface__)
         gmted = ee.Image("USGS/GMTED2010_FULL")
         resolution = 250
-        tile_split = 4
+        tile_split = 8
         gmted_clipped = gmted.clip(geo_json_geometry)
         country_input_dir = self.data_in_directory
         os.makedirs(country_input_dir, exist_ok=True)
@@ -55,7 +55,6 @@ class GMTEDDownloader:
             for resolution, files in resolutions.items():
                 if files:
                     output_file = os.path.join(self.data_out_directory, f"{iso_code}_gmted_{resolution}.tif")
-                    os.makedirs(output_file, exist_ok=True)
                     print(f"Merging files for {iso_code} at {resolution} resolution into {output_file}")
                     self.merge_files(files, output_file)
 

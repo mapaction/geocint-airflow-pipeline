@@ -9,6 +9,7 @@ load_dotenv("/opt/airflow/dags/.env")  # your .env should be in the /dags dir, n
 
 S3_BUCKET = os.environ.get("S3_BUCKET")
 HS_API_KEY = os.environ.get("HS_API_KEY")
+SLACK_TOKEN = os.environ.get("SLACK_API_KEY")
 
 ###################################
 ######## Task Definitions #########
@@ -17,11 +18,8 @@ HS_API_KEY = os.environ.get("HS_API_KEY")
 def make_data_dirs(**kwargs):
     """ Development complete """
     from pipline_lib.make_data_dirs import make_data_dirs as make_dirs
-    country_code = kwargs['country_code']
-    country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
-    docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
     print("////", data_in_directory, data_out_directory, cmf_directory,)
     make_dirs(data_in_directory, data_out_directory, cmf_directory)
@@ -32,10 +30,8 @@ def download_hdx_admin_pop(**kwargs):
     from pipline_lib.download_hdx_admin_pop import \
         download_hdx_admin_pop as download_pop
     country_code = kwargs['country_code']
-    country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
-    docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
     print("////", data_in_directory, data_out_directory, cmf_directory)
     download_pop(country_code, data_out_directory)
@@ -201,35 +197,29 @@ def extract_country_national_coastline(**kwargs):
 def download_elevation90(**kwargs):
     """ Development complete """
     from pipline_lib.SRTMClass import SRTMDownloader
-    country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
-    data_out_directory = kwargs["data_out_directory"]
-    docker_worker_working_dir = kwargs['docker_worker_working_dir']
-    cmf_directory = kwargs['cmf_directory']
-    downloader = SRTMDownloader(country_geojson_filename, data_out_directory, data_out_directory, use_30m=False)
+    data_in_directory = os.path.join(kwargs["data_in_directory"], 'srtm_90' )
+    data_out_directory = os.path.join(kwargs["data_out_directory"], '211_elev') 
+    downloader = SRTMDownloader(country_geojson_filename, data_in_directory, data_out_directory, use_30m=False)
     downloader.download_srtm()
 
 @task()
 def transform_elevation90(**kwargs):
     """ Development complete """
     from pipline_lib.SRTMClass import SRTMDownloader
-    country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
-    data_out_directory = kwargs["data_out_directory"]
-    docker_worker_working_dir = kwargs['docker_worker_working_dir']
-    cmf_directory = kwargs['cmf_directory']
-    downloader = SRTMDownloader(country_geojson_filename, data_out_directory, data_out_directory, use_30m=False)
+    data_in_directory = os.path.join(kwargs["data_in_directory"], 'srtm_90' )
+    data_out_directory = os.path.join(kwargs["data_out_directory"], '211_elev') 
+    downloader = SRTMDownloader(country_geojson_filename, data_in_directory, data_out_directory, use_30m=False)
     downloader.process_files(data_in_directory)
 
-@task()
+@task(trigger_rule="all_done")
 def download_elevation30(**kwargs):
     """ Development complete """
     from pipline_lib.SRTMClass import SRTMDownloader
     country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
-    data_out_directory = kwargs["data_out_directory"]
+    data_in_directory = os.path.join(kwargs["data_in_directory"], 'srtm_30' )
+    data_out_directory = os.path.join(kwargs["data_out_directory"], '211_elev') 
     downloader = SRTMDownloader(country_geojson_filename, data_in_directory, data_out_directory, use_30m=True)
     downloader.download_srtm()
 
@@ -238,8 +228,8 @@ def transform_elevation30(**kwargs):
     """ Development complete """
     from pipline_lib.SRTMClass import SRTMDownloader
     country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
-    data_out_directory = kwargs["data_out_directory"]
+    data_in_directory = os.path.join(kwargs["data_in_directory"], 'srtm_30' )
+    data_out_directory = os.path.join(kwargs["data_out_directory"], '211_elev') 
     downloader = SRTMDownloader(country_geojson_filename, data_in_directory, data_out_directory, use_30m=True)
     downloader.process_files(data_in_directory)
 
@@ -248,8 +238,8 @@ def download_gmdted250(**kwargs):
     """ Development complete """
     from pipline_lib.GMDTEDClass import GMTEDDownloader
     country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
-    data_out_directory = kwargs["data_out_directory"]
+    data_in_directory = os.path.join(kwargs["data_in_directory"], 'gmted_250' )
+    data_out_directory = os.path.join(kwargs["data_out_directory"], '211_elev') 
     downloader = GMTEDDownloader(country_geojson_filename, data_in_directory, data_out_directory)
     downloader.download_gmted_full()
 @task()
@@ -257,8 +247,8 @@ def transform_gmdted250(**kwargs):
     """ Development complete """
     from pipline_lib.GMDTEDClass import GMTEDDownloader
     country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
-    data_out_directory = kwargs["data_out_directory"]
+    data_in_directory = os.path.join(kwargs["data_in_directory"], 'gmted_250' )
+    data_out_directory = os.path.join(kwargs["data_out_directory"], '211_elev') 
     downloader = GMTEDDownloader(country_geojson_filename, data_in_directory, data_out_directory)
     downloader.process_files(data_in_directory)
 
@@ -754,5 +744,6 @@ def create_completeness_report(**kwargs):
     pass
 
 @task(trigger_rule="all_done")
-def send_slack_message(**kwargs):
-    pass
+def send_slack_message(message):
+    from pipline_lib.slack_message import send_slack_message as _ssm
+    _ssm(SLACK_TOKEN, message)

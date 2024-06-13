@@ -9,9 +9,9 @@ class SRTMDownloader:
     def __init__(self, country_geojson_filename, data_in_directory, data_out_directory, use_30m=False):
         self.project_id = 'ma-ediakatos'
         self.country_geojson_filename = country_geojson_filename
-        self.data_out_directory = os.path.join(data_out_directory, '211_elev')
+        self.data_out_directory = data_out_directory#os.path.join(data_out_directory, '211_elev')
         self.use_30m = use_30m
-        self.data_in_directory = os.path.join(data_in_directory, 'strm_30' if use_30m else 'srtm_90')
+        self.data_in_directory = data_in_directory #os.path.join(data_in_directory, 'strm_30' if use_30m else 'srtm_90')
         ee.Authenticate()
         ee.Initialize(project=self.project_id)
 
@@ -21,7 +21,7 @@ class SRTMDownloader:
         geo_json_geometry = geemap.geojson_to_ee(gdf.__geo_interface__)
         srtm = ee.Image('USGS/SRTMGL1_003') if self.use_30m else ee.Image('CGIAR/SRTM90_V4')
         resolution = 30 if self.use_30m else 90
-        tile_split = 8 if self.use_30m else 4
+        tile_split = 16 if self.use_30m else 8
         srtm_clipped = srtm.clip(geo_json_geometry)
         country_input_dir = self.data_in_directory
         os.makedirs(country_input_dir, exist_ok=True)
