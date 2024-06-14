@@ -80,6 +80,46 @@ def wfp_boarder_crossings(**kwargs):
     pass
 
 @task()
+def download_population_with_sadd(**kwargs):
+    """Development complete"""
+    from pipline_lib.hdx_csv_and_zip_scraper import download_csv_and_zip_from_hdx as _scrape_hdx_data
+    country_code = kwargs['country_code']
+    data_in_directory = kwargs["data_in_directory"]
+    _scrape_hdx_data(country_code, data_in_directory)
+
+@task()
+def transform_population_with_sadd(**kwargs):
+    """ Development complete !!!!!! """
+    from pipline_lib.process_pop_sadd import process_pop_sadd as _pop_sadd
+    country_code = kwargs['country_code']
+    data_in_directory = kwargs["data_in_directory"]
+    data_out_directory = kwargs["data_out_directory"]
+    out_dir = f"{data_out_directory}/223_popu"
+    pop_input_dir = f"{data_in_directory}/population_with_sadd"
+    metadata_file = f"{pop_input_dir}/{country_code}_metadata.json"
+    _pop_sadd(country_code, pop_input_dir, metadata_file, out_dir)
+
+@task()
+def download_all_hdx_country_data_types(**kwargs):
+    """ Development complete """
+    from pipline_lib.hdx_list_country_datasets import list_and_save_data_types_with_metadata as _list_and_save
+    # country_code = kwargs['country_code']
+    country_name = kwargs['country_name']
+    data_out_directory = kwargs["data_out_directory"]
+    out_dir = f"{data_out_directory}/hdx"
+    _list_and_save(country_name, out_dir)  
+
+@task()
+def download_hdx_country_data(**kwargs):
+    """ Development complete """
+    from pipline_lib.hdx_run_all_dataypes import download_all_datatypes as _download_all_types
+    country_code = kwargs['country_code']
+    country_name = kwargs['country_name']
+    data_in_directory = kwargs["data_in_directory"]
+    data_out_directory = kwargs["data_out_directory"]
+    _download_all_types(country_name, country_code, "hdx_datatypes.txt", data_in_directory, data_out_directory)     
+
+@task()
 def transform_dams(**kwargs) -> str:
     """ Development complete """
     from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country

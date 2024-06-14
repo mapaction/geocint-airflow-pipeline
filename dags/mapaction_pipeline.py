@@ -38,6 +38,7 @@ def create_mapaction_pipeline(country_name, config):
         "data_in_directory": data_in_directory,
         "data_out_directory": data_out_directory,
         "country_code": country_code,
+        "country_name": country_name,
         "cmf_directory": cmf_directory
     }
 
@@ -61,6 +62,24 @@ def create_mapaction_pipeline(country_name, config):
         ######################################
         ######## Task groups #################
         ######################################
+        with TaskGroup(group_id="hdx_data_scrape") as hdx_data_scrape_group :
+            with dag:
+                download_population_with_sadd_inst = download_population_with_sadd(task_concurrency=3, **task_args)
+                transform_population_with_sadd_inst = transform_population_with_sadd(task_concurrency=3, **task_args)
+                download_population_with_sadd_inst >> transform_population_with_sadd_inst
+
+            for download_task in hdx_data_scrape_group:
+                    download_task.trigger_rule = TriggerRule.ALL_DONE
+
+        with TaskGroup(group_id="hdx_data_download") as hdx_data_download_group:
+            with dag:
+                download_all_hdx_country_data_types_inst = download_all_hdx_country_data_types(task_concurrency=3, **task_args)
+                download_hdx_country_data_inst = download_hdx_country_data(task_concurrency=2, **task_args)
+                download_all_hdx_country_data_types_inst >> download_hdx_country_data_inst
+
+            for download_task in hdx_data_download_group:
+                    download_task.trigger_rule = TriggerRule.ALL_DONE
+
         with TaskGroup(group_id="roads_populated_places") as roads_populated_places_group:
             with dag:
                 ne_10m_roads_inst = ne_10m_roads(task_concurrency=3, **task_args)
@@ -242,11 +261,13 @@ def create_mapaction_pipeline(country_name, config):
         osm_roads_task = osm_roads(task_concurrency=1, **task_args)
         osm_waterbodies_task = osm_waterbodies(task_concurrency=1, **task_args)
         osm_railway_task = osm_railway(task_concurrency=1, **task_args)
-        download_elevation30_inst = download_elevation30(task_concurrency=1, **task_args)
-        transform_elevation30_inst = transform_elevation30(task_concurrency=1, **task_args)
+        # download_elevation30_inst = download_elevation30(task_concurrency=1, **task_args)
+        # transform_elevation30_inst = transform_elevation30(task_concurrency=1, **task_args)
         
         # DAG Structure
         send_slack_message_task >> make_data_dirs_task >> [
+            hdx_data_scrape_group,
+            hdx_data_download_group,
             water_features_group, 
             dams_reservoirs_group,
             coastline_group,
@@ -265,10 +286,12 @@ def create_mapaction_pipeline(country_name, config):
         send_slack_message_task_mid = send_slack_message(mid_message)
 
         # Ensure OSM tasks run after the first export
-        export_group_1 >> send_slack_message_task_mid >> osm_roads_task >> osm_waterbodies_task >> osm_railway_task >> download_elevation30_inst >> transform_elevation30_inst
+        # Removed >> download_elevation30_inst >> transform_elevation30_inst
+        export_group_1 >> send_slack_message_task_mid >> osm_roads_task >> osm_waterbodies_task >> osm_railway_task 
 
         # Export data after Intensive tasks complete
-        [osm_roads_task, osm_waterbodies_task, osm_railway_task, download_elevation30_inst, transform_elevation30_inst] >> export_group_2
+        # Removed download_elevation30_inst, transform_elevation30_inst
+        [osm_roads_task, osm_waterbodies_task, osm_railway_task] >> export_group_2
 
         end_message['text'] = f"[{datetime.now()}]: {dag_id} ---- Dag has completed its run of please check the Airflow UI..."
         send_slack_message_task_end = send_slack_message(end_message) 
