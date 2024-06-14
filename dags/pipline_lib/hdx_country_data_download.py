@@ -8,45 +8,39 @@ hdx_config = None
 
 def download_country_data(country, data_type, destination_folder):
     """
-    Downloads specified data type for a country from HDX to a destination folder.
-
-    Args:
-        iso3 (str): The ISO3 code of the country (e.g., 'GBR' for United Kingdom).
-        data_type (str): The type of data to download (e.g., 'roads', 'railways').
-        destination_folder (str): Path to the folder where data should be saved.
-
-    Raises:
-        ValueError: If no matching datasets are found or download fails.
+    Downloads specified data type for a country from HDX to a destination folder,
+    skipping if an identical file already exists in the destination folder.
     """
-    
-    # Initialize HDX configuration (adjust HDX_KEY if necessary)
     global hdx_config
     if hdx_config is None:
-        # Initialize HDX configuration only once
         hdx_config = Configuration.create(
             hdx_site="prod", user_agent="My HDX App", hdx_read_only=True
         )
     
-    # Search for relevant datasets
-    query = f'{country} AND {data_type}'  # Customize the query as needed
-    datasets = Dataset.search_in_hdx(query, rows=5)  # Get up to 5 results
-    
+    query = f'{country} AND {data_type}'
+    datasets = Dataset.search_in_hdx(query, rows=5)
+
     if not datasets:
         raise ValueError(f"No {data_type} datasets found for {country}.")
 
-    # Select and download the first dataset
-    dataset = datasets[0] 
+    dataset = datasets[0]
     resources = dataset.get_resources()
-    if resources:
-        resource = resources[0]  # Take the first resource 
-        
-        # Create download object
-        url, path = resource.download(folder=destination_folder)
 
-        if not os.path.exists(path):
-            raise ValueError("Download failed. Check network connection or resource availability.")
+    if resources:
+        resource = resources[0]
         
-        print(f"Downloaded {data_type} data for {country} to {path}")
+        # Construct the expected filename in the destination folder
+        filename = resource.get_filename()
+        dest_filepath = os.path.join(destination_folder, filename)
+
+        # Check for existing file with same size in the destination folder
+        if os.path.exists(dest_filepath) and os.path.getsize(dest_filepath) == resource.get_file_size():
+            print(f"Skipping download: {data_type} data for {country} already exists at {dest_filepath}")
+        else:
+            url, path = resource.download(folder=destination_folder)
+            if not os.path.exists(path):
+                raise ValueError("Download failed. Check network connection or resource availability.")
+            print(f"Downloaded {data_type} data for {country} to {path}")
     else:
         raise ValueError(f"No resources found for {dataset['title']}.")
     
