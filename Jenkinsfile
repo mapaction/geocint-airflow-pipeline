@@ -44,14 +44,23 @@ pipeline {
             }
         }
 		
+		stage('Create Directories') {
+            steps {
+                // Create necessary directories if they don't exist
+                sh 'mkdir -p ./dags/static_data/downloaded_data'
+            }
+        }
+		
 		stage('Copy Data Files') {
             steps {
                 // Copy .env file from /jenkins to ./ (Jenkins workspace)
                 sh 'cp /jenkins/oceans_and_seas.zip ./dags/static_data/downloaded_data/'
-				sh 'cp /jenkins/hydrorivers.zip ./dags/static_data/downloaded_data/'
-				sh 'cp -r /jenkins/global_Background_shp ./dags/static_data/downloaded_data/'
+		sh 'cp /jenkins/hydrorivers.zip ./dags/static_data/downloaded_data/'
+		sh 'cp -r /jenkins/global_Background_shp ./dags/static_data/downloaded_data/'
             }
         }
+		
+		
 		
 
     }
