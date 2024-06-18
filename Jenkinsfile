@@ -2,7 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repository') {
+        stage('Clean Workspace') {
+            steps {
+                // Clean up the workspace directory
+                sh 'rm -rf ./*'
+            }
+        }
+		
+		stage('Clone Repository') {
             steps {
                 // Checkout code from SCM 
                 git branch: 'master', url: 'https://github.com/mapaction/geocint-airflow-pipeline.git'
