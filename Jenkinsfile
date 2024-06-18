@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Clean Workspace') {
-            steps {
-                // Clean up the workspace directory
-                sh 'rm -rf ./*'
-            }
-        }
 		
 		stage('Clone Repository') {
             steps {
