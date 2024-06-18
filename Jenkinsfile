@@ -86,7 +86,7 @@ pipeline {
         stage('Execute Docker Compose Up') {
             steps {
                 // Execute docker-compose up airflow-init
-                sh 'docker-compose up airflow-init'
+                sh 'docker compose up airflow-init'
             }
         }
     }
