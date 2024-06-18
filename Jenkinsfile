@@ -44,7 +44,7 @@ pipeline {
             }
         }
 		
-		stage('Create Directories') {
+		stage('Create Directory Downloaded Data') {
             steps {
                 // Create necessary directories if they don't exist
                 sh 'mkdir -p ./dags/static_data/downloaded_data'
