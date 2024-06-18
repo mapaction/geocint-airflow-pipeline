@@ -1,1352 +1,1476 @@
-{
+    {
     "ago": {
-        "name": "Angola",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "municipality",
-        "adm3": "commune",
-        "source": "ine"
+    "name": "Angola",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "municipality",
+    "adm3": "commune",
+    "source": "ine"
     },
     "aia": {
-        "name": "Anguilla",
-        "adm0": "national",
-        "source": "gdam"
+    "name": "Anguilla",
+    "adm0": "country",
+    "source": "gadm"
     },
     "alb": {
-        "name": "Angola",
-        "adm0": "country",
-        "adm1": "county",
-        "adm2": "municipality",
-        "adm3": "locality",
-        "source": "unhcr"
+    "name": "Albania",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "municipality",
+    "adm3": "locality",
+    "source": "unhcr"
     },
     "and": {
-        "name": "Andorra",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Andorra",
+    "adm0": "country",
+    "adm1": "parish",
+    "source": "no cod data" 
     },
     "are": {
-        "name": "United Arab Emirates",
-        "adm0": "country",
-        "adm1": "emirate",
-        "source": "uaemca"
+    "name": "United Arab Emirates",
+    "adm0": "country",
+    "adm1": "emirate",
+    "source": "uaemca"
     },
     "arg": {
-        "name": "Argentina",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "department",
-        "source": "unhcr"
+    "name": "Argentina",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "department",
+    "source": "unhcr"
     },
     "arm": {
-        "name": "Armenia",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "unofficial",
-        "source": "ga"
+    "name": "Armenia",
+    "adm0": "country",
+    "adm1": "province (marz)",
+    "adm2": "community",
+    "source": "ga"
     },
     "atg": {
-        "name": "Antigua and Barbuda",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Antigua and Barbuda",
+    "adm0": "country",
+    "adm1": "parish",
+    "adm2": "dependency", 
+    "source": "gadm"
     },
     "aus": {
-        "name": "Australia",
-        "adm0": "country",
-        "adm1": "sub-division",
-        "source": "no cod data"
+    "name": "Australia",
+    "adm0": "country",
+    "adm1": "state/territory",
+    "adm2": "local government area",
+    "source": "abs" 
     },
     "aut": {
-        "name": "Austria",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Austria",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "district",
+    "source": "statistik austria"
     },
     "aze": {
-        "name": "Azerbaijan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Azerbaijan",
+    "adm0": "country",
+    "adm1": "economic region",
+    "adm2": "rayon",
+    "adm3": "municipality",
+    "source": "gadm"
     },
     "bdi": {
-        "name": "Burundi",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "commune",
-        "source": "igebu"
+    "name": "Burundi",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "commune",
+    "source": "igebu"
     },
     "bel": {
-        "name": "Belgium",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "commune",
-        "source": "no cod data"
+    "name": "Belgium",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "province",
+    "adm3": "municipality",
+    "source": "statbel"
     },
     "ben": {
-        "name": "Benin",
-        "adm0": "country",
-        "adm1": "oblast",
-        "source": "ocha"
+    "name": "Benin",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "commune",
+    "source": "insae"
     },
     "bfa": {
-        "name": "Burkina Faso",
-        "adm0": "country",
-        "adm1": "region",
-        "adm2": "province",
-        "adm3": "department",
-        "source": "igb"
+    "name": "Burkina Faso",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "province",
+    "adm3": "department",
+    "source": "igb"
     },
     "bgd": {
-        "name": "Bangladesh",
-        "adm0": "country",
-        "adm1": "regions",
-        "adm2": "division",
-        "adm3": "district",
-        "source": "bbs"
+    "name": "Bangladesh",
+    "adm0": "country",
+    "adm1": "division",
+    "adm2": "district",
+    "adm3": "upazila/thana",
+    "source": "bbs"
     },
     "bgr": {
-        "name": "Bulgaria",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "district",
-        "adm3": "municipality",
-        "source": "unicef"
+    "name": "Bulgaria",
+    "adm0": "country",
+    "adm1": "oblast", 
+    "adm2": "obshtina", 
+    "source": "nsi" 
     },
     "bhr": {
-        "name": "Bahrain",
-        "adm0": "country",
-        "adm1": "governorate",
-        "source": "wfp"
+    "name": "Bahrain",
+    "adm0": "country",
+    "adm1": "governorate",
+    "source": "wfp"
     },
     "bhs": {
-        "name": "The Bahamas",
-        "adm0": "country",
-        "adm1": "district",
-        "source": "gadm"
+    "name": "The Bahamas",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "gadm"
     },
     "bih": {
-        "name": "Bosnia and Herzegovina",
-        "adm0": "country",
-        "adm1": "federal",
-        "adm2": "municipality",
-        "source": "osm"
+    "name": "Bosnia and Herzegovina",
+    "adm0": "country",
+    "adm1": "entity", 
+    "adm2": "canton",
+    "adm3": "municipality",
+    "source": "osm"
     },
     "blr": {
-        "name": "Belarus",
-        "adm0": "country",
-        "adm1": "oblast",
-        "source": "unicef"
+    "name": "Belarus",
+    "adm0": "country",
+    "adm1": "voblasts",
+    "adm2": "raion",
+    "source": "unicef"
     },
     "blz": {
-        "name": "Belize",
-        "adm0": "country",
-        "adm1": "district",
-        "source": "gadm"
+    "name": "Belize",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "gadm"
     },
     "bmu": {
-        "name": "Bermuda",
-        "adm0": "country",
-        "adm1": "parish",
-        "adm2": "municipality",
-        "source": "gadm"
+    "name": "Bermuda",
+    "adm0": "country",
+    "adm1": "parish",
+    "source": "gadm"
     },
     "bol": {
-        "name": "Bolivia",
-        "adm0": "country",
-        "adm1": "department",
-        "adm2": "municipality",
-        "source": "geobol"
+    "name": "Bolivia",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "municipality",
+    "adm3": "canton",
+    "source": "geobol"
     },
     "bra": {
-        "name": "Brazil",
-        "adm0": "country",
-        "adm1": "state",
-        "adm2": "municipality",
-        "source": "ibge"
+    "name": "Brazil",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "municipality",
+    "source": "ibge"
     },
     "brb": {
-        "name": "Barbados",
-        "adm1": "parish",
-        "source": "gadm"
+    "name": "Barbados",
+    "adm0": "country",
+    "adm1": "parish",
+    "source": "gadm"
     },
     "brn": {
-        "name": "Brunei",
-        "adm0": "country",
-        "adm1": "district",
-        "source": "no cod data"
+    "name": "Brunei",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "no cod data" 
     },
     "btn": {
-        "name": "Bhutan",
-        "adm0": "country",
-        "adm1": "dzongkhag",
-        "source": "ocha"
+    "name": "Bhutan",
+    "adm0": "country",
+    "adm1": "dzongkhag",
+    "adm2": "gewog",
+    "source": "ocha"
     },
     "bwa": {
-        "name": "Botswana",
-        "adm0": "country",
-        "adm1": "district",
-        "adm2": "village",
-        "adm3": "locality",
-        "source": "unfrpa"
+    "name": "Botswana",
+    "adm0": "country",
+    "adm1": "district",
+    "adm2": "sub-district",
+    "source": "unfpa" 
     },
     "caf": {
-        "name": "Central African Republic",
-        "adm0": "country",
-        "adm1": "prefecture",
-        "adm2": "sub-prefecture",
-        "adm3": "sub-prefecture",
-        "adm4": "bangui",
-        "source": "acted"
+    "name": "Central African Republic",
+    "adm0": "country",
+    "adm1": "prefecture",
+    "adm2": "sub-prefecture",
+    "source": "acted"
     },
     "can": {
-        "name": "Canada",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "territory",
-        "source": "no cod data"
+    "name": "Canada",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "census division",
+    "source": "statcan" 
     },
     "che": {
-        "name": "Switzerland",
-        "adm0": "country",
-        "adm1": "canton",
-        "source": "no cod data"
+    "name": "Switzerland",
+    "adm0": "country",
+    "adm1": "canton",
+    "adm2": "district",
+    "source": "gadm"
     },
     "chl": {
-        "name": "Chile",
-        "adm0": "country",
-        "adm1": "region",
-        "adm2": "province",
-        "adm3": "",
-        "source": "bcn"
+    "name": "Chile",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "province",
+    "adm3": "commune",
+    "source": "bcn"
     },
     "chn": {
-        "name": "China",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "municipality",
-        "source": "roap"
+    "name": "China",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "municipality",
+    "adm3": "county",
+    "source": "roap"
     },
     "civ": {
-        "name": "C\u00f4te d'Ivoire",
-        "adm0": "country",
-        "adm1": "district",
-        "adm2": "region",
-        "adm3": "department",
-        "source": "cntig"
+    "name": "Côte d'Ivoire",
+    "adm0": "country",
+    "adm1": "district",
+    "adm2": "region",
+    "adm3": "department",
+    "source": "cntig"
     },
     "cmr": {
-        "name": "Cameroon",
-        "adm0": "country",
-        "adm1": "region",
-        "adm2": "department",
-        "adm3": "arrondissement",
-        "source": "osm"
+    "name": "Cameroon",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "department",
+    "adm3": "arrondissement",
+    "source": "cvuc"
     },
     "cod": {
-        "name": "Democratic Republic of the Congo",
-        "adm0": "country",
-        "adm1": "provinces",
-        "adm2": "territories",
-        "source": "rgc"
+    "name": "Democratic Republic of the Congo",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "territory",
+    "source": "rgc"
     },
     "cog": {
-        "name": "Congo-Brazzaville",
-        "adm0": "country",
-        "adm1": "department",
-        "adm2": "district",
-        "source": "gaul"
+    "name": "Congo",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "district",
+    "source": "cnsee" 
     },
     "cok": {
-        "name": "Cook Islands",
-        "adm0": "country",
-        "adm1": "island",
-        "source": "no cod data"
+    "name": "Cook Islands",
+    "adm0": "country",
+    "adm1": "island",
+    "source": "no cod data"
     },
     "col": {
-        "name": "Colombia",
-        "adm0": "country",
-        "adm1": "department",
-        "adm2": "municipality",
-        "source": "dane"
+    "name": "Colombia",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "municipality",
+    "source": "dane"
     },
     "com": {
-        "name": "Comoros",
-        "adm0": "country",
-        "adm1": "island",
-        "source": "cosep"
+    "name": "Comoros",
+    "adm0": "country",
+    "adm1": "island",
+    "adm2": "prefecture",
+    "source": "cosep"
     },
     "cpv": {
-        "name": "Cape Verde",
-        "adm0": "country",
-        "adm1": "municipality",
-        "adm2": "parish",
-        "source": "salb"
+    "name": "Cape Verde",
+    "adm0": "country",
+    "adm1": "municipality",
+    "adm2": "parish",
+    "source": "ine" 
     },
     "cri": {
-        "name": "Costa Rica",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "canton",
-        "adm3": "district",
-        "source": "nso"
+    "name": "Costa Rica",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "canton",
+    "adm3": "district",
+    "source": "inec"
     },
     "cub": {
-        "name": "Cuba",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "municipality",
-        "source": "gadm"
+    "name": "Cuba",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "municipality",
+    "source": "gadm"
     },
     "cym": {
-        "name": "Cayman Islands",
-        "adm0": "country",
-        "adm1": "district",
-        "source": "gadm"
+    "name": "Cayman Islands",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "gadm"
     },
     "cyp": {
-        "name": "Cyprus",
-        "adm0": "country",
-        "adm1": "district",
-        "adm2": "commune",
-        "source": "no cod data"
+    "name": "Cyprus",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "cystat"
     },
     "cze": {
-        "name": "Czechia",
-        "adm0": "country",
-        "adm1": "region",
-        "adm2": "district",
-        "adm3": "municipality",
-        "adm4": "community",
-        "source": "no cod data"
+    "name": "Czechia",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "adm3": "municipality",
+    "source": "cuzk"
     },
     "deu": {
-        "name": "Germany",
-        "adm0": "country",
-        "adm1": "land",
-        "source": "no cod data"
+    "name": "Germany",
+    "adm0": "country",
+    "adm1": "land",
+    "adm2": "district",
+    "source": "destatis"
     },
     "dji": {
-        "name": "Djibouti",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Djibouti",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "source": "gadm"
     },
     "dma": {
-        "name": "Dominica",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ocha"
+    "name": "Dominica",
+    "adm0": "country",
+    "adm1": "parish",
+    "source": "cso"
     },
     "dnk": {
-        "name": "Denmark",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Denmark",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "municipality",
+    "source": "dst"
     },
     "dom": {
-        "name": "Dominican Republic",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "onde"
+    "name": "Dominican Republic",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "municipality",
+    "adm3": "municipal district",
+    "source": "one"
     },
     "dza": {
-        "name": "Algeria",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "unhcr"
+    "name": "Algeria",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "daïra", 
+    "source": "ons" 
     },
     "ecu": {
-        "name": "Ecuador",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "inec"
+    "name": "Ecuador",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "canton",
+    "adm3": "parish",
+    "source": "inec"
     },
     "egy": {
-        "name": "Egypt",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "capmas"
+    "name": "Egypt",
+    "adm0": "country",
+    "adm1": "governorate",
+    "adm2": "markaz",
+    "source": "capmas"
     },
     "eri": {
-        "name": "Eritrea",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ocha"
+    "name": "Eritrea",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "sub-region",
+    "source": "ocha"
     },
     "esp": {
-        "name": "Spain",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Spain",
+    "adm0": "country",
+    "adm1": "autonomous community",
+    "adm2": "province",
+    "source": "ine"
     },
     "est": {
-        "name": "Estonia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Estonia",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "municipality",
+    "source": "statistikaamet"
     },
     "eth": {
-        "name": "Ethiopia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "bofed"
+    "name": "Ethiopia",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "zone",
+    "adm3": "woreda",
+    "source": "csa"
     },
     "fin": {
-        "name": "Finland",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Finland",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "sub-region",
+    "adm3": "municipality",
+    "source": "maanmittauslaitos"
     },
     "fji": {
-        "name": "Fiji",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "pcrafi"
+    "name": "Fiji",
+    "adm0": "country",
+    "adm1": "division",
+    "adm2": "province",
+    "adm3": "tikina",
+    "source": "fbos"
     },
     "flk": {
-        "name": "Falkland Islands",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Falkland Islands",
+    "adm0": "country",
+    "source": "no cod data" 
     },
     "fra": {
-        "name": "France",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "France",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "department",
+    "source": "insee"
     },
     "fro": {
-        "name": "Faroe Islands",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Faroe Islands",
+    "adm0": "country",
+    "adm1": "municipality",
+    "source": "hagstova føroya"
     },
     "fsm": {
-        "name": "Federated States of Micronesia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "fsmds"
+    "name": "Federated States of Micronesia",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "municipality",
+    "source": "fsmds"
     },
     "gab": {
-        "name": "Gabon",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "salb"
+    "name": "Gabon",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "department",
+    "source": "direction générale de la statistique"
     },
     "gbr": {
-        "name": "United Kingdom",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "United Kingdom",
+    "adm0": "country",
+    "adm1": "country",
+    "adm2": "region",
+    "adm3": "unitary authority",
+    "source": "ons"
     },
     "geo": {
-        "name": "Georgia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "nsog"
+    "name": "Georgia",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "municipality",
+    "source": "geostat"
     },
     "ggy": {
-        "name": "Guernsey",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Guernsey",
+    "adm0": "country",
+    "adm1": "parish",
+    "source": "no cod data" 
     },
     "gha": {
-        "name": "Ghana",
-        "adm0": "country",
-        "adm1": "region",
-        "adm2": "districts",
-        "source": "gss"
+    "name": "Ghana",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "source": "gss"
     },
     "gib": {
-        "name": "Gibraltar",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Gibraltar",
+    "adm0": "country",
+    "source": "no cod data" 
     },
     "gin": {
-        "name": "Guinea",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "wfp"
+    "name": "Guinea",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "prefecture",
+    "source": "insd"
     },
     "gmb": {
-        "name": "The Gambia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ndma"
+    "name": "The Gambia",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "source": "ndma"
     },
     "gnb": {
-        "name": "Guinea-Bissau",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "salb"
+    "name": "Guinea-Bissau",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "sector",
+    "source": "ine" 
     },
     "gnq": {
-        "name": "Equatorial Guinea",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Equatorial Guinea",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "gadm"
     },
     "grc": {
-        "name": "Greece",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "eurogeographics"
+    "name": "Greece",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "regional unit",
+    "adm3": "municipality",
+    "source": "elstat" 
     },
     "grd": {
-        "name": "Grenada",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Grenada",
+    "adm0": "country",
+    "adm1": "parish",
+    "adm2": "dependency",
+    "source": "gadm"
     },
     "grl": {
-        "name": "Greenland",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Greenland",
+    "adm0": "country",
+    "adm1": "municipality",
+    "source": "statgreen" 
     },
     "gtm": {
-        "name": "Guatemala",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "cnprd"
+    "name": "Guatemala",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "municipality",
+    "source": "ine" 
     },
     "guy": {
-        "name": "Guyana",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "dlp"
+    "name": "Guyana",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "neighborhood council",
+    "source": "gadm"
     },
     "hnd": {
-        "name": "Honduras",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "seplan"
+    "name": "Honduras",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "municipality",
+    "source": "ine" 
     },
     "hrv": {
-        "name": "Croatia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Croatia",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "municipality",
+    "source": "dzs"
     },
     "hti": {
-        "name": "Haiti",
-        "adm0": "country",
-        "adm1": "department",
-        "adm2": "commune",
-        "adm3": "communal section",
-        "source": "cnigs"
+    "name": "Haiti",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "commune",
+    "adm3": "communal section",
+    "source": "cnigs"
     },
     "hun": {
-        "name": "Hungary",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "osm"
+    "name": "Hungary",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "district",
+    "source": "ksh"
     },
     "idn": {
-        "name": "Indonesia",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "city, district, regency",
-        "adm3": "sub-district",
-        "adm4": "village",
-        "source": "bps"
+    "name": "Indonesia",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "regency/city",
+    "adm3": "district",
+    "adm4": "village",
+    "source": "bps"
     },
     "imn": {
-        "name": "Isle of Man",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Isle of Man",
+    "adm0": "country",
+    "adm1": "sheading", 
+    "adm2": "parish", 
+    "source": "no cod data"
     },
     "ind": {
-        "name": "India",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "India",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "district",
+    "source": "censusindia"
     },
     "iot": {
-        "name": "British Indian Ocean Territory",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "British Indian Ocean Territory",
+    "adm0": "country",
+    "source": "no cod data"
     },
     "irl": {
-        "name": "Ireland",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Ireland",
+    "adm0": "country",
+    "adm1": "county",
+    "source": "cso" 
     },
     "irn": {
-        "name": "Iran",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "unhcr"
+    "name": "Iran",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "county",
+    "adm3": "district",
+    "source": "amar"
     },
     "irq": {
-        "name": "Iraq",
-        "adm0": "country",
-        "adm1": "governorate",
-        "adm2": "district",
-        "adm3": "sub-district",
-        "source": "icso"
+    "name": "Iraq",
+    "adm0": "country",
+    "adm1": "governorate",
+    "adm2": "district",
+    "adm3": "sub-district",
+    "source": "cosit" 
     },
     "isl": {
-        "name": "Iceland",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Iceland",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "municipality",
+    "source": "statice" 
     },
     "isr": {
-        "name": "Israel",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Israel",
+    "adm0": "country",
+    "adm1": "district",
+    "adm2": "sub-district",
+    "source": "cbs"
     },
     "ita": {
-        "name": "Italy",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Italy",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "province",
+    "adm3": "municipality",
+    "source": "istat"
     },
     "jam": {
-        "name": "Jamaica",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Jamaica",
+    "adm0": "country",
+    "adm1": "parish",
+    "source": "pioj" 
     },
     "jey": {
-        "name": "Jersey",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Jersey",
+    "adm0": "country",
+    "adm1": "parish",
+    "source": "no cod data" 
     },
     "jor": {
-        "name": "Jordan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Jordan",
+    "adm0": "country",
+    "adm1": "governorate",
+    "adm2": "department",
+    "source": "dos" 
     },
     "jpn": {
-        "name": "Japan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ocha"
+    "name": "Japan",
+    "adm0": "country",
+    "adm1": "prefecture",
+    "adm2": "municipality",
+    "source": "esri"
     },
     "kaz": {
-        "name": "Kazakhstan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "unhcr"
+    "name": "Kazakhstan",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "source": "stat.gov"
     },
     "ken": {
-        "name": "Kenya",
-        "adm0": "country",
-        "adm1": "county",
-        "adm2": "sub-county",
-        "source": "iebc"
+    "name": "Kenya",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "sub-county",
+    "source": "knbs"
     },
     "kgz": {
-        "name": "Kyrgyzstan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "meskr"
+    "name": "Kyrgyzstan",
+    "adm0": "country",
+    "adm1": "oblast",
+    "adm2": "raion",
+    "source": "nsc"
     },
     "khm": {
-        "name": "Cambodia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "wfp"
+    "name": "Cambodia",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "adm3": "commune",
+    "source": "nis"
     },
     "kir": {
-        "name": "Kiribati",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "spcsdd"
+    "name": "Kiribati",
+    "adm0": "country",
+    "adm1": "island group",
+    "adm2": "island council",
+    "source": "spcsdd"
     },
     "kna": {
-        "name": "Saint Kitts and Nevis",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Saint Kitts and Nevis",
+    "adm0": "country",
+    "adm1": "parish",
+    "source": "gadm"
     },
     "kor": {
-        "name": "South Korea",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "South Korea",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "si/gun/gu",
+    "source": "kostat"
     },
     "kwt": {
-        "name": "Kuwait",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Kuwait",
+    "adm0": "country",
+    "adm1": "governorate",
+    "adm2": "area",
+    "source": "pac" 
     },
     "lao": {
-        "name": "Laos",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ngd"
+    "name": "Laos",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "adm3": "village",
+    "source": "nsc" 
     },
     "lbn": {
-        "name": "Lebanon",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "cdr"
+    "name": "Lebanon",
+    "adm0": "country",
+    "adm1": "governorate",
+    "adm2": "district",
+    "source": "cdr"
     },
     "lbr": {
-        "name": "Liberia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "unmil"
+    "name": "Liberia",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "district",
+    "source": "unmil"
     },
     "lby": {
-        "name": "Libya",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "iom"
+    "name": "Libya",
+    "adm0": "country",
+    "adm1": "shabiyah",
+    "source": "iom"
     },
     "lca": {
-        "name": "Saint Lucia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "dpp"
+    "name": "Saint Lucia",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "dpp"
     },
     "lie": {
-        "name": "Liechtenstein",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Liechtenstein",
+    "adm0": "country",
+    "adm1": "municipality",
+    "source": "no cod data"
     },
     "lka": {
-        "name": "Sri Lanka",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "sdsl"
+    "name": "Sri Lanka",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "adm3": "divisional secretariat",
+    "source": "sdsl"
     },
     "lso": {
-        "name": "Lesotho",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "fmlg"
+    "name": "Lesotho",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "fmlg"
     },
     "ltu": {
-        "name": "Lithuania",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Lithuania",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "municipality",
+    "source": "gadm"
     },
     "lux": {
-        "name": "Luxembourg",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Luxembourg",
+    "adm0": "country",
+    "adm1": "canton",
+    "adm2": "commune",
+    "source": "gadm"
     },
     "lva": {
-        "name": "Latvia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Latvia",
+    "adm0": "country",
+    "adm1": "municipality",
+    "source": "csb"
     },
     "mar": {
-        "name": "Morocco",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "hcp"
+    "name": "Morocco",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "prefecture",
+    "source": "hcp"
     },
     "mco": {
-        "name": "Monaco",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Monaco",
+    "adm0": "country",
+    "adm1": "ward",
+    "source": "no cod data" 
     },
     "mda": {
-        "name": "Moldova",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "unhcr"
+    "name": "Moldova",
+    "adm0": "country",
+    "adm1": "district",
+    "adm2": "municipality",
+    "source": "unhcr"
     },
     "mdg": {
-        "name": "Madagascar",
-        "adm0": "country",
-        "adm1": "region",
-        "adm2": "district",
-        "adm3": "commune",
-        "adm4": "fokontany",
-        "source": "bngrc"
+    "name": "Madagascar",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "adm3": "commune",
+    "adm4": "fokontany", 
+    "source": "bngrc"
     },
     "mdv": {
-        "name": "Maldives",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "grm"
+    "name": "Maldives",
+    "adm0": "country",
+    "adm1": "atoll",
+    "adm2": "island",
+    "source": "grm"
     },
     "mex": {
-        "name": "Mexico",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "inegi"
+    "name": "Mexico",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "municipality",
+    "source": "inegi"
     },
     "mhl": {
-        "name": "Marshall Islands",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "spcsdd"
+    "name": "Marshall Islands",
+    "adm0": "country",
+    "adm1": "atoll",
+    "source": "spcsdd"
     },
     "mkd": {
-        "name": "North Macedonia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ntus"
+    "name": "North Macedonia",
+    "adm0": "country",
+    "adm1": "municipality",
+    "source": "ntus"
     },
-    "mli": {
-        "name": "Mali",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "dnct"
-    },
+    "mli": { "name": "Mali", "adm0": "country", "adm1": "regions", "adm2": "cercles", "adm3": "communes", "adm4": "quartiers", "source": "dnct" },
     "mlt": {
-        "name": "Malta",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Malta",
+    "adm0": "country",
+    "adm1": "districts",
+    "adm2": "local councils",
+    "source": "no cod data"
     },
     "mmr": {
-        "name": "Myanmar",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "mimu"
+    "name": "Myanmar",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "adm3": "township",
+    "source": "mimu"
     },
     "mne": {
-        "name": "Montenegro",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Montenegro",
+    "adm0": "country",
+    "adm1": "municipality",
+    "source": "no cod data"
     },
     "mng": {
-        "name": "Mongolia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "nsom"
+    "name": "Mongolia",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "nso"
     },
     "moz": {
-        "name": "Mozambique",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "district",
-        "adm3": "posto",
-        "source": "ine"
+    "name": "Mozambique",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "adm3": "posto",
+    "source": "ine"
     },
     "mrt": {
-        "name": "Mauritania",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ansade"
+    "name": "Mauritania",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "department",
+    "source": "ansade"
     },
     "msr": {
-        "name": "Montserrat",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Montserrat",
+    "adm0": "country",
+    "adm1": "parish", 
+    "source": "gadm"
     },
     "mus": {
-        "name": "Mauritius",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "sm"
+    "name": "Mauritius",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "sm"
     },
     "mwi": {
-        "name": "Malawi",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "nsom"
+    "name": "Malawi",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "source": "nsom"
     },
     "mys": {
-        "name": "Malaysia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "unhcr"
+    "name": "Malaysia",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "district",
+    "source": "unhcr"
     },
     "nam": {
-        "name": "Namibia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "nsa"
+    "name": "Namibia",
+    "adm0": "country",
+    "adm1": "region",
+    "source": "nsa"
     },
     "ner": {
-        "name": "Niger",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ignn"
+    "name": "Niger",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "department",
+    "source": "ignn"
     },
     "nga": {
-        "name": "Nigeria",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "uncs"
+    "name": "Nigeria",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "local government area",
+    "source": "uncs"
     },
     "nic": {
-        "name": "Nicaragua",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Nicaragua",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "municipality",
+    "source": "gadm"
     },
     "niu": {
-        "name": "Niue",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Niue",
+    "adm0": "country",
+    "adm1": "village",
+    "source": "no cod data" 
     },
     "nld": {
-        "name": "Netherlands",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Netherlands",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "municipality",
+    "source": "gadm"
     },
     "nor": {
-        "name": "Norway",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Norway",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "municipality",
+    "source": "kartverket" 
     },
     "npl": {
-        "name": "Nepal",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "sdn"
+    "name": "Nepal",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "sdn"
     },
     "nru": {
-        "name": "Nauru",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Nauru",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "no cod data" 
     },
     "nzl": {
-        "name": "New Zealand",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "New Zealand",
+    "adm0": "country",
+    "adm1": "regional council",
+    "adm2": "territorial authority",
+    "source": "gadm"
     },
     "omn": {
-        "name": "Oman",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Oman",
+    "adm0": "country",
+    "adm1": "governorate",
+    "adm2": "wilayat",
+    "source": "gadm"
     },
     "pak": {
-        "name": "Pakistan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "wfp"
+    "name": "Pakistan",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "adm3": "tehsil", 
+    "source": "wfp"
     },
     "pcn": {
-        "name": "Pitcairn Islands",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Pitcairn Islands",
+    "adm0": "country",
+    "source": "no cod data" 
     },
     "per": {
-        "name": "Peru",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ign"
+    "name": "Peru",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "province",
+    "adm3": "district",
+    "source": "ign"
     },
     "phl": {
-        "name": "The Philippines",
-        "adm0": "country",
-        "adm1": "region",
-        "adm2": "provinces",
-        "adm3": "municipalities",
-        "source": "psa"
+    "name": "Philippines",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "province",
+    "adm3": "municipality",
+    "source": "psa"
     },
     "plw": {
-        "name": "Palau",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Palau",
+    "adm0": "country",
+    "adm1": "state",
+    "source": "no cod data" 
     },
     "png": {
-        "name": "Papua New Guinea",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "pngnso"
+    "name": "Papua New Guinea",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "pngnso"
     },
     "pol": {
-        "name": "Poland",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "prg"
+    "name": "Poland",
+    "adm0": "country",
+    "adm1": "voivodeship",
+    "adm2": "powiat",
+    "source": "prg"
     },
     "prk": {
-        "name": "North Korea",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "wfp"
+    "name": "North Korea",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "city/county",
+    "source": "wfp"
     },
     "prt": {
-        "name": "Portugal",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Portugal",
+    "adm0": "country",
+    "adm1": "autonomous region",
+    "adm2": "municipality",
+    "source": "gadm"
     },
     "pry": {
-        "name": "Paraguay",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "dgeec"
+    "name": "Paraguay",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "district",
+    "source": "dgeec"
     },
     "qat": {
-        "name": "Qatar",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "qpsa"
+    "name": "Qatar",
+    "adm0": "country",
+    "adm1": "municipality",
+    "source": "qpsa"
     },
     "rou": {
-        "name": "Romania",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ancpi"
+    "name": "Romania",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "commune/city/municipality",
+    "source": "ancpi"
     },
     "rus": {
-        "name": "Russia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Russia",
+    "adm0": "country",
+    "adm1": "federal subject",
+    "adm2": "district",
+    "source": "gadm"
     },
     "rwa": {
-        "name": "Rwanda",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "nisr"
+    "name": "Rwanda",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "nisr"
     },
     "sau": {
-        "name": "Saudi Arabia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Saudi Arabia",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "governorate",
+    "source": "gadm"
     },
     "sdn": {
-        "name": "Sudan",
-        "adm0": "country",
-        "adm1": "state",
-        "adm2": "district",
-        "source": "imwg"
+    "name": "Sudan",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "district",
+    "source": "imwg"
     },
     "sen": {
-        "name": "Senegal",
-        "adm0": "country",
-        "adm1": "region",
-        "adm2": "department",
-        "adm3": "arrondissement",
-        "source": "gs"
+    "name": "Senegal",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "department",
+    "adm3": "arrondissement",
+    "source": "gs"
     },
     "sgp": {
-        "name": "Singapore",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Singapore",
+    "adm0": "country",
+    "adm1": "planning area",
+    "source": "no cod data" 
     },
     "sgs": {
-        "name": "South Georgia and the South Sandwich Islands",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "South Georgia and the South Sandwich Islands",
+    "adm0": "country",
+    "source": "no cod data"
     },
     "shn": {
-        "name": "Saint Helena, Ascension and Tristan da Cunha",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Saint Helena, Ascension and Tristan da Cunha",
+    "adm0": "country",
+    "adm1": "administrative area",
+    "source": "no cod data"
     },
     "slb": {
-        "name": "Solomon Islands",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "sinso"
+    "name": "Solomon Islands",
+    "adm0": "country",
+    "adm1": "province",
+    "source": "sinso"
     },
     "sle": {
-        "name": "Sierra Leone",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gsl"
+    "name": "Sierra Leone",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "gsl"
     },
     "slv": {
-        "name": "El Salvador",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "El Salvador",
+    "adm0": "country",
+    "adm1": "department",
+    "adm2": "municipality",
+    "source": "gadm"
     },
     "smr": {
-        "name": "San Marino",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "San Marino",
+    "adm0": "country",
+    "adm1": "castelli",
+    "source": "no cod data"
     },
     "som": {
-        "name": "Somalia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ocha"
+    "name": "Somalia",
+    "adm0": "country",
+    "adm1": "federal member state",
+    "adm2": "region",
+    "adm3": "district",
+    "source": "ocha"
     },
     "srb": {
-        "name": "Serbia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Serbia",
+    "adm0": "country",
+    "adm1": "districts",
+    "adm2": "municipalities",
+    "source": "gadm"
     },
     "ssd": {
-        "name": "South Sudan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "imwg"
+    "name": "South Sudan",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "county",
+    "source": "imwg"
     },
     "stp": {
-        "name": "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "São Tomé and Príncipe",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "gadm"
     },
     "sur": {
-        "name": "Syrian Arab Republic",
-        "adm0": "country",
-        "adm1": "district",
-        "adm2": "resort",
-        "source": "gadm"
+    "name": "Suriname",
+    "adm0": "country",
+    "adm1": "district",
+    "adm2": "resort",
+    "source": "gadm"
     },
     "svk": {
-        "name": "Slovakia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "geoportal"
+    "name": "Slovakia",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "source": "geoportal"
     },
     "svn": {
-        "name": "Slovenia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Slovenia",
+    "adm0": "country",
+    "adm1": "statistical region",
+    "adm2": "municipality",
+    "source": "gadm"
     },
     "swe": {
-        "name": "Sweden",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Sweden",
+    "adm0": "country",
+    "adm1": "county",
+    "adm2": "municipality",
+    "source": "gadm"
     },
     "swz": {
-        "name": "Eswatini",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "cso"
+    "name": "Eswatini",
+    "adm0": "country",
+    "adm1": "region",
+    "source": "cso"
     },
     "syc": {
-        "name": "Seychelles",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "snbs"
+    "name": "Seychelles",
+    "adm0": "country",
+    "adm1": "districts", 
+    "source": "snbs"
     },
     "syr": {
-        "name": "Syria",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "unocha"
+    "name": "Syria",
+    "adm0": "country",
+    "adm1": "governorate",
+    "adm2": "district",
+    "adm3": "subdistrict",
+    "source": "unocha"
     },
     "tca": {
-        "name": "Turks and Caicos Islands",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Turks and Caicos Islands",
+    "adm0": "country",
+    "adm1": "island group",
+    "source": "gadm"
     },
     "tcd": {
-        "name": "Chad",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "inseedt"
+    "name": "Chad",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "department",
+    "source": "inseedt"
     },
     "tgo": {
-        "name": "Togo",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gaul"
+    "name": "Togo",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "prefecture",
+    "source": "gaul"
     },
     "tha": {
-        "name": "Thailand",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "rtsd"
+    "name": "Thailand",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "adm3": "subdistrict",
+    "source": "rtsd"
     },
     "tjk": {
-        "name": "Tajikistan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "asprt"
+    "name": "Tajikistan",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "districts", 
+    "source": "asprt"
     },
     "tkl": {
-        "name": "Tokelau",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Tokelau",
+    "adm0": "country",
+    "adm1": "atoll", 
+    "source": "no cod data"
     },
     "tkm": {
-        "name": "Turkmenistan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Turkmenistan",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "gadm"
     },
     "tls": {
-        "name": "East Timor",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "who"
+    "name": "East Timor",
+    "adm0": "country",
+    "adm1": "municipality",
+    "adm2": "administrative post",
+    "source": "who"
     },
     "ton": {
-        "name": "Tonga",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "spcsdddl"
+    "name": "Tonga",
+    "adm0": "country",
+    "adm1": "division",
+    "adm2": "district",
+    "source": "spcsdddl"
     },
     "tto": {
-        "name": "Trinidad and Tobago",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Trinidad and Tobago",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "municipality",
+    "source": "gadm"
     },
     "tun": {
-        "name": "Tunisia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "inst"
+    "name": "Tunisia",
+    "adm0": "country",
+    "adm1": "governorate",
+    "adm2": "delegation",
+    "source": "inst"
     },
     "tur": {
-        "name": "Turkey",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gcm"
+    "name": "Turkey",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "gcm"
     },
     "tuv": {
-        "name": "Tuvalu",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Tuvalu",
+    "adm0": "country",
+    "adm1": "island council",
+    "source": "no cod data"
     },
     "twn": {
-        "name": "Taiwan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Taiwan",
+    "adm0": "country",
+    "adm1": "special municipality",
+    "adm2": "city",
+    "adm3": "district",
+    "source": "gadm"
     },
     "tza": {
-        "name": "Tanzania",
-        "adm0": "country",
-        "adm1": "region",
-        "adm2": "district",
-        "adm3": "ward",
-        "source": "tnbs"
+    "name": "Tanzania",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "adm3": "ward",
+    "source": "tnbs"
     },
     "uga": {
-        "name": "Uganda",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ubs"
+    "name": "Uganda",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "source": "ubs"
     },
     "ukr": {
-        "name": "Ukraine",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "sspec"
+    "name": "Ukraine",
+    "adm0": "country",
+    "adm1": "oblast", 
+    "adm2": "raion",
+    "source": "sspec"
     },
     "ury": {
-        "name": "Uruguay",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Uruguay",
+    "adm0": "country",
+    "adm1": "department",
+    "source": "gadm"
     },
     "usa": {
-        "name": "United States",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "United States",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "county",
+    "source": "gadm"
     },
     "uzb": {
-        "name": "Uzbekistan",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ocha"
+    "name": "Uzbekistan",
+    "adm0": "country",
+    "adm1": "region",
+    "adm2": "district",
+    "source": "ocha"
     },
     "vat": {
-        "name": "Vatican City",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Vatican City",
+    "adm0": "country",
+    "source": "no cod data" 
     },
     "vct": {
-        "name": "Saint Vincent and the Grenadines",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "Saint Vincent and the Grenadines",
+    "adm0": "country",
+    "adm1": "parish", 
+    "source": "gadm"
     },
     "ven": {
-        "name": "Venezuela",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "ine"
+    "name": "Venezuela",
+    "adm0": "country",
+    "adm1": "state",
+    "adm2": "municipality",
+    "source": "ine"
     },
     "vgb": {
-        "name": "British Virgin Islands",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gadm"
+    "name": "British Virgin Islands",
+    "adm0": "country",
+    "source": "gadm" 
     },
     "vnm": {
-        "name": "Vietnam",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "gvn"
+    "name": "Vietnam",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "gvn"
     },
     "vut": {
-        "name": "Vanuatu",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "spc"
+    "name": "Vanuatu",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "area council",
+    "source": "spc"
     },
     "wsm": {
-        "name": "Samoa",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Samoa",
+    "adm0": "country",
+    "adm1": "district",
+    "source": "no cod data" 
     },
     "xkx": {
-        "name": "Kosovo",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "no cod data"
+    "name": "Kosovo",
+    "adm0": "country",
+    "adm1": "municipalities",
+    "source": "no cod data" 
     },
     "yem": {
-        "name": "Yemen",
-        "adm0": "country",
-        "adm1": "governorate",
-        "adm2": "district",
-        "adm3": "sub-district",
-        "source": "cso"
+    "name": "Yemen",
+    "adm0": "country",
+    "adm1": "governorate",
+    "adm2": "district",
+    "adm3": "sub-district",
+    "source": "cso"
     },
     "zaf": {
-        "name": "South Africa",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "samdb"
+    "name": "South Africa",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district municipality",
+    "adm3": "local municipality",
+    "source": "samdb"
     },
     "zmb": {
-        "name": "Zambia",
-        "adm0": "country",
-        "adm1": "province",
-        "source": "dmmu"
+    "name": "Zambia",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "source": "dmmu"
     },
     "zwe": {
-        "name": "Zimbabwe",
-        "adm0": "country",
-        "adm1": "province",
-        "adm2": "district",
-        "adm3": "ward",
-        "source": "zimstat"
+    "name": "Zimbabwe",
+    "adm0": "country",
+    "adm1": "province",
+    "adm2": "district",
+    "adm3": "ward",
+    "source": "zimstat"
     }
 }
