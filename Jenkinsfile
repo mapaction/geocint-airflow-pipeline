@@ -11,8 +11,19 @@ pipeline {
 
         stage('Stop Docker Containers') {
             steps {
-                // Stop all running containers
-                sh 'docker stop $(docker ps -aq)'
+                script {
+                    def runningContainers = sh(
+                        script: 'docker ps -aq',
+                        returnStdout: true
+                    ).trim()
+
+                    if (runningContainers) {
+                        // Stop all running containers
+                        sh "docker stop ${runningContainers}"
+                    } else {
+                        echo "No running containers found."
+                    }
+                }
             }
         }
 
