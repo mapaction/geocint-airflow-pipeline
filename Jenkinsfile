@@ -27,10 +27,50 @@ pipeline {
             }
         }
 
+        pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                // Checkout code from SCM 
+                git branch: 'master', url: 'https://github.com/mapaction/geocint-airflow-pipeline.git'
+            }
+        }
+
+        stage('Stop Docker Containers') {
+            steps {
+                script {
+                    def runningContainers = sh(
+                        script: 'docker ps -aq',
+                        returnStdout: true
+                    ).trim()
+
+                    if (runningContainers) {
+                        // Stop all running containers
+                        sh "docker stop ${runningContainers}"
+                    } else {
+                        echo "No running containers found."
+                    }
+                }
+            }
+        }
+
         stage('Delete Docker Images') {
             steps {
-                // Delete all Docker images
-                sh 'docker rmi -f $(docker images -aq)'
+                script {
+                    def dockerImages = sh(
+                        script: 'docker images -aq',
+                        returnStdout: true
+                    ).trim()
+
+                    if (dockerImages) {
+                        // Delete all Docker images
+                        sh "docker rmi -f ${dockerImages}"
+                    } else {
+                        echo "No Docker images to delete."
+                    }
+                }
             }
         }
 
