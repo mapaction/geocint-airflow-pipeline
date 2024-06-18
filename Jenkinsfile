@@ -89,28 +89,28 @@ pipeline {
         stage('Execute Docker Compose Up Airflow Init') {
             steps {
                 // Execute docker-compose up airflow-init
-                sh 'docker compose up airflow-init'
+                sh 'sudo docker compose up airflow-init'
             }
         }
 		
 	stage('Execute Docker Compose Up in Detached Mode ') {
             steps {
                 // Execute docker-compose up airflow-init
-                sh 'docker compose up -d'
+                sh 'sudo docker compose up -d'
             }
         }
 
 	stage('Docker Compose Down') {
             steps {
                 // Execute docker-compose down
-                sh 'docker compose down'
+                sh 'sudo docker compose down'
             }
         }
 
         stage('Docker Compose Up with Force Recreate') {
             steps {
                 // Execute docker-compose up with force recreate in detached mode
-                sh 'docker compose up --force-recreate -d'
+                sh 'sudo docker compose up --force-recreate -d'
             }
         }
     }
