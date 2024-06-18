@@ -63,13 +63,15 @@ pipeline {
             steps {
                 // Create necessary directories
                 sh 'mkdir -p ./dags ./logs ./plugins ./config'
+				sh 'echo -e "AIRFLOW_UID=$(id -u)" > .env'
             }
         }
 
-        stage('Copy .env File') {
+        stage('Append .env File') {
             steps {
-                // Copy .env file from /jenkins to ./ (Jenkins workspace)
-                sh 'cp /jenkins/.env ./.env'
+                sh '''
+                    cat /jenkins/.env >> ./.env
+                '''
             }
         }
 
