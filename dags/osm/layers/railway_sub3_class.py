@@ -16,7 +16,7 @@ class OSMRailwayDataDownloader:
         ox.settings.log_console = True
         ox.settings.use_cache = True
         self.output_dir = f"data/output/country_extractions/{country_code}/232_tran/"
-        self.output_filename = f"{country_code}_tran_rst_pt_s2_osm_pp_railwaystation.shp"
+        self.output_filename = f"{country_code}_tran_rst_pt_s2_osm_pp_railwayline.shp"
     
     def download_and_process_data(self):
     # Ensure output directory exists
