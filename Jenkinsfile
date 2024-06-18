@@ -57,14 +57,13 @@ pipeline {
             steps {
                 // Create necessary directories
                 sh 'mkdir -p ./dags ./logs ./plugins ./config'
-		sh 'echo "AIRFLOW_UID=$(id -u)" > .env'
             }
         }
 
         stage('Append .env File') {
             steps {
                 sh '''
-                    cat /jenkins/.env >> ./.env
+                    cat /jenkins/.env > ./.env
                 '''
             }
         }
