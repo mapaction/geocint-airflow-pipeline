@@ -28,13 +28,6 @@ pipeline {
         }
 
 
-    stages {
-        stage('Clone Repository') {
-            steps {
-                // Checkout code from SCM 
-                git branch: 'master', url: 'https://github.com/mapaction/geocint-airflow-pipeline.git'
-            }
-        }
 
         stage('Stop Docker Containers') {
             steps {
