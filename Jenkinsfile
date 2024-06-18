@@ -83,10 +83,17 @@ pipeline {
             }
         }
 
-        stage('Execute Docker Compose Up') {
+        stage('Execute Docker Compose Up Airflow Init') {
             steps {
                 // Execute docker-compose up airflow-init
                 sh 'docker compose up airflow-init'
+            }
+        }
+		
+		stage('Execute Docker Compose Up in Detached Mode ') {
+            steps {
+                // Execute docker-compose up airflow-init
+                sh 'docker compose up -d'
             }
         }
     }
