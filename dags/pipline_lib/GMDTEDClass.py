@@ -54,7 +54,7 @@ class GMTEDDownloader:
         for iso_code, resolutions in iso_files.items():
             for resolution, files in resolutions.items():
                 if files:
-                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_gmted_{resolution}.tif")
+                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_elev_hsh_ras_s0_gmted_pp_{resolution}.tif")
                     print(f"Merging files for {iso_code} at {resolution} resolution into {output_file}")
                     self.merge_files(files, output_file)
 
