@@ -93,10 +93,24 @@ pipeline {
             }
         }
 		
-		stage('Execute Docker Compose Up in Detached Mode ') {
+	stage('Execute Docker Compose Up in Detached Mode ') {
             steps {
                 // Execute docker-compose up airflow-init
                 sh 'docker compose up -d'
+            }
+        }
+
+	stage('Docker Compose Down') {
+            steps {
+                // Execute docker-compose down
+                sh 'docker compose down'
+            }
+        }
+
+        stage('Docker Compose Up with Force Recreate') {
+            steps {
+                // Execute docker-compose up with force recreate in detached mode
+                sh 'docker compose up --force-recreate -d'
             }
         }
     }
