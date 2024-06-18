@@ -57,7 +57,7 @@ pipeline {
             steps {
                 // Create necessary directories
                 sh 'mkdir -p ./dags ./logs ./plugins ./config'
-				sh 'echo -e "AIRFLOW_UID=$(id -u)" > .env'
+		sh 'echo "AIRFLOW_UID=$(id -u)" > .env'
             }
         }
 
