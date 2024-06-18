@@ -9,18 +9,28 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Stop Docker Containers') {
             steps {
-                // Install flake8 using pip
-                sh 'pip install flake8'
+                // Stop all running containers
+                sh 'docker stop $(docker ps -aq)'
             }
         }
 
-        stage('Run flake8 Tests') {
+        stage('Delete Docker Images') {
             steps {
-                // Run flake8 to check Python files recursively
-                sh 'flake8 .'
+                // Delete all Docker images
+                sh 'docker rmi -f $(docker images -aq)'
             }
         }
+
+        stage('System Prune') {
+            steps {
+                // Prune Docker system (clean up unused data)
+                sh 'docker system prune -af'
+            }
+        }
+
+        // Other stages can be added here as needed
+
     }
 }
