@@ -30,7 +30,29 @@ pipeline {
             }
         }
 
-        // Other stages can be added here as needed
+        stage('Create Directories') {
+            steps {
+                // Create necessary directories
+                sh 'mkdir -p ./dags ./logs ./plugins ./config'
+            }
+        }
+		
+		stage('Copy .env File') {
+            steps {
+                // Copy .env file from /jenkins to ./ (Jenkins workspace)
+                sh 'cp /jenkins/.env ./.env'
+            }
+        }
+		
+		stage('Copy Data Files') {
+            steps {
+                // Copy .env file from /jenkins to ./ (Jenkins workspace)
+                sh 'cp /jenkins/oceans_and_seas.zip ./dags/static_data/downloaded_data/'
+				sh 'cp /jenkins/hydrorivers.zip ./dags/static_data/downloaded_data/'
+				sh 'cp -r /jenkins/global_Background_shp ./dags/static_data/downloaded_data/'
+            }
+        }
+		
 
     }
 }
