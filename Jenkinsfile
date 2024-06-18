@@ -27,7 +27,6 @@ pipeline {
             }
         }
 
-
         stage('Delete Docker Images') {
             steps {
                 script {
@@ -59,33 +58,30 @@ pipeline {
                 sh 'mkdir -p ./dags ./logs ./plugins ./config'
             }
         }
-		
-		stage('Copy .env File') {
+
+        stage('Copy .env File') {
             steps {
                 // Copy .env file from /jenkins to ./ (Jenkins workspace)
                 sh 'cp /jenkins/.env ./.env'
             }
         }
-		
-		stage('Create Directory Downloaded Data') {
+
+        stage('Create Directory Downloaded Data') {
             steps {
                 // Create necessary directories if they don't exist
                 sh 'mkdir -p ./dags/static_data/downloaded_data'
             }
         }
-		
-		stage('Copy Data Files') {
+
+        stage('Copy Data Files') {
             steps {
-                // Copy .env file from /jenkins to ./ (Jenkins workspace)
+                // Copy data files from /jenkins to ./dags/static_data/downloaded_data/
                 sh 'cp /jenkins/oceans_and_seas.zip ./dags/static_data/downloaded_data/'
-		sh 'cp /jenkins/hydrorivers.zip ./dags/static_data/downloaded_data/'
-		sh 'cp -r /jenkins/global_Background_shp ./dags/static_data/downloaded_data/'
-		sh 'cp /jenkins/credentials.json ./dags/static_data/'
+                sh 'cp /jenkins/hydrorivers.zip ./dags/static_data/downloaded_data/'
+                sh 'cp -r /jenkins/global_Background_shp ./dags/static_data/downloaded_data/'
+                sh 'cp /jenkins/credentials.json ./dags/static_data/'
             }
         }
-		
-		
-		
 
     }
 }
