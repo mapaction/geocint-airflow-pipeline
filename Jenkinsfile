@@ -28,25 +28,6 @@ pipeline {
         }
 
 
-
-        stage('Stop Docker Containers') {
-            steps {
-                script {
-                    def runningContainers = sh(
-                        script: 'docker ps -aq',
-                        returnStdout: true
-                    ).trim()
-
-                    if (runningContainers) {
-                        // Stop all running containers
-                        sh "docker stop ${runningContainers}"
-                    } else {
-                        echo "No running containers found."
-                    }
-                }
-            }
-        }
-
         stage('Delete Docker Images') {
             steps {
                 script {
@@ -97,8 +78,8 @@ pipeline {
             steps {
                 // Copy .env file from /jenkins to ./ (Jenkins workspace)
                 sh 'cp /jenkins/oceans_and_seas.zip ./dags/static_data/downloaded_data/'
-		sh 'cp /jenkins/hydrorivers.zip ./dags/static_data/downloaded_data/'
-		sh 'cp -r /jenkins/global_Background_shp ./dags/static_data/downloaded_data/'
+				sh 'cp /jenkins/hydrorivers.zip ./dags/static_data/downloaded_data/'
+				sh 'cp -r /jenkins/global_Background_shp ./dags/static_data/downloaded_data/'
             }
         }
 		
