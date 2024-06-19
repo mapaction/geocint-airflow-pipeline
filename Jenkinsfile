@@ -13,17 +13,14 @@ pipeline {
         stage('Stop Docker Containers') {
             steps {
                 script {
-                    def runningContainers = sh(
-                        script: 'docker ps -aq',
-                        returnStdout: true
-                    ).trim()
-
-                    if (runningContainers) {
-                        // Stop all running containers
-                        sh "docker stop ${runningContainers}"
-                    } else {
-                        echo "No running containers found."
-                    }
+                    sh '''
+                        runningContainers=$(docker ps -q)
+                        if [ -n "$runningContainers" ]; then
+                            docker stop $runningContainers
+                        else
+                            echo "No running containers found."
+                        fi
+                    '''
                 }
             }
         }
@@ -31,17 +28,14 @@ pipeline {
         stage('Delete Docker Images') {
             steps {
                 script {
-                    def dockerImages = sh(
-                        script: 'docker images -aq',
-                        returnStdout: true
-                    ).trim()
-
-                    if (dockerImages) {
-                        // Delete all Docker images
-                        sh "docker rmi -f ${dockerImages}"
-                    } else {
-                        echo "No Docker images to delete."
-                    }
+                    sh '''
+                        dockerImages=$(docker images -q)
+                        if [ -n "$dockerImages" ]; then
+                            docker rmi -f $dockerImages
+                        else
+                            echo "No Docker images to delete."
+                        fi
+                    '''
                 }
             }
         }
