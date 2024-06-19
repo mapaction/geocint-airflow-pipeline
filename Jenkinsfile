@@ -9,9 +9,9 @@ pipeline {
         stage('Change permissions to Jenkins') {
             steps {
                 // Clean workspace using rm -rf command, including hidden files
-                sh 'rm -rf ./* .[^.]*'
+                sh 'sudo rm -rf ./* .[^.]*'
                 // Change ownership recursively to jenkins user and group
-                sh 'chown -R jenkins:jenkins .'
+                sh 'sudo chown -R jenkins:jenkins .'
             }
         }
 
