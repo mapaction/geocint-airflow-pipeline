@@ -177,3 +177,5 @@ gdal==3.6.2
 hdx-python-api==6.3.1
 pycountry
 quantulum3[classifier]
+slackclient
+slack

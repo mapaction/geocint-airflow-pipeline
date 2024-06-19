@@ -4,15 +4,28 @@ import geopandas as gpd
 import geemap
 from shapely.geometry import box
 from osgeo import gdal
+from google.oauth2 import service_account
 
 class GMTEDDownloader:
     def __init__(self, country_geojson_filename, data_in_directory, data_out_directory):
         self.project_id = 'ma-ediakatos'
         self.country_geojson_filename = country_geojson_filename
-        self.data_out_directory = data_out_directory
-        self.data_in_directory = data_in_directory
-        ee.Authenticate()
-        ee.Initialize(project=self.project_id)
+        self.data_out_directory = data_out_directory #os.path.join(data_out_directory, '211_elev')
+        self.data_in_directory = data_in_directory#os.path.join(data_in_directory, "gmted")
+        # Path to the service account JSON key file
+        service_account_file = "/opt/airflow/dags/static_data/credentials.json"
+
+        # Load service account credentials from the JSON key file
+        credentials = service_account.Credentials.from_service_account_file(
+            service_account_file,
+            scopes=['https://www.googleapis.com/auth/cloud-platform']
+        )
+
+        # Set the environment variable
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = service_account_file
+
+        # Authenticate and initialize Earth Engine with the credentials
+        ee.Initialize(credentials)
 
     def download_gmted_full(self):
         gdf = gpd.read_file(self.country_geojson_filename)
@@ -55,8 +68,12 @@ class GMTEDDownloader:
             for resolution, files in resolutions.items():
                 if files:
                     output_file = os.path.join(self.data_out_directory, f"{iso_code}_elev_hsh_ras_s0_gmted_pp_{resolution}.tif")
+                    # Create only the directory for output_file if it does not exist
+                    #output_dir = os.path.dirname(output_file)
+                    #os.makedirs(output_dir, exist_ok=True)
                     print(f"Merging files for {iso_code} at {resolution} resolution into {output_file}")
                     self.merge_files(files, output_file)
+
 
     @staticmethod
     def merge_files(input_files, output_file):

@@ -4,16 +4,32 @@ import geopandas as gpd
 import geemap
 from shapely.geometry import box
 from osgeo import gdal
+from google.oauth2 import service_account
 
 class SRTMDownloader:
     def __init__(self, country_geojson_filename, data_in_directory, data_out_directory, use_30m=False):
         self.project_id = 'ma-ediakatos'
         self.country_geojson_filename = country_geojson_filename
-        self.data_out_directory = data_out_directory#os.path.join(data_out_directory, '211_elev')
+        self.data_out_directory = data_out_directory  #os.path.join(data_out_directory, '211_elev')
         self.use_30m = use_30m
         self.data_in_directory = data_in_directory #os.path.join(data_in_directory, 'strm_30' if use_30m else 'srtm_90')
-        ee.Authenticate()
-        ee.Initialize(project=self.project_id)
+        #ee.Authenticate()
+        #ee.Initialize(project=self.project_id)
+        # Path to the service account JSON key file
+        service_account_file = "/opt/airflow/dags/static_data/credentials.json"
+
+        # Load service account credentials from the JSON key file
+        credentials = service_account.Credentials.from_service_account_file(
+            service_account_file,
+            scopes=['https://www.googleapis.com/auth/cloud-platform']
+        )
+
+        # Set the environment variable
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = service_account_file
+
+        # Authenticate and initialize Earth Engine with the credentials
+        ee.Initialize(credentials)
+
 
     def download_srtm(self):
         gdf = gpd.read_file(self.country_geojson_filename)
@@ -36,7 +52,7 @@ class SRTMDownloader:
                 print(f"Successfully downloaded {output_file}")
             except Exception as e:
                 print(f"Error downloading {output_file}: {e}")
-
+    # split this to two functions one for 30 and one for 90
     def process_files(self, data_in_directory):
         print(f"Processing files in directory: {data_in_directory}")
         iso_files = {}
