@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+	stage('Change permissions to Jenkins') {
+            steps {
+               
+                sh 'chown -R jenkins:jenkins .'
+            }
+        }
         stage('Clean Directory') {
             steps {
                 // Clean workspace using rm -rf command, including hidden files
