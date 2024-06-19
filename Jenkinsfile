@@ -18,7 +18,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 // Checkout code from SCM
-                git branch: 'master', url: 'https://github.com/mapaction/geocint-airflow-pipeline.git'
+                git branch: 'staging', url: 'https://github.com/mapaction/geocint-airflow-pipeline.git'
             }
         }
 
