@@ -11,7 +11,7 @@ pipeline {
                 // Clean workspace using rm -rf command, including hidden files
                 sh 'sudo rm -rf ./* .[^.]*'
                 // Change ownership recursively to jenkins user and group
-                sh 'sudo chown -R jenkins:jenkins .'
+                sh 'sudo chown -R jenkins:jenkins * .*'
             }
         }
 
@@ -25,13 +25,15 @@ pipeline {
         stage('Stop Docker Containers') {
             steps {
                 script {
-                    runningContainers = sh(
+                    // Check if there are any running containers
+                    def runningContainers = sh(
                         script: 'docker ps -q',
                         returnStdout: true
                     ).trim()
 
+                    // If there are running containers, stop them
                     if (runningContainers) {
-                        sh "docker stop ${runningContainers}"
+                        sh "docker stop \$(docker ps -q)"
                     } else {
                         echo "No running containers found."
                     }
@@ -42,15 +44,11 @@ pipeline {
         stage('Delete Docker Images') {
             steps {
                 script {
-                    dockerImages = sh(
-                        script: 'docker images -q',
-                        returnStdout: true
-                    ).trim()
-
-                    if (dockerImages) {
-                        sh "docker rmi -f ${dockerImages}"
+                    def imageIds = sh(script: 'docker images -q', returnStdout: true).trim()
+                    if (imageIds) {
+                        sh "docker rmi -f ${imageIds}"
                     } else {
-                        echo "No Docker images to delete."
+                        echo "No Docker images found to delete."
                     }
                 }
             }
@@ -86,6 +84,7 @@ pipeline {
                 sh 'cp /jenkins/hydrorivers.zip ./dags/static_data/downloaded_data/'
                 sh 'cp -r /jenkins/global_Background_shp ./dags/static_data/downloaded_data/'
                 sh 'cp /jenkins/credentials.json ./dags/static_data/'
+                sh 'sudo cp /jenkins/hdx_configuration.yaml /root/.hdx_configuration.yaml'
             }
         }
 
