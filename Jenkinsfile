@@ -9,7 +9,16 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/mapaction/geocint-airflow-pipeline.git'
             }
         }
-
+	stage('Clean Directory') {
+            steps {
+                script {
+                    sh '''
+                        echo "Cleaning workspace directory..."
+                        sudo rm -rf ./*
+                    '''
+                }
+            }
+        }
         stage('Stop Docker Containers') {
             steps {
                 script {
