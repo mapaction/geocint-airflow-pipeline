@@ -13,6 +13,8 @@ pipeline {
             steps {
                 script {
                     sh '''
+                        echo "Ensuring all files are writable..."
+                        sudo chmod -R u+w ./*
                         echo "Cleaning workspace directory..."
                         sudo rm -rf ./*
                     '''
