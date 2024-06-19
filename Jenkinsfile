@@ -6,16 +6,12 @@ pipeline {
     }
 
     stages {
-	stage('Change permissions to Jenkins') {
-            steps {
-               
-                sh 'chown -R jenkins:jenkins .'
-            }
-        }
-        stage('Clean Directory') {
+        stage('Change permissions to Jenkins') {
             steps {
                 // Clean workspace using rm -rf command, including hidden files
-                cleanWs()
+                sh 'rm -rf ./* .[^.]*'
+                // Change ownership recursively to jenkins user and group
+                sh 'chown -R jenkins:jenkins .'
             }
         }
 
