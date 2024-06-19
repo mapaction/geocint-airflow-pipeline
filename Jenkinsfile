@@ -9,7 +9,7 @@ pipeline {
         stage('Clean Directory') {
             steps {
                 // Clean workspace using rm -rf command, including hidden files
-                sh 'sudo rm -rf ./* .[^.]*'
+                cleanWs()
             }
         }
 
