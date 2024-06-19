@@ -67,7 +67,7 @@ class GMTEDDownloader:
         for iso_code, resolutions in iso_files.items():
             for resolution, files in resolutions.items():
                 if files:
-                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_gmted_{resolution}.tif")
+                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_elev_hsh_ras_s0_gmted_pp_{resolution}.tif")
                     # Create only the directory for output_file if it does not exist
                     #output_dir = os.path.dirname(output_file)
                     #os.makedirs(output_dir, exist_ok=True)
