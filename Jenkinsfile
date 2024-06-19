@@ -8,8 +8,8 @@ pipeline {
     stages {
         stage('Clean Directory') {
             steps {
-                // Clean workspace using Workspace Cleanup Plugin at the beginning
-                cleanWs()
+                // Clean workspace using rm -rf command, including hidden files
+                sh 'sudo rm -rf ./* .[^.]*'
             }
         }
 
