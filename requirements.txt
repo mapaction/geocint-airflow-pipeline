@@ -174,7 +174,7 @@ google-auth-oauthlib
 google-auth-httplib2
 geemap
 gdal==3.6.2
-hdx-python-api==6.3.1
+hdx-python-api
 pycountry
 quantulum3[classifier]
 slackclient
