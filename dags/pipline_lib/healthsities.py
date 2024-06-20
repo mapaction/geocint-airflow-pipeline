@@ -1,6 +1,6 @@
 from logging import getLogger, basicConfig
 import requests
-
+import argparse 
 import shapefile
 
 BASE_URL = "https://healthsites.io"
@@ -65,3 +65,11 @@ def write_healthsites_shapefile(healthsites: list, output_path: str) -> None:
                      addr_city=site['attributes'].get('addr_city', None),
                      uuid=site['attributes'].get('uuid', None),
                      osm_id=site['osm_id'])
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Download health sites from healthsites.io")
+    parser.add_argument("--country_name", help="Country name", required=True)   
+    parser.add_argument("--api_key", help="Healthsites api key", required=True)     
+    args = parser.parse_args()
+
+    healthsites(args.country_name, args.api_key, f"{args.country_name}.shp")

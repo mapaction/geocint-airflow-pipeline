@@ -352,14 +352,14 @@ def transform_admin_linework(**kwargs):
 @task()
 def healthsites(**kwargs):
     """ Development complete """
-    from pipline_lib.process_healthsites import extract_and_download as _extract_and_download
-    country_geojson_filename = kwargs['country_geojson_filename']
+    from pipline_lib.healthsities import healthsites as _healthsites
+    country_name = kwargs['country_name']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     cmf_directory = kwargs['cmf_directory']
+    filename = f"{data_out_directory}/_heal_hea_pt_s3_healthsites_pp_healthfacilities.shp"
     print("////", data_in_directory, data_out_directory, cmf_directory)
-    print(f"//////// API KEY ////////// {HS_API_KEY}")
-    _extract_and_download(HS_API_KEY, country_geojson_filename)
+    _healthsites(country_name, HS_API_KEY, filename)
 
 @task()
 def ne_10m_roads(**kwargs):
