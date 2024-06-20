@@ -13,50 +13,54 @@ logger = logging.getLogger(__name__)
 hdx_config = None
 
 def download_country_data(country, data_type, destination_folder):
-    """
-    Downloads specified data type for a country from HDX to a destination folder,
-    skipping if an identical file already exists in the destination folder.
-    """
     global hdx_config
     if hdx_config is None:
         hdx_config = Configuration.create(
             hdx_site="prod", user_agent="My HDX App", hdx_read_only=True
         )
-    
+
     query = f'{country} AND {data_type}'
-    datasets = Dataset.search_in_hdx(query, rows=5)
-    if datasets:
-        dataset = datasets[0]
+    datasets = Dataset.search_in_hdx(query, rows=10) 
+
+    if not datasets:
+        logger.warning(f"No {data_type} datasets found for {country}.")
+        return 
+
+    for dataset in datasets:
         resources = dataset.get_resources()
         if resources:
             for resource in resources:
                 resource_object = Resource.read_from_hdx(resource['id'])
-
-                # Check if the resource has a valid URL before attempting to download
-                if resource_object.get_url():
-                    # Derive the filename from the resource URL
-                    filename = resource_object.get_url().split("/")[-1]
-
+                
+                resource_url = resource_object.get('url')
+                
+                if resource_url:
+                    filename = resource_url.split("/")[-1]
                     dest_filepath = os.path.join(destination_folder, filename)
 
-                    # Check for existing file with same size
-                    if os.path.exists(dest_filepath) and os.path.getsize(dest_filepath) == resource_object.get_file_size():
-                        logger.info(f"Skipping download: {data_type} data for {country} already exists at {dest_filepath}")
-                    else:
-                        # Use the Download class for improved download handling
+                    if os.path.exists(dest_filepath):
+                        if os.path.getsize(dest_filepath) == resource_object.get('file_size'):
+                            logger.info(f"Skipping download: {filename} already exists with the same size at {dest_filepath}")
+                        else:
+                            # Overwrite the file if sizes are different
+                            logger.info(f"Overwriting {filename} in {dest_filepath} (size mismatch)")
+                            os.remove(dest_filepath)
+
+                    try:
                         with Download(user_agent='My HDX App') as downloader:
                             downloader.download_file(
-                                resource_object.get_url(),
+                                resource_url,
                                 folder=destination_folder,
                                 filename=filename,
                             )
-                        logger.info(f"Downloaded {data_type} data for {country} to {dest_filepath}")
+                        logger.info(f"Downloaded {filename} to {dest_filepath}")
+                        return  
+                    except Exception as e:
+                        logger.error(f"Error downloading {filename}: {e}")
                 else:
                     logger.warning(f"Resource '{resource['name']}' in dataset '{dataset['title']}' has no valid URL.")
         else:
             logger.warning(f"No resources found for dataset '{dataset['title']}'.")
-    else:
-        logger.warning(f"No {data_type} datasets found for {country}.")
 
 
 if __name__ == "__main__":
