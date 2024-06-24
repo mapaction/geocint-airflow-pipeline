@@ -352,7 +352,7 @@ def transform_admin_linework(**kwargs):
 @task()
 def healthsites(**kwargs):
     """ Development complete """
-    from pipline_lib.healthsities import healthsites as _healthsites
+    from pipline_lib.healthsities import healthsites
     country_name = kwargs['country_name']
     country_code = kwargs['country_code']
     data_in_directory = kwargs["data_in_directory"]
@@ -360,7 +360,7 @@ def healthsites(**kwargs):
     cmf_directory = kwargs['cmf_directory']
     filename = f"{data_out_directory}/215_heal/{country_code}_heal_hea_pt_s3_healthsites_pp_healthfacilities.shp"
     print("////", data_in_directory, data_out_directory, cmf_directory)
-    _healthsites(country_name, HS_API_KEY, filename)
+    healthsites(country_name, HS_API_KEY, filename)
 
 @task()
 def ne_10m_roads(**kwargs):
