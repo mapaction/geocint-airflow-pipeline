@@ -4,8 +4,21 @@ import geopandas
 from airflow.decorators import task
 from dotenv import load_dotenv
 from webdav3.client import Client
+from logging import getLogger, basicConfig
 
-load_dotenv("/opt/airflow/dags/.env")  # your .env should be in the /dags dir, not the project root.
+basicConfig()
+logger = getLogger(__name__)
+logger.setLevel("DEBUG")
+# Get the directory of the current script file
+basedir = os.path.abspath(os.path.dirname(__file__))
+env_path = os.path.join(basedir, '..', '.env')
+
+# Load environment variables from .env file with error handling
+if os.path.exists(env_path):
+    load_dotenv(dotenv_path=env_path)
+else:
+    logger.warning(f".env file not found at {env_path}")
+    # Handle the missing .env file here (e.g., raise an exception or use default values)
 
 S3_BUCKET = os.environ.get("S3_BUCKET")
 HS_API_KEY = os.environ.get("HS_API_KEY")
