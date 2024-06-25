@@ -11,7 +11,7 @@ logger = getLogger(__name__)
 logger.setLevel("DEBUG")
 # Get the directory of the current script file
 basedir = os.path.abspath(os.path.dirname(__file__))
-env_path = os.path.join(basedir, '..', '.env')
+env_path = os.path.join(basedir, '...', '.env')
 
 # Load environment variables from .env file with error handling
 if os.path.exists(env_path):
