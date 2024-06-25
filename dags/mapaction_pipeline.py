@@ -66,8 +66,11 @@ def create_mapaction_pipeline(country_name, config):
             with dag:
                 download_population_with_sadd_inst = download_population_with_sadd(task_concurrency=3, **task_args)
                 transform_population_with_sadd_inst = transform_population_with_sadd(task_concurrency=3, **task_args)
+                download_hdx_admin_boundaries_inst = download_hdx_admin_boundaries(task_concurrency=3, **task_args)
+                transform_hdx_admin_boundaries_inst = transform_hdx_admin_boundaries(task_concurrency=3, **task_args)
                 download_population_with_sadd_inst >> transform_population_with_sadd_inst
-
+                download_hdx_admin_boundaries_inst >> transform_hdx_admin_boundaries_inst
+                
             for download_task in hdx_data_scrape_group:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
 
