@@ -53,7 +53,7 @@ def process_cod_boundaries(country_iso3, admin_level_field='admLevel', input_dir
 
     shp_filepath = None
     for file in os.listdir(input_dir):
-        if file.endswith('.shp') and "admALL" in file:  # Check for both .shp extension and admALL
+        if "admALL" in file and 'admbndl' in file and file.endswith('.shp'):  # Check for both .shp extension and admALL
             shp_filepath = os.path.join(input_dir, file)
             print(shp_filepath)
             break
