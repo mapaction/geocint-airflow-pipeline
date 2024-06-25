@@ -99,6 +99,25 @@ def wfp_boarder_crossings(**kwargs):
     pass
 
 @task()
+def download_hdx_admin_boundaries(**kwargs):
+    from pipline_lib.hdx_admin_boundary_scrape import download_zip_from_hdx as _download_zip
+    country_code = kwargs['country_code']
+    data_in_directory = kwargs["data_in_directory"]
+    input_directory = f"{data_in_directory}/hdx_admin_boundaries"
+    _download_zip(country_code, input_directory)
+
+@task()
+def transform_hdx_admin_boundaries(**kwargs):
+    from pipline_lib.admin_linework_disputed_boundaries import process_cod_boundaries as _process_cod
+    country_code = kwargs['country_code']
+    data_in_directory = kwargs["data_in_directory"]
+    data_out_directory = kwargs["data_out_directory"]
+    input_directory = f"{data_in_directory}/hdx_admin_boundaries"
+    docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    admn_level_json_file = f"{docker_worker_working_dir}/dags/static_data/admin_level_display_names.json"
+    _process_cod(country_code, input_directory, data_out_directory, admn_level_json_file)
+
+@task()
 def download_population_with_sadd(**kwargs):
     """Development complete"""
     from pipline_lib.hdx_csv_and_zip_scraper import download_csv_and_zip_from_hdx as _scrape_hdx_data
@@ -377,7 +396,7 @@ def healthsites(**kwargs):
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     cmf_directory = kwargs['cmf_directory']
-    filename = f"{data_out_directory}/215_heal/{country_code}_heal_hea_pt_s3_healthsites_pp_healthfacilities.shp"
+    filename = f"{data_out_directory}/215_heal/{country_code}_heal_hea_pt_s3_healthsites_pp_healthsites.shp"
     print("////", data_in_directory, data_out_directory, cmf_directory)
     healthsites(country_name, HS_API_KEY, filename)
 
@@ -778,7 +797,10 @@ def upload_datasets_all(**kwargs):
     # Define source folder and target folder in Nextcloud
     source_folder = kwargs['data_out_directory']  # Local source folder
     country_code = kwargs['country_code']
-    target_folder = f"DataPipeline/{country_code}"  # Remote target folder on Nextcloud
+    docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    world_source_data = f"{docker_worker_working_dir}/data/output/world"
+    world_target_folder = f"DataPipeline/world"
+    target_folder = f"DataPipeline/country_extractions/{country_code}"  # Remote target folder on Nextcloud
 
     def upload_directory(local_dir, remote_dir):
         # Ensure the remote directory exists
@@ -798,6 +820,7 @@ def upload_datasets_all(**kwargs):
 
     # Start the upload process
     upload_directory(source_folder, target_folder)
+    upload_directory(world_source_data, world_target_folder)
 
 @task(trigger_rule="all_done")
 def create_completeness_report(**kwargs):
