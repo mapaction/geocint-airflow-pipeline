@@ -73,6 +73,8 @@ def process_cod_boundaries(country_iso3, admin_level_field='admLevel', input_dir
         merged_lines = gpd.GeoSeries([geom for geom in intersections.geoms if isinstance(geom, LineString)])
         gdf = gpd.GeoDataFrame(geometry=merged_lines)
 
+    os.makedirs(output_dir, exist_ok=True)
+
     # Filter and Rename
     # Combine specific levels with admin levels 0-4 for filtering
     specific_levels = [99] + list(range(80, 90))
