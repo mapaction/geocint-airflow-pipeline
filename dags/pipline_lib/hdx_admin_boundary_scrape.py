@@ -49,7 +49,7 @@ def download_zip_from_hdx(iso3_code, base_folder):
         return
 
     # Create a directory for the downloaded files
-    dest_folder = os.path.join(base_folder, f"cod_{iso3_code}")
+    dest_folder = os.path.join(base_folder)
     os.makedirs(dest_folder, exist_ok=True)
 
     # Download ZIP files that contain shapefiles (.shp)
