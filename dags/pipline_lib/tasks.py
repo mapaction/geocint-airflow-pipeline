@@ -112,7 +112,7 @@ def transform_hdx_admin_boundaries(**kwargs):
     country_code = kwargs['country_code']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
-    input_directory = f"{data_in_directory}/hdx_admin_boundaries"
+    input_directory = f"{data_in_directory}/hdx_admin_boundaries/Shapefiles"
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     admn_level_json_file = f"{docker_worker_working_dir}/dags/static_data/admin_level_display_names.json"
     _process_cod(country_code, input_dir=input_directory, output_dir=data_out_directory, display_names_file=admn_level_json_file)
