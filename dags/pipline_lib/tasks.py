@@ -11,11 +11,17 @@ logger = getLogger(__name__)
 logger.setLevel("DEBUG")
 # Get the directory of the current script file
 basedir = os.path.abspath(os.path.dirname(__file__))
-env_path = os.path.join(basedir, '...', '.env')
+
+# Go up two directories to reach the project root
+project_root = os.path.dirname(os.path.dirname(basedir))
+
+# Construct the full path to the .env file
+env_path = os.path.join(project_root, '.env')
 
 # Load environment variables from .env file with error handling
 if os.path.exists(env_path):
     load_dotenv(dotenv_path=env_path)
+    logger.info(f".env file loaded successfully from {env_path}")
 else:
     logger.warning(f".env file not found at {env_path}")
     # Handle the missing .env file here (e.g., raise an exception or use default values)
