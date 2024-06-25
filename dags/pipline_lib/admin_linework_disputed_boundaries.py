@@ -101,12 +101,12 @@ def process_cod_boundaries(country_iso3, admin_level_field='admLevel', input_dir
             file_path = os.path.join(layer_name, filename)
         elif adm_level.startswith("8"):
             layer_name = "202_admn"
-            filename = f"{country_iso3}_admn_{adm_level}_disputed_boundaries.geojson"
+            filename = f"{country_iso3}_admn_ad{adm_level}_disputed_boundaries.geojson"
             file_path = os.path.join(layer_name, filename)
         elif adm_level in ["0", "1", "2", "3", "4"]:
             level_name = country.get(f"adm{adm_level}", f"adm{adm_level}")  # Default to admX if not found in JSON
             layer_name = "202_admn"
-            filename = f"{country_iso3}_admn_{adm_level}_ln_s1_{country.get('source', 'unknown')}_pp_{level_name}.geojson"
+            filename = f"{country_iso3}_admn_ad{adm_level}_ln_s1_{country.get('source', 'unknown')}_pp_{level_name}.geojson"
             file_path = os.path.join(layer_name, filename)
         else:
             filename = f"{country_iso3}_{adm_level.replace(' ', '_')}.geojson" 
