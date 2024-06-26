@@ -797,9 +797,8 @@ def upload_datasets_all(**kwargs):
     # Define source folder and target folder in Nextcloud
     source_folder = kwargs['data_out_directory']  # Local source folder
     country_code = kwargs['country_code']
-    docker_worker_working_dir = kwargs['docker_worker_working_dir']
-    world_source_data = f"{docker_worker_working_dir}/data/output/world"
-    world_target_folder = f"DataPipeline/world"
+    world_source_data = "data/output/world"
+    world_target_folder = "DataPipeline/world"
     target_folder = f"DataPipeline/country_extractions/{country_code}"  # Remote target folder on Nextcloud
 
     def upload_directory(local_dir, remote_dir):
