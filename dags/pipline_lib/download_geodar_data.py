@@ -1,23 +1,22 @@
 import requests
 import shutil
 import os
-import sys
 import logging
 import zipfile
 
 # Set up logging configuration
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def extract_and_organize_files(zip_file_path, extract_dir):
+def extract_and_organize_files(zip_file_path, extract_dir, layer_1, layer_2):
     with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
         zip_ref.extractall(extract_dir)
         
         for root, _, files in os.walk(extract_dir):
             for file_name in files:
-                if "reservoirs" in file_name:
-                    dest_folder = "reservoirs"
-                elif "dams" in file_name:
-                    dest_folder = "dams"
+                if layer_1 in file_name:
+                    dest_folder = layer_1
+                elif layer_2 in file_name:
+                    dest_folder = layer_2
                 else:
                     continue
                 
@@ -28,11 +27,10 @@ def extract_and_organize_files(zip_file_path, extract_dir):
                 shutil.move(old_file_path, new_file_path)
                 logging.info(f"Moved file: {file_name} to {new_file_path}")
 
-def download_shapefile_zip():
-    url = "https://zenodo.org/records/6163413/files/GeoDAR_v10_v11.zip?download=1"
+def download_shapefile_zip(url, layer_1, layer_2):
     response = requests.get(url, stream=True)
     if response.status_code == 200:
-        filename = "geodar"  # Define the filename
+        filename = f"{layer_1}_{layer_2}"  # Define the filename
         save_directory = f"./data/input/geodar"
         if not os.path.exists(save_directory):
             os.makedirs(save_directory)
@@ -44,6 +42,6 @@ def download_shapefile_zip():
         extract_dir = save_directory
         extract_and_organize_files(save_path, extract_dir)
         
-        logging.info("Files extracted and reorganized into 'reservoirs' and 'dams' folders within the same directory.")
+        logging.info(f"Files extracted and reorganized into {layer_1} and {layer_2} folders within the same directory.")
     else:
         logging.error(f"Failed to download file. Status code: {response.status_code}")

@@ -22,6 +22,7 @@ def create_mapaction_pipeline(country_name, config):
     cmf_directory = f"data/cmfs/{country_code}"
     docker_worker_working_dir = "/opt/airflow"
     country_geojson_filename = f"{docker_worker_working_dir}/dags/static_data/countries/{country_code}.json"
+    downloaded_data_path = f"{docker_worker_working_dir}/dags/static_data/downloaded_data"
 
     # message dict
     message = {
@@ -39,7 +40,8 @@ def create_mapaction_pipeline(country_name, config):
         "data_out_directory": data_out_directory,
         "country_code": country_code,
         "country_name": country_name,
-        "cmf_directory": cmf_directory
+        "cmf_directory": cmf_directory,
+        "downloaded_data_path": downloaded_data_path
     }
 
     default_args = {
@@ -155,11 +157,19 @@ def create_mapaction_pipeline(country_name, config):
         # Dams and Reservoirs (from Geodar)
         with TaskGroup(group_id="dams_reservoirs") as dams_reservoirs_group:
             with dag:
-                download_geodar_data_inst = download_geodar_data(task_concurrency=3, **task_args)
-                transform_dams_inst = transform_dams(task_concurrency=2, **task_args)
-                transform_reservoirs_inst = transform_reservoirs(task_concurrency=2, **task_args)
+                # download_geodar_data_inst = download_geodar_data(task_concurrency=3, **task_args)
+                # transform_dams_inst = transform_dams(task_concurrency=2, **task_args)
+                # transform_reservoirs_inst = transform_reservoirs(task_concurrency=2, **task_args)
 
-                download_geodar_data_inst >> [transform_dams_inst, transform_reservoirs_inst]
+                # download_geodar_data_inst >> [transform_dams_inst, transform_reservoirs_inst]
+
+                transform_geodar_catchment_data_inst = transform_geodar_catchment_data(task_concurrency=3, **task_args)
+                transform_geodar_dam_data_inst = transform_geodar_dam_data(task_concurrency=3, **task_args)
+                transform_geodar_reservoir_data_inst = transform_geodar_reservoir_data(task_concurrency=3, **task_args)
+
+                transform_geodar_catchment_data_inst,
+                transform_geodar_dam_data_inst,
+                transform_geodar_reservoir_data_inst
 
             for download_task in dams_reservoirs_group:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
