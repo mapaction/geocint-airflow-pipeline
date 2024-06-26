@@ -253,7 +253,7 @@ def hyrdrorivers(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    extract_data("dags/static_data/downloaded_data/hydrorivers.zip", f'data/output/country_extractions/{country_code}', f'221_phys/{country_code}_phys_riv_ln_s1_hydrosheds_pp_rivers')
+    extract_data("dags/static_data/downloaded_data/hydrorivers.zip", f'data/output/world', f'wrl_phys_riv_ln_s1_hydrosheds_pp_rivers')
 
 @task()
 def download_world_admin_boundaries(**kwargs):
