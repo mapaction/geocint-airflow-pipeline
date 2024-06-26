@@ -279,12 +279,11 @@ def create_mapaction_pipeline(country_name, config):
         
         # DAG Structure
         send_slack_message_task >> make_data_dirs_task >> [
-            hdx_data_scrape_group,
             hdx_data_download_group,
             water_features_group, 
             dams_reservoirs_group,
             coastline_group,
-            elevation_terrain_group,
+            elevation_terrain_group >> hdx_data_scrape_group,
             admin_boundaries_group,
             energy_infrastructure_group,
             roads_populated_places_group, 
