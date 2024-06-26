@@ -59,14 +59,54 @@ def download_hdx_admin_pop(**kwargs):
 def download_geodar_data(**kwargs):
     """ Development complete """
     from pipline_lib.download_geodar_data import download_shapefile_zip
+    # country_code = kwargs['country_code']
+    # country_geojson_filename = kwargs['country_geojson_filename']
+    # data_in_directory = kwargs["data_in_directory"]
+    # data_out_directory = kwargs["data_out_directory"]
+    # docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    # cmf_directory = kwargs['cmf_directory']
+    # print("//// downloading geodar data in data/input/geodar")
+    # download_shapefile_zip()
+    pass
+
+@task()
+def transform_geodar_catchment_data(**kwargs):
+    """ Development complete """
+    from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
+    downloaded_data_path = kwargs["downloaded_data_path"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
-    cmf_directory = kwargs['cmf_directory']
-    print("//// downloading geodar data in data/input/geodar")
-    download_shapefile_zip()
+    input_filepath = f"{downloaded_data_path}/catchments"
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_catchment_pt_s1_geodar_pp_catchment"
+    clip_shapefile_by_country(country_geojson_filename, input_filepath, output_name)
+
+@task()
+def transform_geodar_dam_data(**kwargs):
+    """ Development complete """
+    from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country
+    country_code = kwargs['country_code']
+    country_geojson_filename = kwargs['country_geojson_filename']
+    downloaded_data_path = kwargs["downloaded_data_path"]
+    data_out_directory = kwargs["data_out_directory"]
+    docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    input_filepath = f"{downloaded_data_path}/dams"
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_dam_pt_s1_geodar_pp_dam"
+    clip_shapefile_by_country(country_geojson_filename, input_filepath, output_name)
+
+@task()
+def transform_geodar_reservoir_data(**kwargs):
+    """ Development complete """
+    from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country
+    country_code = kwargs['country_code']
+    country_geojson_filename = kwargs['country_geojson_filename']
+    downloaded_data_path = kwargs["downloaded_data_path"]
+    data_out_directory = kwargs["data_out_directory"]
+    docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    input_filepath = f"{downloaded_data_path}/reservoirs"
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_pt_s1_geodar_pp_reservoir"
+    clip_shapefile_by_country(country_geojson_filename, input_filepath, output_name)
 
 @task()
 def download_railway_data(**kwargs):
@@ -155,7 +195,13 @@ def download_hdx_country_data(**kwargs):
     country_name = kwargs['country_name']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
-    _download_all_types(country_name, country_code, "hdx_datatypes.txt", data_in_directory, data_out_directory)     
+    _download_all_types(country_name, country_code, "hdx_datatypes.txt", data_in_directory, data_out_directory) 
+
+@task()
+def transform_world_admin_boundaries(**kwargs):
+    """ Development complete """
+    from pipline_lib.extraction import extract_data
+    extract_data("data/input/world_admin_boundaries", 'data/output/world', 'wrl_admn_ad0_ln_s0_wfp_pp_worldcountries')    
 
 @task()
 def transform_dams(**kwargs) -> str:
@@ -213,24 +259,12 @@ def hyrdrorivers(**kwargs):
 def download_world_admin_boundaries(**kwargs):
     """ Development complete """
     from pipline_lib.download_from_url import download_file
-    country_code = kwargs['country_code']
-    country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
-    data_out_directory = kwargs["data_out_directory"]
-    docker_worker_working_dir = kwargs['docker_worker_working_dir']
-    cmf_directory = kwargs['cmf_directory']
     download_file("https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=Europe%2FLondon", 'data/input/world_admin_boundaries')
 
 @task()
 def transform_world_admin_boundaries(**kwargs):
     """ Development complete """
     from pipline_lib.extraction import extract_data
-    country_code = kwargs['country_code']
-    country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
-    data_out_directory = kwargs["data_out_directory"]
-    docker_worker_working_dir = kwargs['docker_worker_working_dir']
-    cmf_directory = kwargs['cmf_directory']
     extract_data("data/input/world_admin_boundaries", 'data/output/world', 'wrl_admn_ad0_ln_s0_wfp_pp_worldcountries')
 
 @task()
