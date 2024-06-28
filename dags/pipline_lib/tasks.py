@@ -410,7 +410,7 @@ def ocha_admin_boundaries(**kwargs):
 
 @task()
 def transform_admin_linework(**kwargs):
-    """ Development complete """
+    """ Not in USE Development complete """
     from pipline_lib.admin_linework import process_admin_boundaries as _process_admin_boundaries
     country_code = kwargs['country_code']
     data_in_directory = kwargs["data_in_directory"]
