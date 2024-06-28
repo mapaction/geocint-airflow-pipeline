@@ -546,16 +546,25 @@ def transform_worldports(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     csv_filename = f"{data_in_directory}/worldports/worldports.csv"
+
     df = pandas.read_csv(csv_filename, low_memory=False)
     country_df = df[df["Country Code"] == country_code.capitalize()]
+
+    # Check if any data was found for the country
+    if country_df.empty:
+        logger.warning(f"No data found for country code: {country_code}")
+        return  # Exit the function gracefully
+
     gdf = geopandas.GeoDataFrame(
         country_df, geometry=geopandas.points_from_xy(country_df.Longitude, country_df.Latitude)
     )
+
     print(gdf.head())
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/232_tran"
     output_name_csv = f"{output_dir}/{country_code}_tran_por_pt_s0_worldports_pp_ports.csv"
     output_name_shp = f"{output_dir}/{country_code}_tran_por_pt_s0_worldports_pp_ports.shp"
     os.makedirs(output_dir, exist_ok=True)
+
     country_df.to_csv(output_name_csv)
     gdf.to_file(output_name_shp)
 
