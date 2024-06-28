@@ -238,11 +238,15 @@ def create_mapaction_pipeline(country_name, config):
                 download_healthsites_inst = healthsites(**task_args)
                 download_worldpop1km_inst = worldpop1km(**task_args)
                 download_worldpop100m_inst = worldpop100m(**task_args)
+                transform_elevation90_inst = transform_elevation90(task_concurrency=1, **task_args)
+                transform_gmdted250_inst = transform_gmdted250(task_concurrency=1, **task_args)
                 oceans_and_seas_inst,
                 hyrdrorivers_inst,
                 download_healthsites_inst,
                 download_worldpop1km_inst,
-                download_worldpop100m_inst
+                download_worldpop100m_inst,
+                transform_elevation90_inst,
+                transform_gmdted250_inst
 
                 for download_task in [oceans_and_seas_inst, hyrdrorivers_inst, download_healthsites_inst, download_worldpop1km_inst, download_worldpop100m_inst]:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
