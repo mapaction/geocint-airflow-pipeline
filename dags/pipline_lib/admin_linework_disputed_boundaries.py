@@ -55,7 +55,7 @@ def process_cod_boundaries(country_iso3, admin_level_field='admLevel', input_dir
     # check if the directory Shapefiles is present and change the input dir
     for file in os.listdir(input_dir):
         if "Shapefiles" in file:
-            input_dir = os.listdir(os.path.join(input_dir, 'Shapefiles'))
+            input_dir = os.path.join(input_dir, 'Shapefiles')
     
     for file in os.listdir(input_dir):
         if "admALL" in file and 'admbndl' in file and file.endswith('.shp'):  # Check for both .shp extension and admALL
