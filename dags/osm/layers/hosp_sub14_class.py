@@ -114,7 +114,7 @@ class OSMHospitalDataDownloader:
         required_fields = ['emergency', 'operator', 'operator_type', 'beds']
         for field in required_fields:
             if field not in gdf.columns:
-                gdf[field] = None e
+                gdf[field] = None
 
         
         gdf['fclass2'] = gdf.apply(
