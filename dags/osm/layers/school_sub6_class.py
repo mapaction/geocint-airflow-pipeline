@@ -17,7 +17,7 @@ class OSMSchoolDataDownloader:
         self.crs_project = crs_project
         self.crs_global = crs_global
         ox.config(log_console=True, use_cache=True)
-        self.output_filename = f"osm-data/output/country_extractions/{country_code}/210_educ/{country_code}_educ_edu_pt_s3_osm_pp_schools.shp"
+        self.output_filename = f"data/output/country_extractions/{country_code}/210_educ/{country_code}_educ_edu_pt_s3_osm_pp_schools.shp"
 
     def download_and_process_data(self):
         region_gdf = gpd.read_file(self.geojson_path)
