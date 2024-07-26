@@ -7,11 +7,11 @@ class OSMPortDataDownloader:
         self.geojson_path = geojson_path
         self.crs_project = crs_project
         self.crs_global = crs_global
-        self.osm_tags = {'landuse': ['harbour', 'industrial', 'port'], 'harbour': 'port'}
+        self.osm_tags = {'landuse': 'harbour', 'harbour': 'port'}
         ox.settings.log_console = True
         ox.settings.use_cache = True
         self.attributes = ['name', 'name:en', 'name_en']
-        self.output_filename = f"data/output/country_extractions/{country_code}/232_tran/{country_code}_tran_por_pt_s0_osm_pp_port.shp"
+        self.output_filename = f"osm-data/output/country_extractions/{country_code}/232_tran/{country_code}_tran_por_pt_s0_osm_pp_port.shp"
         
 
     def download_and_process_data(self):
@@ -26,10 +26,11 @@ class OSMPortDataDownloader:
         gdf['geometry'] = gdf.geometry.centroid
         gdf = gdf.to_crs(epsg=self.crs_global)
 
-        # # Handle list-type fields before saving
+        
         list_type_cols = [col for col, dtype in gdf.dtypes.items() if dtype == object]
         for col in list_type_cols:
             gdf[col] = gdf[col].apply(lambda x: ', '.join(map(str, x)) if isinstance(x, list) else x)
+
 
         # Make directories if they don't exist
         os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
@@ -44,7 +45,9 @@ class OSMPortDataDownloader:
         collumns_to_keep = ['geometry', 'fclass'] + list(actual_tags) #+ list(self.osm_tags)
         gdf = gdf[collumns_to_keep]
 
-        self.ensure_unique_column_names(gdf)
+        
+        gdf = self.ensure_unique_column_names(gdf)
+
 
         # Save the data to a GeoPackage
         try:
@@ -53,12 +56,28 @@ class OSMPortDataDownloader:
             print(f"An error occurred while saving the GeoDataFrame: {e}")
 
     def ensure_unique_column_names(self, gdf):
-        new_columns = {}
+        final_columns = {}
+        truncated_columns = {}
+        
+        # Step 1: Truncate names and count occurrences
         for col in gdf.columns:
-            new_col = col[:10]
-            counter = 1
-            while new_col in new_columns.values():
-                new_col = f"{col[:9]}{counter}"
-                counter += 1
-            new_columns[col] = new_col
-        gdf.rename(columns=new_columns, inplace=True)
+            truncated = col[:10]
+            if truncated not in truncated_columns:
+                truncated_columns[truncated] = 0
+            truncated_columns[truncated] += 1
+            final_columns[col] = truncated
+
+        # Step 2: Ensure uniqueness by appending suffixes if necessary
+        unique_columns = {}
+        for original, truncated in final_columns.items():
+            if truncated_columns[truncated] > 1:
+                counter = truncated_columns[truncated]
+                while truncated in unique_columns:
+                    truncated = f"{truncated[:8]}_{counter}"
+                    counter += 1
+                truncated_columns[truncated] = 1
+            unique_columns[truncated] = original
+
+        # Rename columns in the GeoDataFrame
+        gdf.rename(columns=unique_columns, inplace=True)
+        return gdf

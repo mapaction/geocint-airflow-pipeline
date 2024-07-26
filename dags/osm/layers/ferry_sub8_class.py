@@ -50,7 +50,7 @@ class OSMFerryTerminalDataDownloader:
 
         gdf = self.ensure_unique_column_names(gdf)
 
-        # Save the data to a GeoPackage
+        
         if not gdf.empty:
             gdf.to_file(self.output_filename, driver='ESRI Shapefile')
         else:
