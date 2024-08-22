@@ -7,14 +7,15 @@ from osgeo import gdal
 from google.oauth2 import service_account
 
 class GMTEDDownloader:
-    def __init__(self, country_geojson_filename, data_in_directory, data_out_directory):
+    def __init__(self, country_geojson_filename, data_in_directory, data_out_directory, is_hsh=True):
         self.project_id = 'ma-ediakatos'
         self.country_geojson_filename = country_geojson_filename
         self.data_out_directory = data_out_directory #os.path.join(data_out_directory, '211_elev')
         self.data_in_directory = data_in_directory#os.path.join(data_in_directory, "gmted")
         # Path to the service account JSON key file
         service_account_file = "/opt/airflow/dags/static_data/credentials.json"
-
+        self.is_hsh = is_hsh
+        self.data_type = 'hsh' if self.is_hsh else 'dtm'
         # Load service account credentials from the JSON key file
         credentials = service_account.Credentials.from_service_account_file(
             service_account_file,
@@ -31,9 +32,10 @@ class GMTEDDownloader:
         gdf = gpd.read_file(self.country_geojson_filename)
         country_name = os.path.splitext(os.path.basename(self.country_geojson_filename))[0].lower()
         geo_json_geometry = geemap.geojson_to_ee(gdf.__geo_interface__)
+        gmted_hillside = ee.Terrain.slope(gmted)
         gmted = ee.Image("USGS/GMTED2010_FULL")
         resolution = 250
-        tile_split = 8
+        tile_split = 16
         gmted_clipped = gmted.clip(geo_json_geometry)
         country_input_dir = self.data_in_directory
         os.makedirs(country_input_dir, exist_ok=True)
@@ -42,10 +44,14 @@ class GMTEDDownloader:
         for idx, tile in enumerate(tiles):
             coords = [[[p[0], p[1]] for p in tile.exterior.coords]]
             region = ee.Geometry.Polygon(coords)
-            output_file = os.path.join(country_input_dir, f'{country_name}_tile_{idx+1}_gmted_{resolution}m.tif')
+            output_file = os.path.join(country_input_dir, f'{country_name}_tile_{idx+1}_elev_{self.data_type}_ras_s0_gmted_pp_{resolution}m.tif')
             try:
-                geemap.ee_export_image(gmted_clipped, filename=output_file, scale=resolution, region=region, file_per_band=False)
-                print(f"Successfully downloaded {output_file}")
+                if self.is_hsh:
+                    geemap.ee_export_image(gmted_hillside, filename=output_file, scale=resolution, region=region, file_per_band=False)
+                    print(f"Successfully downloaded {output_file}")
+                else:
+                    geemap.ee_export_image(gmted_clipped, filename=output_file, scale=resolution, region=region, file_per_band=False)
+                    print(f"Successfully downloaded {output_file}")
             except Exception as e:
                 print(f"Error downloading {output_file}: {e}")
 
@@ -67,10 +73,7 @@ class GMTEDDownloader:
         for iso_code, resolutions in iso_files.items():
             for resolution, files in resolutions.items():
                 if files:
-                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_elev_hsh_ras_s0_gmted_pp_{resolution}.tif")
-                    # Create only the directory for output_file if it does not exist
-                    #output_dir = os.path.dirname(output_file)
-                    #os.makedirs(output_dir, exist_ok=True)
+                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_elev_{self.data_type}_ras_s0_gmted_pp_{resolution}.tif")
                     print(f"Merging files for {iso_code} at {resolution} resolution into {output_file}")
                     self.merge_files(files, output_file)
 
