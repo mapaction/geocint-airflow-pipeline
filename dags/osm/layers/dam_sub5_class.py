@@ -48,36 +48,19 @@ class OSMDamDataDownloader:
         # Ensure unique column names for Shapefile format
         gdf = self.ensure_unique_column_names(gdf)  
 
-        if not gdf.empty:
-            gdf.to_file(self.output_filename, driver='ESRI Shapefile')
-        else:
-            print("No data to save.")
 
     def ensure_unique_column_names(self, gdf):
-        truncated_columns = {}
-        final_columns = {}
-        unique_suffixes = {}
-
-        # Step 1: Truncate names
+        unique_columns = {}
         for col in gdf.columns:
-            truncated = col[:10]
-            if truncated not in truncated_columns:
-                truncated_columns[truncated] = 1
+            col_truncated = col[:10]
+            if col_truncated in unique_columns:
+                unique_columns[col_truncated] += 1
+                col_truncated = f"{col_truncated}_{unique_columns[col_truncated]}"
             else:
-                truncated_columns[truncated] += 1
-            final_columns[col] = truncated
+                unique_columns[col_truncated] = 1
+            gdf.rename(columns={col: col_truncated}, inplace=True)
 
-        # Step 2: Resolve duplicates by adding a unique suffix
-        for original, truncated in final_columns.items():
-            if truncated_columns[truncated] > 1:
-                if truncated not in unique_suffixes:
-                    unique_suffixes[truncated] = 1
-                else:
-                    unique_suffixes[truncated] += 1
-                suffix = unique_suffixes[truncated]
-                suffix_length = len(str(suffix))
-                truncated_with_suffix = truncated[:10-suffix_length] + str(suffix)
-                final_columns[original] = truncated_with_suffix
-
-        gdf.rename(columns=final_columns, inplace=True)
-        return gdf
+        if not gdf.empty:
+            gdf.to_file(self.output_filename, driver='GPKG')
+        else:
+            print("No data to save.")
