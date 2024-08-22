@@ -11,7 +11,7 @@ pipeline {
                 // Clean workspace using rm -rf command, including hidden files
                 sh 'sudo rm -rf ./* .[^.]*'
                 // Change ownership recursively to jenkins user and group
-                sh 'sudo chown -R jenkins:jenkins .'
+                sh 'sudo chown -R jenkins:jenkins * .*'
             }
         }
 
