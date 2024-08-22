@@ -1,38 +1,55 @@
 from logging import getLogger, basicConfig
 import requests
-
+import argparse
 import shapefile
+from concurrent.futures import ThreadPoolExecutor, as_completed  # For parallel processing
+import time 
 
 BASE_URL = "https://healthsites.io"
 
 basicConfig()
-
 logger = getLogger(__name__)
 logger.setLevel("DEBUG")
+
+# Constants for maximum retries and backoff
+MAX_RETRIES = 3
+RETRY_BACKOFF_FACTOR = 1.5
+
+def get_health_sites(country_name: str, api_key: str) -> list:
+    all_results = []
+    urls = [f"{BASE_URL}/api/v3/facilities/?api-key={api_key}&country={country_name}"]
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = [executor.submit(fetch_url, url) for url in urls]
+        for future in as_completed(futures):
+            response = future.result()
+            if response.ok:
+                data = response.json()
+                all_results.extend(data)
+                if 'next' in response.links:
+                    urls.append(response.links['next']['url'])
+            else:
+                logger.error(f"Error fetching page: {response.status_code}, {response.text}")
+    return all_results
+
+def fetch_url(url, retry_count=0):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response
+    except requests.exceptions.RequestException as e:
+        if retry_count < MAX_RETRIES:
+            logger.warning(f"Error fetching {url}: {e}. Retrying...")
+            time.sleep(RETRY_BACKOFF_FACTOR ** retry_count)
+            return fetch_url(url, retry_count + 1)
+        else:
+            logger.error(f"Max retries reached for {url}")
+            raise  # Re-raise the exception after max retries
 
 
 def healthsites(country_name: str, api_key: str, save_location: str):
     """ Main entry point to this module """
     data = get_health_sites(country_name=country_name, api_key=api_key)
     write_healthsites_shapefile(healthsites=data, output_path=save_location)
-
-
-def get_health_sites(country_name: str, api_key: str) -> list:
-    """ Queries healsites.io v3 api, loops through pages to get data """
-    logger.debug("Running get_health_sites for %s", country_name)
-    page = 1
-    results = []
-    new_results = True
-    while new_results:
-        url = f"{BASE_URL}/api/v3/facilities/?api-key={api_key}&page={page}&country={country_name}"
-        response = requests.get(url)
-        new_results = response.json()
-        results.extend(new_results)
-        page += 1
-    logger.debug("Finished running get_health_sites. Found %s pages and %s results",
-                 page, len(results))
-    return results
-
 
 def write_healthsites_shapefile(healthsites: list, output_path: str) -> None:
     """ Writes input data into a shapefile (.shp, .shx and .dbf) """
@@ -65,3 +82,11 @@ def write_healthsites_shapefile(healthsites: list, output_path: str) -> None:
                      addr_city=site['attributes'].get('addr_city', None),
                      uuid=site['attributes'].get('uuid', None),
                      osm_id=site['osm_id'])
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Download health sites from healthsites.io")
+    parser.add_argument("--country_name", help="Country name", required=True)   
+    parser.add_argument("--api_key", help="Healthsites api key", required=True)     
+    args = parser.parse_args()
+
+    healthsites(args.country_name, args.api_key, f"{args.country_name}.shp")
