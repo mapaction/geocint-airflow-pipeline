@@ -17,7 +17,7 @@ class OSMSchoolDataDownloader:
         self.crs_project = crs_project
         self.crs_global = crs_global
         ox.config(log_console=True, use_cache=True)
-        self.output_filename = f"data/output/country_extractions/{country_code}/210_educ/{country_code}_educ_edu_pt_s3_osm_pp_schools.shp"
+        self.output_filename = f"data/output/country_extractions/{country_code}/210_educ/{country_code}_educ_edu_pt_s3_osm_pp_schools.gpkg"
 
     def download_and_process_data(self):
         region_gdf = gpd.read_file(self.geojson_path)
@@ -32,6 +32,7 @@ class OSMSchoolDataDownloader:
         gdf_projected['geometry'] = gdf_projected.geometry.centroid
         gdf = gdf_projected.to_crs(epsg=self.crs_global)
 
+        # Check for 'fclass' column and add it if not present
         if 'fclass' not in gdf.columns:
             gdf['fclass'] = self.osm_value
 
@@ -62,14 +63,8 @@ class OSMSchoolDataDownloader:
         columns_to_keep = ['geometry', 'fclass'] + list(actual_tags)
         gdf = gdf[columns_to_keep]
 
-        # Ensure unique column names for Shapefile format
-        gdf = self.ensure_unique_column_names(gdf)
-
-        # Keep only the first 100 columns
-        gdf = gdf.iloc[:, :100]
-
         if not gdf.empty:
-            gdf.to_file(self.output_filename, driver='ESRI Shapefile')
+            gdf.to_file(self.output_filename, driver='GPKG')
         else:
             print("No data to save.")
 
@@ -101,3 +96,4 @@ class OSMSchoolDataDownloader:
 
         gdf.rename(columns=final_columns, inplace=True)
         return gdf
+    

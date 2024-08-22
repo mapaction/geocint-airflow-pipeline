@@ -4,10 +4,6 @@ import geopandas as gpd
 import pandas as pd
 
 class OSMCanalDataDownloader:
-    # Class attribute for the output filename with the specified naming convention
-    osm_key = "waterway"
-    osm_value = "canal"
-    
     def __init__(self, geojson_path, crs_project, crs_global, country_code):
         self.geojson_path = geojson_path
         self.crs_project = crs_project
@@ -26,7 +22,7 @@ class OSMCanalDataDownloader:
             raise ValueError("Geometry type not supported. Please provide a Polygon or MultiPolygon.")
 
         # Download OSM data
-        gdf = ox.geometries_from_polygon(geometry, tags={self.osm_key: self.osm_value})
+        gdf = ox.geometries_from_polygon(geometry, tags={"waterway": "canal"})
 
         # Reproject geometries
         gdf_projected = gdf.to_crs(epsg=self.crs_project)
@@ -37,10 +33,6 @@ class OSMCanalDataDownloader:
 
         # Ensure unique column names
         gdf_projected = self.ensure_unique_column_names(gdf_projected)
-
-        # Add 'fclass' column
-        if 'fclass' not in gdf_projected.columns:
-            gdf_projected['fclass'] = self.osm_value
 
         # Save the GeoDataFrame
         self.save_data(gdf_projected)
