@@ -7,7 +7,7 @@ from osgeo import gdal
 from google.oauth2 import service_account
 
 class SRTMDownloader:
-    def __init__(self, country_geojson_filename, data_in_directory, data_out_directory, use_30m=False):
+    def __init__(self, country_geojson_filename, data_in_directory, data_out_directory, use_30m=False, is_hsh=True):
         self.project_id = 'ma-ediakatos'
         self.country_geojson_filename = country_geojson_filename
         self.data_out_directory = data_out_directory  #os.path.join(data_out_directory, '211_elev')
@@ -17,7 +17,8 @@ class SRTMDownloader:
         #ee.Initialize(project=self.project_id)
         # Path to the service account JSON key file
         service_account_file = "/opt/airflow/dags/static_data/credentials.json"
-
+        self.is_hsh = is_hsh
+        self.data_type = 'hsh' if self.is_hsh else 'dtm'
         # Load service account credentials from the JSON key file
         credentials = service_account.Credentials.from_service_account_file(
             service_account_file,
@@ -39,6 +40,7 @@ class SRTMDownloader:
         resolution = 30 if self.use_30m else 90
         tile_split = 16 if self.use_30m else 8
         srtm_clipped = srtm.clip(geo_json_geometry)
+        srtm_hillside = ee.Terrain.slope(srtm)
         country_input_dir = self.data_in_directory
         os.makedirs(country_input_dir, exist_ok=True)
         tiles = self.split_bbox(gdf.total_bounds, n=tile_split)
@@ -46,10 +48,14 @@ class SRTMDownloader:
         for idx, tile in enumerate(tiles):
             coords = [[[p[0], p[1]] for p in tile.exterior.coords]]
             region = ee.Geometry.Polygon(coords)
-            output_file = os.path.join(country_input_dir, f'{country_name}_tile_{idx+1}_elev_hsh_ras_s3_srtm_pp_{resolution}m.tif')
+            output_file = os.path.join(country_input_dir, f'{country_name}_tile_{idx+1}_elev_{self.data_type}_ras_s0_srtm_pp_{resolution}m.tif')
             try:
-                geemap.ee_export_image(srtm_clipped, filename=output_file, scale=resolution, region=region, file_per_band=False)
-                print(f"Successfully downloaded {output_file}")
+                if self.is_hsh:
+                    geemap.ee_export_image(srtm_hillside, filename=output_file, scale=resolution, region=region, file_per_band=False)
+                    print(f"Successfully downloaded {output_file}")
+                else:
+                    geemap.ee_export_image(srtm_clipped, filename=output_file, scale=resolution, region=region, file_per_band=False)
+                    print(f"Successfully downloaded {output_file}")
             except Exception as e:
                 print(f"Error downloading {output_file}: {e}")
     # split this to two functions one for 30 and one for 90
@@ -71,7 +77,7 @@ class SRTMDownloader:
         for iso_code, resolutions in iso_files.items():
             for resolution, files in resolutions.items():
                 if files:
-                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_elev_hsh_ras_s3_srtm_pp_{resolution}.tif")
+                    output_file = os.path.join(self.data_out_directory, f"{iso_code}_elev_{self.data_type}_ras_s0_srtm_pp_{resolution}.tif")
                     print(f"Merging files for {iso_code} at {resolution} resolution into {output_file}")
                     self.merge_files(files, output_file)
 

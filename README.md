@@ -76,3 +76,21 @@ remade / mapped in the POC pipeline with the same names, and this is currently w
 2. Follow the Airflow steps for using docker compose [here](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html).
 3. Note, you may need to force recreating images, e.g. `docker compose up --force-recreate`
 4. The default location for the webserver is [http://localhost:8080](http://localhost:8080). The default username and password is `airflow`. 
+
+## Start clean build 
+
+1. Ensure you have the AIRFLOW_UID with this command 
+- `mkdir -p ./dags ./logs ./plugins ./config`
+- `echo -e "AIRFLOW_UID=$(id -u)" > .env`
+2. Clear all the the docker container using `docker system prune --all`
+Note this will remove all containers fron the suytem if you just wan to remove airflow containers, you can use `docker container prune`
+3. Run `docker compose airflow-init`
+5. Run `docker compose up`
+6. Run `docker ps` to get the container ID of the airflow-worker container and copy it.
+7. Enter the container using the following `docker exec -it -u root <continer_id> bash`
+8. Create a group ID with the same code as the AIRFLOW_UID using `sudo groupadd <AIRFLOW_UID>`
+9. Give default user a password `sudo passwd default <password>`
+10. Add default user to sudoers `sudo usermod -aG sudo default`
+11. Add default user to the group `sudo usermod -aG <AIRFLOW_UID> default `
+12. Add peremission to /opt/airflow directory using `sudo chown -R default:<ARIFLOW_UID> /opt/airflow/`
+13. The default location for the webserver is [http://localhost:8080](http://localhost:8080). The default username and password
