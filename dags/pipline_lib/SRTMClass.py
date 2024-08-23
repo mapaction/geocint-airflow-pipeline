@@ -38,7 +38,7 @@ class SRTMDownloader:
         geo_json_geometry = geemap.geojson_to_ee(gdf.__geo_interface__)
         srtm = ee.Image('USGS/SRTMGL1_003') if self.use_30m else ee.Image('CGIAR/SRTM90_V4')
         resolution = 30 if self.use_30m else 90
-        tile_split = 16 if self.use_30m else 8
+        tile_split = 32 if self.use_30m else 16
         srtm_clipped = srtm.clip(geo_json_geometry)
         srtm_hillside = ee.Terrain.slope(srtm)
         country_input_dir = self.data_in_directory
