@@ -20,42 +20,60 @@ def clip_shapefile_by_country(country_geojson_path, input_shp_path, output_name)
     spatial_extent_match = re.search(r"Extent:\s*\((.*?)\)", ogrinfo_output)
 
     if spatial_extent_match:
-        # not used as it gives unexpected results
-        # spatial_extent = spatial_extent_match.group(1).replace(",", "")
+        # Check if the GeoJSON boundary overlaps with the shapefile features
+        ogr2ogr_cmd_check = (
+            f"ogr2ogr -clipsrc {country_geojson_path} "
+            f"-f GeoJSON /vsistdout/ {input_shp_path}"
+        )
 
-        # Clip using GeoJSON boundary directly
+        try:
+            result_check = subprocess.run(ogr2ogr_cmd_check, shell=True,
+                                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+            if result_check.returncode != 0:
+                logging.error("Error occurred during ogr2ogr checking:")
+                logging.error(result_check.stderr)
+                return
+
+            if result_check.stdout.strip() == "":
+                logging.warning("No features found within the country boundary. Skipping GeoJSON creation.")
+                return  # No need to proceed further, since no features intersect.
+
+        except subprocess.CalledProcessError as e:
+            logging.error("Error running ogr2ogr for checking:")
+            logging.error(e.stderr)
+            return  # Exit the function
+
+        # Now that we know there are features, create the GeoJSON and shapefile
         ogr2ogr_cmd = (
             f"ogr2ogr -clipsrc {country_geojson_path} "
             f"-f GeoJSON {output_geojson_path} {input_shp_path}"
         )
 
         try:
-            result = subprocess.run(ogr2ogr_cmd, shell=True, 
-                                   stderr=subprocess.PIPE, text=True)
+            result = subprocess.run(ogr2ogr_cmd, shell=True,
+                                    stderr=subprocess.PIPE, text=True)
 
             if result.returncode != 0:
                 logging.error("Error occurred during ogr2ogr clipping:")
-                logging.error(result.stderr)  
-                output_geojson_path.unlink(missing_ok=True)  
-                return  # Exit the function
+                logging.error(result.stderr)
+                output_geojson_path.unlink(missing_ok=True)
+                return
 
         except subprocess.CalledProcessError as e:
             logging.error("Error running ogr2ogr:")
             logging.error(e.stderr)
-            return  # Exit the function
+            return
 
-        # Check if the output GeoJSON has features
-        if output_geojson_path.stat().st_size > 0:  
-            logging.info("Outputting features...")
+        # Convert GeoJSON to shapefile
+        ogr2ogr_cmd = (
+            f"ogr2ogr -lco ENCODING=UTF8 {output_shp_path} {output_geojson_path}"
+        )
+        subprocess.run(ogr2ogr_cmd, shell=True, check=True)
 
-            # Convert GeoJSON to shapefile
-            ogr2ogr_cmd = (
-                f"ogr2ogr -lco ENCODING=UTF8 {output_shp_path} {output_geojson_path}"
-            )
-            subprocess.run(ogr2ogr_cmd, shell=True, check=True)
-        else:
-            logging.warning("No features found within the country boundary.")
-            output_geojson_path.unlink()  
+        # Delete the GeoJSON file
+        output_geojson_path.unlink(missing_ok=True)
+        return
 
     else:
         logging.error("Error: Could not determine spatial extent from GeoJSON")

@@ -1,0 +1,134 @@
+{
+    "zwe": [
+        {
+            "level": "download",
+            "filepath": "downloaded_files/zwe/data/in/zip/zwe_admbnda_adm0_zimstat_ocha_20180911.zip",
+            "date_processed": "2024-08-27 14:38:55"
+        },
+        {
+            "level": "download",
+            "filepath": "downloaded_files/zwe/data/in/zip/zwe_admbnda_adm1_zimstat_ocha_20180911.zip",
+            "date_processed": "2024-08-27 14:38:58"
+        },
+        {
+            "level": "download",
+            "filepath": "downloaded_files/zwe/data/in/zip/zwe_admbnda_adm2_zimstat_ocha_20180911.zip",
+            "date_processed": "2024-08-27 14:39:02"
+        },
+        {
+            "level": "download",
+            "filepath": "downloaded_files/zwe/data/in/zip/zwe_admbnda_adm3_zimstat_ocha_20180911.zip",
+            "date_processed": "2024-08-27 14:39:22"
+        },
+        {
+            "level": "download",
+            "filepath": "downloaded_files/zwe/data/in/zip/zwe_admbndl_admall_zimstat_ocha_itos_20180911.zip",
+            "date_processed": "2024-08-27 14:39:36"
+        },
+        {
+            "level": 0,
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_level/zwe_admn_ad0_py_s1_hdx_pp_country.shp",
+            "date_processed": "2024-08-27 14:39:37"
+        },
+        {
+            "level": 3,
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_level/zwe_admn_ad3_py_s1_hdx_pp_district.shp",
+            "date_processed": "2024-08-27 14:39:37"
+        },
+        {
+            "level": 2,
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_level/zwe_admn_ad2_py_s1_hdx_pp_province.shp",
+            "date_processed": "2024-08-27 14:39:37"
+        },
+        {
+            "level": 1,
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_level/zwe_admn_ad1_py_s1_hdx_pp_region.shp",
+            "date_processed": "2024-08-27 14:39:37"
+        },
+        {
+            "level": "linework_0",
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad0_ln_s1_hdx_pp_Admin.shp",
+            "date_processed": "2024-08-27 14:39:37"
+        },
+        {
+            "level": "linework_3",
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad3_ln_s1_hdx_pp_district.shp",
+            "date_processed": "2024-08-27 14:39:37"
+        },
+        {
+            "level": "linework_2",
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad2_ln_s1_hdx_pp_province.shp",
+            "date_processed": "2024-08-27 14:39:37"
+        },
+        {
+            "level": "linework_1",
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad1_ln_s1_hdx_pp_region.shp",
+            "date_processed": "2024-08-27 14:39:37"
+        },
+        {
+            "level": "download",
+            "filepath": "downloaded_files/zwe/data/in/zip/zwe_admbndp_admall_zimstat_ocha_itos_20180911.zip",
+            "date_processed": "2024-08-27 14:39:40"
+        },
+        {
+            "level": 0,
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_level/zwe_admn_ad0_py_s1_hdx_pp_country.shp",
+            "date_processed": "2024-08-27 14:39:40"
+        },
+        {
+            "level": 3,
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_level/zwe_admn_ad3_py_s1_hdx_pp_district.shp",
+            "date_processed": "2024-08-27 14:39:40"
+        },
+        {
+            "level": 2,
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_level/zwe_admn_ad2_py_s1_hdx_pp_province.shp",
+            "date_processed": "2024-08-27 14:39:40"
+        },
+        {
+            "level": 1,
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_level/zwe_admn_ad1_py_s1_hdx_pp_region.shp",
+            "date_processed": "2024-08-27 14:39:40"
+        },
+        {
+            "level": "linework_0",
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad0_ln_s1_hdx_pp_Admin.shp",
+            "date_processed": "2024-08-27 14:39:40"
+        },
+        {
+            "level": "linework_3",
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad3_ln_s1_hdx_pp_district.shp",
+            "date_processed": "2024-08-27 14:39:40"
+        },
+        {
+            "level": "linework_2",
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad2_ln_s1_hdx_pp_province.shp",
+            "date_processed": "2024-08-27 14:39:40"
+        },
+        {
+            "level": "linework_1",
+            "filepath": "/home/evangelos/src/geo-admin-tools/downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad1_ln_s1_hdx_pp_region.shp",
+            "date_processed": "2024-08-27 14:39:40"
+        },
+        {
+            "level": "linework_0",
+            "filepath": "downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad0_ln_s1_hdx_pp_Admin.shp",
+            "date_processed": "2024-08-27 14:39:48"
+        },
+        {
+            "level": "linework_3",
+            "filepath": "downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad3_ln_s1_hdx_pp_district.shp",
+            "date_processed": "2024-08-27 14:39:49"
+        },
+        {
+            "level": "linework_2",
+            "filepath": "downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad2_ln_s1_hdx_pp_province.shp",
+            "date_processed": "2024-08-27 14:39:49"
+        },
+        {
+            "level": "linework_1",
+            "filepath": "downloaded_files/zwe/data/out/admin_linework/zwe_admn_ad1_ln_s1_hdx_pp_region.shp",
+            "date_processed": "2024-08-27 14:39:49"
+        }
+    ]
+}

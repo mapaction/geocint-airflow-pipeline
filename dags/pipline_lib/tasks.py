@@ -205,7 +205,7 @@ def download_world_coastline_data(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    download_file("https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhg/latest/gshhg-shp-2.3.7.zip", 'data/input/world_coastline')
+    #download_file("https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhg/latest/gshhg-shp-2.3.7.zip", 'data/input/world_coastline')
 
 @task()
 def transform_world_costline_data(**kwargs):
@@ -217,7 +217,7 @@ def transform_world_costline_data(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    extract_data("data/input/world_coastline", 'data/output/world', 'wrl_elev_cst_ln_s0_un_pp_coastline')
+    #extract_data("data/input/world_coastline", 'data/output/world', 'wrl_elev_cst_ln_s0_un_pp_coastline')
 
 @task()
 def extract_country_national_coastline(**kwargs):
@@ -232,6 +232,60 @@ def extract_country_national_coastline(**kwargs):
     input_shp_name = f"{docker_worker_working_dir}//data/output/world/wrl_elev_cst_ln_s0_un_pp_coastline.shp"
     output_name = f"{docker_worker_working_dir}/{data_out_directory}/211_elev/{country_code}_elev_cst_ln_s0_un_pp_coastline"
     _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+
+import logging
+
+# @task()
+# def extract_country_coastline_v2(**kwargs):
+#     """ Development complete """
+#     from geo_admin_tools.src.runner import main_method
+
+#     logging.info("Starting extract_country_coastline_v2 task")
+#     country_code = kwargs['country_code']
+#     country_name = kwargs.get('country_name', 'Unknown Country')
+#     data_out_directory = kwargs["data_out_directory"]
+#     docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    
+#     logging.info(f"Country code: {country_code}, Country name: {country_name}")
+#     logging.info(f"Docker working dir: {docker_worker_working_dir}, Data out directory: {data_out_directory}")
+
+#     country_codes = [(country_code, country_name)]
+#     data_out = f"{docker_worker_working_dir}/{data_out_directory}/211_elev/"
+    
+#     logging.info(f"Data out path: {data_out}")
+#     main_method(country_codes, data_out)
+#     logging.info("Completed extract_country_coastline_v2 task")
+
+@task()
+def extract_country_coastline_v2(**kwargs):
+    """ Development complete """
+    from geo_admin_tools.src.runner import main_method
+
+    logging.info("Starting extract_country_coastline_v2 task")
+    country_code = kwargs['country_code']
+    country_name = kwargs.get('country_name', 'Unknown Country')
+    data_in_directory = kwargs["data_in_directory"]
+    data_out_directory = kwargs["data_out_directory"]
+    docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    
+    logging.info(f"Country code: {country_code}, Country name: {country_name}")
+    logging.info(f"Docker working dir: {docker_worker_working_dir}, Data in directory: {data_in_directory}, Data out directory: {data_out_directory}")
+
+    country_codes = [(country_code, country_name)]
+    
+    # Construct paths without unnecessary repetition
+    data_in_path = os.path.join(docker_worker_working_dir, data_in_directory, "in")
+    data_mid_path = os.path.join(docker_worker_working_dir, data_in_directory, "mid")
+    data_out_path = os.path.join(docker_worker_working_dir, data_out_directory)
+
+    
+    logging.info(f"Data in path: {data_in_path}")
+    logging.info(f"Data mid path: {data_mid_path}")
+    logging.info(f"Data out path: {data_out_path}")
+
+    # Pass paths correctly
+    main_method(country_codes, data_in_path, data_mid_path, data_out_path)
+    logging.info("Completed extract_country_coastline_v2 task")
 
 @task()
 def download_elevation90_hsh(**kwargs):

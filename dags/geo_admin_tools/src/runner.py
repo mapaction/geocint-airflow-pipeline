@@ -1,0 +1,105 @@
+import os
+import geopandas as gpd
+from geo_admin_tools.utils.file_operations import get_country_codes
+from geo_admin_tools.utils.download_utils import scrape_and_download_zip_files
+from geo_admin_tools.utils.metadata_utils import capture_metadata
+from geo_admin_tools.src.admin_linework import find_admlevel_column, generate_admin_linework
+import logging
+import shutil
+
+
+def main_method(country_codes, data_in_path, data_mid_path, data_out_path):
+    """Main function to iterate over country codes and handle data processing."""
+    
+    for iso_code, country_name in country_codes:
+        download_dir = data_in_path
+        os.makedirs(download_dir, exist_ok=True)
+        
+        logging.info(f"Processing country: {country_name} ({iso_code})")
+        scrape_and_download_zip_files(iso_code, download_dir, data_mid_path)
+
+        # Process shapefiles and generate linework using the new mid directory
+        for root, dirs, files in os.walk(data_mid_path):
+            for file in files:
+                if file.endswith('.shp'):  # Only process .shp files
+                    file_path = os.path.join(root, file)
+                    process_shapefiles(file_path, iso_code, data_out_path)
+        
+        def cleanup(data_out_path):
+            """Clean up temporary directories after processing."""
+            adm_level_out_dir = os.path.join(data_out_path, "202_admn/admin_level")
+            shutil.rmtree(adm_level_out_dir)
+            logging.info(f"Cleaned up temporary directories.")
+        
+        cleanup(data_out_path)
+
+    
+def process_shapefiles(filepath, iso_code, data_out_path):
+    """Process shapefiles and extract relevant administrative boundary levels."""
+    adm_level_out_dir = os.path.join(data_out_path, "202_admn/admin_level")
+    linework_out_dir = os.path.join(data_out_path, "202_admn")
+    disputed_out_dir = os.path.join(data_out_path, "202_admn")
+    coastline_out_dir = os.path.join(data_out_path, "211_elev")
+    
+    source_abbr = "hdx"  # Placeholder for source abbreviation
+
+    realname_mapping = {
+    0: "country",
+    1: "parish",  # Changed from "region"
+    2: "province",
+    3: "district",
+    4: "subdistrict",
+}
+
+    try:
+        gdf = gpd.read_file(filepath)
+        adm_column = find_admlevel_column(gdf)
+
+        if adm_column:
+            logging.info(f"Found {adm_column} column in {filepath}. Available levels: {gdf[adm_column].unique()}")
+            
+            # Process each admin level correctly into the output directory
+            for level in gdf[adm_column].unique():
+                level_gdf = gdf[gdf[adm_column] == level]
+                output_dir = None
+                output_file = None
+
+                realname = realname_mapping.get(level, "Admin")
+
+                if level == 0:
+                    output_dir = adm_level_out_dir
+                    output_file = f"{iso_code}_admn_ad0_py_s1_{source_abbr}_pp_{realname}.shp"
+                elif level == 1:
+                    output_dir = adm_level_out_dir
+                    output_file = f"{iso_code}_admn_ad1_py_s1_{source_abbr}_pp_{realname}.shp"
+                elif level == 2:
+                    output_dir = adm_level_out_dir
+                    output_file = f"{iso_code}_admn_ad2_py_s1_{source_abbr}_pp_{realname}.shp"
+                elif level == 3:
+                    output_dir = adm_level_out_dir
+                    output_file = f"{iso_code}_admn_ad3_py_s1_{source_abbr}_pp_{realname}.shp"
+                elif level == 4:
+                    output_dir = adm_level_out_dir
+                    output_file = f"{iso_code}_admn_ad4_py_s1_{source_abbr}_pp_{realname}.shp"
+                elif level in [86, 87]:
+                    output_dir = disputed_out_dir
+                    output_file = f"{iso_code}_admn_ad0_ln_s0_{source_abbr}_pp_disputedBoundaries.shp"
+                elif level == 99:
+                    output_dir = coastline_out_dir
+                    output_file = f"{iso_code}_elev_cst_ln_s0_{source_abbr}_pp_coastline.shp"
+                else:
+                    logging.info(f"Level {level} not specifically handled, but found in {filepath}")
+
+                if output_dir and output_file:
+                    os.makedirs(output_dir, exist_ok=True)
+                    level_outfile = os.path.join(output_dir, output_file)
+                    level_gdf.to_file(level_outfile)
+                    logging.info(f"Created {level_outfile}")
+
+            # Generate admin linework after processing
+            generate_admin_linework(gdf, linework_out_dir, iso_code, source_abbr, "Admin", adm_column)
+        else:
+            logging.info(f"No 'admLevel' column found in {filepath}. Skipping processing.")
+
+    except Exception as e:
+        logging.error(f"Error processing {filepath}: {e}")
