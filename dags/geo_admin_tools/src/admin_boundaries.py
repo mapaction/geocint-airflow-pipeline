@@ -21,7 +21,7 @@ def process_shapefiles(filepath, iso_code, base_download_directory):
     disputed_out_dir = os.path.join(base_download_directory, "disputed_boundaries")
     coastline_out_dir = os.path.join(base_download_directory, "national_coastline")
 
-    source_abbr = "hdx"  # Placeholder for source abbreviation
+    source_abbr = "hdx"  
 
     realname_mapping = {
     0: "country",
