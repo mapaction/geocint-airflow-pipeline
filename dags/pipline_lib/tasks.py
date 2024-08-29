@@ -36,9 +36,21 @@ def download_hdx_admin_pop(**kwargs):
     print("////", data_in_directory, data_out_directory, cmf_directory)
     download_pop(country_code, data_out_directory)
 
+# @task()
+# def download_geodar_data(**kwargs):
+#     """ Development complete """
+#     from pipline_lib.download_geodar_data import download_shapefile_zip
+#     country_code = kwargs['country_code']
+#     country_geojson_filename = kwargs['country_geojson_filename']
+#     data_in_directory = kwargs["data_in_directory"]
+#     data_out_directory = kwargs["data_out_directory"]
+#     docker_worker_working_dir = kwargs['docker_worker_working_dir']
+#     cmf_directory = kwargs['cmf_directory']
+#     print("//// downloading geodar data in data/input/geodar")
+#     download_shapefile_zip()
+#v2
 @task()
 def download_geodar_data(**kwargs):
-    """ Development complete """
     from pipline_lib.download_geodar_data import download_shapefile_zip
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
@@ -46,8 +58,12 @@ def download_geodar_data(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
+    doi = "https://doi.org/10.5281/zenodo.6163413"
+    
     print("//// downloading geodar data in data/input/geodar")
-    download_shapefile_zip()
+    download_shapefile_zip("https://zenodo.org/records/6163413/files/GeoDAR_v10_v11.zip?download=1", "dams", "reservoirs", doi)
+
+
 
 @task()
 def download_railway_data(**kwargs):
@@ -119,9 +135,22 @@ def download_hdx_country_data(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     _download_all_types(country_name, country_code, "hdx_datatypes.txt", data_in_directory, data_out_directory)     
 
+# @task()
+# def transform_dams(**kwargs) -> str:
+#     """ Development complete """
+#     from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
+#     country_code = kwargs['country_code']
+#     country_geojson_filename = kwargs['country_geojson_filename']
+#     data_in_directory = kwargs["data_in_directory"]
+#     data_out_directory = kwargs["data_out_directory"]
+#     docker_worker_working_dir = kwargs['docker_worker_working_dir']
+#     cmf_directory = kwargs['cmf_directory']
+#     input_shp_name = f"{docker_worker_working_dir}/data/input/geodar/dams/GeoDAR_v11_dams.shp"
+#     output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_dam_pt_s1_geodar_pp_dam"
+#     _clip_by_country(country_geojson_filename, input_shp_name, output_name)     
+#v2
 @task()
 def transform_dams(**kwargs) -> str:
-    """ Development complete """
     from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
@@ -131,20 +160,21 @@ def transform_dams(**kwargs) -> str:
     cmf_directory = kwargs['cmf_directory']
     input_shp_name = f"{docker_worker_working_dir}/data/input/geodar/dams/GeoDAR_v11_dams.shp"
     output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_dam_pt_s1_geodar_pp_dam"
-    _clip_by_country(country_geojson_filename, input_shp_name, output_name)     
+    _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+
 
 @task()
 def transform_reservoirs(**kwargs) -> str:
     """ Development complete """
-    from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
+    from pipline_lib.mapaction_extract_from_shp2 import clip_shapefile_by_country as _clip_by_country
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    input_shp_name = f"{docker_worker_working_dir}//data/input/geodar/reservoirs/GeoDAR_v11_reservoirs.shp"
-    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_py_s3_geodar_pp_reservoir"
+    input_shp_name = f"{docker_worker_working_dir}/data/input/geodar/reservoirs/GeoDAR_v11_reservoirs.shp"
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_pt_s3_geodar_pp_reservoir"
     _clip_by_country(country_geojson_filename, input_shp_name, output_name)
 
 @task()
