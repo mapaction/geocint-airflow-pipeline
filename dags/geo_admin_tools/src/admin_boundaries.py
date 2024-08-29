@@ -24,12 +24,13 @@ def process_shapefiles(filepath, iso_code, base_download_directory):
     source_abbr = "hdx"  
 
     realname_mapping = {
-    0: "country",
-    1: "parish",  # Changed from "region"
-    2: "province",
-    3: "district",
-    4: "subdistrict",
-}
+        0: "country",
+        1: "parish",  # Changed from "region"
+        2: "municipality",
+        3: "district",
+        4: "locality",
+    }
+
 
     try:
         gdf = gpd.read_file(filepath)

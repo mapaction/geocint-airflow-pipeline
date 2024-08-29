@@ -45,9 +45,9 @@ def process_shapefiles(filepath, iso_code, data_out_path):
     realname_mapping = {
         0: "country",
         1: "parish",  # Changed from "region"
-        2: "province",
+        2: "municipality",
         3: "district",
-        4: "subdistrict",
+        4: "locality",
     }
 
     try:
