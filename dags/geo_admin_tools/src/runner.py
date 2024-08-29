@@ -37,8 +37,12 @@ def process_shapefiles(filepath, iso_code, data_out_path):
     """Process shapefiles and extract relevant administrative boundary levels."""
     adm_level_out_dir = os.path.join(data_out_path, "202_admn/admin_level")
     linework_out_dir = os.path.join(data_out_path, "202_admn")
-    disputed_out_dir = os.path.join(data_out_path, "202_admn/disputed_boundaries")
-    coastline_out_dir = os.path.join(data_out_path, "211_elev/national_coastline")
+    disputed_out_dir = os.path.join(data_out_path, "202_admn")
+    coastline_out_dir = os.path.join(data_out_path, "211_elev")
+    os.makedirs(adm_level_out_dir, exist_ok=True)
+    os.makedirs(linework_out_dir, exist_ok=True)
+    os.makedirs(disputed_out_dir, exist_ok=True)
+    os.makedirs(coastline_out_dir, exist_ok=True)
 
     source_abbr = "hdx"  # Placeholder for source abbreviation
 
