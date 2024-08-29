@@ -29,7 +29,6 @@ def save_linework_shapefiles(line_gdf, linework_out_dir, iso_code, source_abbr, 
     try:
         os.makedirs(linework_out_dir, exist_ok=True)
 
-        
         linework_file = f"{iso_code}_admn_ad{level}_ln_s1_{source_abbr}_pp_{realname}.shp"
         line_outfile = os.path.join(linework_out_dir, linework_file)
 
@@ -46,7 +45,7 @@ def save_linework_shapefiles(line_gdf, linework_out_dir, iso_code, source_abbr, 
 
 def find_admlevel_column(gdf):
     """Function to find an exact 'admLevel' column match in a case-insensitive manner."""
-    logging.info(f"Columns in the shapefile: {gdf.columns}")  
+    logging.info(f"Columns in the shapefile: {gdf.columns}")
 
     # Check for an exact 'admLevel' match (case-insensitive)
     for col in gdf.columns:
