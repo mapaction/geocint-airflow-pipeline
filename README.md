@@ -80,11 +80,20 @@ remade / mapped in the POC pipeline with the same names, and this is currently w
 ## Start clean build 
 
 1. Ensure you have the AIRFLOW_UID with this command 
+
+### Make directories
 - `mkdir -p ./dags ./logs ./plugins ./config`
+### Get AIRFLOW_UID
 - `echo -e "AIRFLOW_UID=$(id -u)" > .env`
+
+### Append WebDAV variables
+- `echo "WEBDAV_HOSTNAME=" >> .env`
+- `echo "WEBDAV_LOGIN=" >> .env`
+- `echo "WEBDAV_PASSWORD=" >> .env`
+
 2. Clear all the the docker container using `docker system prune --all`
 Note this will remove all containers fron the suytem if you just wan to remove airflow containers, you can use `docker container prune`
-3. Run `docker compose airflow-init`
+3. Run `docker compose up airflow-init`
 5. Run `docker compose up`
 6. Run `docker ps` to get the container ID of the airflow-worker container and copy it.
 7. Enter the container using the following `docker exec -it -u root <continer_id> bash`
