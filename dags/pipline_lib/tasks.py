@@ -239,27 +239,6 @@ def extract_country_national_coastline(**kwargs):
 
 import logging
 
-# @task()
-# def extract_country_coastline_v2(**kwargs):
-#     """ Development complete """
-#     from geo_admin_tools.src.runner import main_method
-
-#     logging.info("Starting extract_country_coastline_v2 task")
-#     country_code = kwargs['country_code']
-#     country_name = kwargs.get('country_name', 'Unknown Country')
-#     data_out_directory = kwargs["data_out_directory"]
-#     docker_worker_working_dir = kwargs['docker_worker_working_dir']
-    
-#     logging.info(f"Country code: {country_code}, Country name: {country_name}")
-#     logging.info(f"Docker working dir: {docker_worker_working_dir}, Data out directory: {data_out_directory}")
-
-#     country_codes = [(country_code, country_name)]
-#     data_out = f"{docker_worker_working_dir}/{data_out_directory}/211_elev/"
-    
-#     logging.info(f"Data out path: {data_out}")
-#     main_method(country_codes, data_out)
-#     logging.info("Completed extract_country_coastline_v2 task")
-
 @task()
 def extract_country_coastline_v2(**kwargs):
     """ Development complete """
@@ -599,10 +578,10 @@ def transform_worldports(**kwargs):
     )
     print(gdf.head())
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/232_tran"
-    output_name_csv = f"{output_dir}/{country_code}_tran_por_pt_s0_worldports_pp_ports.csv"
+    #output_name_csv = f"{output_dir}/{country_code}_tran_por_pt_s0_worldports_pp_ports.csv"
     output_name_shp = f"{output_dir}/{country_code}_tran_por_pt_s0_worldports_pp_ports.shp"
     os.makedirs(output_dir, exist_ok=True)
-    country_df.to_csv(output_name_csv)
+    #country_df.to_csv(output_name_csv)
     gdf.to_file(output_name_shp)
 
 @task()
@@ -613,6 +592,29 @@ def ourairports(**kwargs):
     from pipline_lib.ourairports import ourairports as _ourairports
     _ourairports(data_in_directory, data_out_directory)
 
+# @task()
+# def transform_ourairports(**kwargs):
+#     """ Development complete """
+#     country_code = kwargs['country_code']
+#     country_geojson_filename = kwargs['country_geojson_filename']
+#     data_in_directory = kwargs["data_in_directory"]
+#     data_out_directory = kwargs["data_out_directory"]
+#     docker_worker_working_dir = kwargs['docker_worker_working_dir']
+
+#     csv_filename = f"{data_in_directory}/ourairports/ourairports.csv"
+#     df = pandas.read_csv(csv_filename, low_memory=False)
+#     gdf = geopandas.GeoDataFrame(
+#         df, geometry=geopandas.points_from_xy(df.longitude_deg, df.latitude_deg)
+#     )
+#     # Use point inside polygon to select relevant rows
+#     country_poly = geopandas.read_file(country_geojson_filename)
+#     country_data = gdf[gdf.geometry.within(country_poly.geometry.iloc[0])]
+#     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/232_tran"
+#     #output_name_csv = f"{output_dir}/{country_code}_tran_air_pt_s0_ourairports_pp_airports.csv"
+#     output_name_shp = f"{output_dir}/{country_code}_tran_air_pt_s0_ourairports_pp_airports.shp"
+#     os.makedirs(output_dir, exist_ok=True)
+#     #country_data.to_csv(output_name_csv)
+#     country_data.to_file(output_name_shp)
 @task()
 def transform_ourairports(**kwargs):
     """ Development complete """
@@ -621,20 +623,19 @@ def transform_ourairports(**kwargs):
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
-
     csv_filename = f"{data_in_directory}/ourairports/ourairports.csv"
     df = pandas.read_csv(csv_filename, low_memory=False)
+    # Create a GeoDataFrame and set the CRS to WGS 84 (EPSG:4326)
     gdf = geopandas.GeoDataFrame(
-        df, geometry=geopandas.points_from_xy(df.longitude_deg, df.latitude_deg)
+        df,
+        geometry=geopandas.points_from_xy(df.longitude_deg, df.latitude_deg),
+        crs="EPSG:4326"  # Define the CRS as WGS 84
     )
-    # Use point inside polygon to select relevant rows
     country_poly = geopandas.read_file(country_geojson_filename)
     country_data = gdf[gdf.geometry.within(country_poly.geometry.iloc[0])]
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/232_tran"
-    output_name_csv = f"{output_dir}/{country_code}_tran_air_pt_s0_ourairports_pp_airports.csv"
     output_name_shp = f"{output_dir}/{country_code}_tran_air_pt_s0_ourairports_pp_airports.shp"
     os.makedirs(output_dir, exist_ok=True)
-    country_data.to_csv(output_name_csv)
     country_data.to_file(output_name_shp)
 
 @task()
