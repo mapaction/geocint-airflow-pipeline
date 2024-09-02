@@ -550,10 +550,8 @@ def transform_power_plants(**kwargs):
         country_df, geometry=geopandas.points_from_xy(country_df.longitude, country_df.latitude)
     )
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/233_util"
-    output_name_csv = f"{output_dir}/{country_code}_util_pst_pt_s0_gppd_pp_powerplants.csv"
     output_name_shp = f"{output_dir}/{country_code}_util_pst_pt_s0_gppd_pp_powerplants.shp"
     os.makedirs(output_dir, exist_ok=True)
-    country_df.to_csv(output_name_csv)
     gdf.to_file(output_name_shp)
 
 @task()
