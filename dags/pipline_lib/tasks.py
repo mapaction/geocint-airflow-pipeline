@@ -592,29 +592,6 @@ def ourairports(**kwargs):
     from pipline_lib.ourairports import ourairports as _ourairports
     _ourairports(data_in_directory, data_out_directory)
 
-# @task()
-# def transform_ourairports(**kwargs):
-#     """ Development complete """
-#     country_code = kwargs['country_code']
-#     country_geojson_filename = kwargs['country_geojson_filename']
-#     data_in_directory = kwargs["data_in_directory"]
-#     data_out_directory = kwargs["data_out_directory"]
-#     docker_worker_working_dir = kwargs['docker_worker_working_dir']
-
-#     csv_filename = f"{data_in_directory}/ourairports/ourairports.csv"
-#     df = pandas.read_csv(csv_filename, low_memory=False)
-#     gdf = geopandas.GeoDataFrame(
-#         df, geometry=geopandas.points_from_xy(df.longitude_deg, df.latitude_deg)
-#     )
-#     # Use point inside polygon to select relevant rows
-#     country_poly = geopandas.read_file(country_geojson_filename)
-#     country_data = gdf[gdf.geometry.within(country_poly.geometry.iloc[0])]
-#     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/232_tran"
-#     #output_name_csv = f"{output_dir}/{country_code}_tran_air_pt_s0_ourairports_pp_airports.csv"
-#     output_name_shp = f"{output_dir}/{country_code}_tran_air_pt_s0_ourairports_pp_airports.shp"
-#     os.makedirs(output_dir, exist_ok=True)
-#     #country_data.to_csv(output_name_csv)
-#     country_data.to_file(output_name_shp)
 @task()
 def transform_ourairports(**kwargs):
     """ Development complete """
