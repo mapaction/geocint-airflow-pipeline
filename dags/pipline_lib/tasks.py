@@ -537,22 +537,53 @@ def power_plants(**kwargs):
 
 @task()
 def transform_power_plants(**kwargs):
-    """ Development complete """
-    country_code = kwargs['country_code']
+    country_code = kwargs['country_code'].upper()
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     csv_filename = f"{data_in_directory}/power_plants/global_power_plant_database.csv"
 
-    df = pandas.read_csv(csv_filename, low_memory=False)
-    country_df = df[df["country"] == country_code.upper()]
+    try:
+        df = pandas.read_csv(csv_filename, low_memory=False)
+    except FileNotFoundError:
+        print(f"Error: The file {csv_filename} was not found.")
+        return
+    except Exception as e:
+        print(f"An error occurred while reading the file: {e}")
+        return
+
+    country_df = df[df["country"].str.upper() == country_code]
+
+    if country_df.empty:
+        print(f"No data available for the specified country code ({country_code}) after filtering.")
+        return
+
+    country_df['longitude'] = pandas.to_numeric(country_df['longitude'], errors='coerce')
+    country_df['latitude'] = pandas.to_numeric(country_df['latitude'], errors='coerce')
+    country_df = country_df.dropna(subset=['longitude', 'latitude'])
+
+    if country_df.empty:
+        print("No valid geographic data available for the specified country after dropping NaNs.")
+        return
+
     gdf = geopandas.GeoDataFrame(
-        country_df, geometry=geopandas.points_from_xy(country_df.longitude, country_df.latitude)
+        country_df,
+        geometry=geopandas.points_from_xy(country_df.longitude, country_df.latitude),
+        crs="EPSG:4326"
     )
+
+    if not gdf.geometry.geom_type.eq('Point').all():
+        print("Error: Not all geometries are points.")
+        return
+
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/233_util"
     output_name_shp = f"{output_dir}/{country_code}_util_pst_pt_s0_gppd_pp_powerplants.shp"
+
     os.makedirs(output_dir, exist_ok=True)
-    gdf.to_file(output_name_shp)
+
+    gdf.to_file(output_name_shp, driver='ESRI Shapefile')
+    print(f"Shapefile saved successfully to {output_name_shp}")
+
 
 @task()
 def worldports(**kwargs):
