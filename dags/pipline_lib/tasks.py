@@ -565,24 +565,31 @@ def worldports(**kwargs):
 
 @task()
 def transform_worldports(**kwargs):
-    """ Development complete """
+    country_name = kwargs['country_name']
     country_code = kwargs['country_code']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     csv_filename = f"{data_in_directory}/worldports/worldports.csv"
     df = pandas.read_csv(csv_filename, low_memory=False)
-    country_df = df[df["Country Code"] == country_code.capitalize()]
-    gdf = geopandas.GeoDataFrame(
-        country_df, geometry=geopandas.points_from_xy(country_df.Longitude, country_df.Latitude)
-    )
+    country_df = df[df["Country Code"] == country_name.capitalize()]
+    country_df['Longitude'] = pandas.to_numeric(country_df['Longitude'], errors='coerce')
+    country_df['Latitude'] = pandas.to_numeric(country_df['Latitude'], errors='coerce')
+    country_df = country_df.dropna(subset=['Longitude', 'Latitude'])
+    if country_df.empty:
+        print("No data available for the specified country after filtering. Exiting task.")
+        return
+    geometry = geopandas.points_from_xy(country_df.Longitude, country_df.Latitude)
+    gdf = geopandas.GeoDataFrame(country_df, geometry=geometry, crs="EPSG:4326")
+    if not gdf.geometry.geom_type.eq('Point').all():
+        print("Error: Not all geometries are points.")
+        return
     print(gdf.head())
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/232_tran"
-    #output_name_csv = f"{output_dir}/{country_code}_tran_por_pt_s0_worldports_pp_ports.csv"
     output_name_shp = f"{output_dir}/{country_code}_tran_por_pt_s0_worldports_pp_ports.shp"
     os.makedirs(output_dir, exist_ok=True)
-    #country_df.to_csv(output_name_csv)
-    gdf.to_file(output_name_shp)
+    gdf.to_file(output_name_shp, driver='ESRI Shapefile')
+
 
 @task()
 def ourairports(**kwargs):
