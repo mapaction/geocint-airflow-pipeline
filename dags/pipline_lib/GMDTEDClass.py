@@ -31,6 +31,7 @@ class GMTEDDownloader:
         resolution = 250
         tile_split = 16
         gmted_clipped = gmted.clip(geo_json_geometry)
+        gmted_hillside = ee.Terrain.slope(gmted)
         country_input_dir = self.data_in_directory
         os.makedirs(country_input_dir, exist_ok=True)
         tiles = self.split_bbox(gdf.total_bounds, n=tile_split)
