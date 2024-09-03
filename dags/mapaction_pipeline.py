@@ -172,7 +172,7 @@ def create_mapaction_pipeline(country_name, config):
             with dag:
                 download_world_coastline_data_inst = download_world_coastline_data(task_concurrency=3, **task_args)
                 transform_world_costline_data_inst = transform_world_costline_data(task_concurrency=2, **task_args)
-                extract_country_national_coastline_inst = extract_country_national_coastline(task_concurrency=2, **task_args)
+                extract_country_national_coastline_inst = extract_country_coastline_v2(task_concurrency=2, **task_args)
 
                 download_world_coastline_data_inst >> transform_world_costline_data_inst >> extract_country_national_coastline_inst
 

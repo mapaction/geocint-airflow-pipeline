@@ -10,22 +10,16 @@ class GMTEDDownloader:
     def __init__(self, country_geojson_filename, data_in_directory, data_out_directory, is_hsh=True):
         self.project_id = 'ma-ediakatos'
         self.country_geojson_filename = country_geojson_filename
-        self.data_out_directory = data_out_directory #os.path.join(data_out_directory, '211_elev')
-        self.data_in_directory = data_in_directory#os.path.join(data_in_directory, "gmted")
-        # Path to the service account JSON key file
+        self.data_out_directory = data_out_directory
+        self.data_in_directory = data_in_directory
         service_account_file = "/opt/airflow/dags/static_data/credentials.json"
         self.is_hsh = is_hsh
         self.data_type = 'hsh' if self.is_hsh else 'dtm'
-        # Load service account credentials from the JSON key file
         credentials = service_account.Credentials.from_service_account_file(
             service_account_file,
             scopes=['https://www.googleapis.com/auth/cloud-platform']
         )
-
-        # Set the environment variable
         os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = service_account_file
-
-        # Authenticate and initialize Earth Engine with the credentials
         ee.Initialize(credentials)
 
     def download_gmted_full(self):
@@ -33,6 +27,7 @@ class GMTEDDownloader:
         country_name = os.path.splitext(os.path.basename(self.country_geojson_filename))[0].lower()
         geo_json_geometry = geemap.geojson_to_ee(gdf.__geo_interface__)
         gmted = ee.Image("USGS/GMTED2010_FULL")
+        gmted_hillside = ee.Terrain.slope(gmted)
         resolution = 250
         tile_split = 16
         gmted_clipped = gmted.clip(geo_json_geometry)
