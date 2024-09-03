@@ -148,7 +148,7 @@ def transform_reservoirs(**kwargs) -> str:
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
     input_shp_name = f"{docker_worker_working_dir}/data/input/geodar/reservoirs/GeoDAR_v11_reservoirs.shp"
-    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_pt_s3_geodar_pp_reservoir"
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_py_s3_geodar_pp_reservoir"
     _clip_by_country(country_geojson_filename, input_shp_name, output_name)
 
 @task()
@@ -450,7 +450,7 @@ def transform_admin_linework(**kwargs):
 @task()
 def healthsites(**kwargs):
     """ Development complete """
-    from pipline_lib.healthsites import download_shapefiles_from_page as _extract_and_download
+    from pipline_lib.healthsities import download_shapefiles_from_page as _extract_and_download
     country_geojson_filename = kwargs['country_geojson_filename']
     data_out_directory = kwargs["data_out_directory"]
     country_name = kwargs["country_name"]
@@ -538,6 +538,7 @@ def power_plants(**kwargs):
 
 @task()
 def transform_power_plants(**kwargs):
+    country_code_lower = kwargs['country_code']
     country_code = kwargs['country_code'].upper()
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
@@ -578,7 +579,7 @@ def transform_power_plants(**kwargs):
         return
 
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/233_util"
-    output_name_shp = f"{output_dir}/{country_code}_util_pst_pt_s0_gppd_pp_powerplants.shp"
+    output_name_shp = f"{output_dir}/{country_code_lower}_util_pst_pt_s0_gppd_pp_powerplants.shp"
 
     os.makedirs(output_dir, exist_ok=True)
 
