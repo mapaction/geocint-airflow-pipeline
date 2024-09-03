@@ -36,9 +36,9 @@ def download_hdx_admin_pop(**kwargs):
     print("////", data_in_directory, data_out_directory, cmf_directory)
     download_pop(country_code, data_out_directory)
 
+
 @task()
 def download_geodar_data(**kwargs):
-    """ Development complete """
     from pipline_lib.download_geodar_data import download_shapefile_zip
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
@@ -46,8 +46,12 @@ def download_geodar_data(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
+    doi = "https://doi.org/10.5281/zenodo.6163413"
+    
     print("//// downloading geodar data in data/input/geodar")
-    download_shapefile_zip()
+    download_shapefile_zip("https://zenodo.org/records/6163413/files/GeoDAR_v10_v11.zip?download=1", "dams", "reservoirs", doi)
+
+
 
 @task()
 def download_railway_data(**kwargs):
@@ -121,7 +125,6 @@ def download_hdx_country_data(**kwargs):
 
 @task()
 def transform_dams(**kwargs) -> str:
-    """ Development complete """
     from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
@@ -131,20 +134,21 @@ def transform_dams(**kwargs) -> str:
     cmf_directory = kwargs['cmf_directory']
     input_shp_name = f"{docker_worker_working_dir}/data/input/geodar/dams/GeoDAR_v11_dams.shp"
     output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_dam_pt_s1_geodar_pp_dam"
-    _clip_by_country(country_geojson_filename, input_shp_name, output_name)     
+    _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+
 
 @task()
 def transform_reservoirs(**kwargs) -> str:
     """ Development complete """
-    from pipline_lib.mapaction_exctract_from_shp import clip_shapefile_by_country as _clip_by_country
+    from pipline_lib.mapaction_extract_from_shp2 import clip_shapefile_by_country as _clip_by_country
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    input_shp_name = f"{docker_worker_working_dir}//data/input/geodar/reservoirs/GeoDAR_v11_reservoirs.shp"
-    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_py_s3_geodar_pp_reservoir"
+    input_shp_name = f"{docker_worker_working_dir}/data/input/geodar/reservoirs/GeoDAR_v11_reservoirs.shp"
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_pt_s3_geodar_pp_reservoir"
     _clip_by_country(country_geojson_filename, input_shp_name, output_name)
 
 @task()
@@ -205,7 +209,7 @@ def download_world_coastline_data(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    download_file("https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhg/latest/gshhg-shp-2.3.7.zip", 'data/input/world_coastline')
+    #download_file("https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhg/latest/gshhg-shp-2.3.7.zip", 'data/input/world_coastline')
 
 @task()
 def transform_world_costline_data(**kwargs):
@@ -217,7 +221,7 @@ def transform_world_costline_data(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    extract_data("data/input/world_coastline", 'data/output/world', 'wrl_elev_cst_ln_s0_un_pp_coastline')
+    #extract_data("data/input/world_coastline", 'data/output/world', 'wrl_elev_cst_ln_s0_un_pp_coastline')
 
 @task()
 def extract_country_national_coastline(**kwargs):
@@ -232,6 +236,39 @@ def extract_country_national_coastline(**kwargs):
     input_shp_name = f"{docker_worker_working_dir}//data/output/world/wrl_elev_cst_ln_s0_un_pp_coastline.shp"
     output_name = f"{docker_worker_working_dir}/{data_out_directory}/211_elev/{country_code}_elev_cst_ln_s0_un_pp_coastline"
     _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+
+import logging
+
+@task()
+def extract_country_coastline_v2(**kwargs):
+    """ Development complete """
+    from geo_admin_tools.src.runner import main_method
+
+    logging.info("Starting extract_country_coastline_v2 task")
+    country_code = kwargs['country_code']
+    country_name = kwargs.get('country_name', 'Unknown Country')
+    data_in_directory = kwargs["data_in_directory"]
+    data_out_directory = kwargs["data_out_directory"]
+    docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    
+    logging.info(f"Country code: {country_code}, Country name: {country_name}")
+    logging.info(f"Docker working dir: {docker_worker_working_dir}, Data in directory: {data_in_directory}, Data out directory: {data_out_directory}")
+
+    country_codes = [(country_code, country_name)]
+    
+    # Construct paths without unnecessary repetition
+    data_in_path = os.path.join(docker_worker_working_dir, data_in_directory, "in")
+    data_mid_path = os.path.join(docker_worker_working_dir, data_in_directory, "mid")
+    data_out_path = os.path.join(docker_worker_working_dir, data_out_directory)
+
+    
+    logging.info(f"Data in path: {data_in_path}")
+    logging.info(f"Data mid path: {data_mid_path}")
+    logging.info(f"Data out path: {data_out_path}")
+
+    # Pass paths correctly
+    main_method(country_codes, data_in_path, data_mid_path, data_out_path)
+    logging.info("Completed extract_country_coastline_v2 task")
 
 @task()
 def download_elevation90_hsh(**kwargs):
@@ -500,24 +537,53 @@ def power_plants(**kwargs):
 
 @task()
 def transform_power_plants(**kwargs):
-    """ Development complete """
-    country_code = kwargs['country_code']
+    country_code = kwargs['country_code'].upper()
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     csv_filename = f"{data_in_directory}/power_plants/global_power_plant_database.csv"
 
-    df = pandas.read_csv(csv_filename, low_memory=False)
-    country_df = df[df["country"] == country_code.upper()]
+    try:
+        df = pandas.read_csv(csv_filename, low_memory=False)
+    except FileNotFoundError:
+        print(f"Error: The file {csv_filename} was not found.")
+        return
+    except Exception as e:
+        print(f"An error occurred while reading the file: {e}")
+        return
+
+    country_df = df[df["country"].str.upper() == country_code]
+
+    if country_df.empty:
+        print(f"No data available for the specified country code ({country_code}) after filtering.")
+        return
+
+    country_df['longitude'] = pandas.to_numeric(country_df['longitude'], errors='coerce')
+    country_df['latitude'] = pandas.to_numeric(country_df['latitude'], errors='coerce')
+    country_df = country_df.dropna(subset=['longitude', 'latitude'])
+
+    if country_df.empty:
+        print("No valid geographic data available for the specified country after dropping NaNs.")
+        return
+
     gdf = geopandas.GeoDataFrame(
-        country_df, geometry=geopandas.points_from_xy(country_df.longitude, country_df.latitude)
+        country_df,
+        geometry=geopandas.points_from_xy(country_df.longitude, country_df.latitude),
+        crs="EPSG:4326"
     )
+
+    if not gdf.geometry.geom_type.eq('Point').all():
+        print("Error: Not all geometries are points.")
+        return
+
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/233_util"
-    output_name_csv = f"{output_dir}/{country_code}_util_pst_pt_s0_gppd_pp_powerplants.csv"
     output_name_shp = f"{output_dir}/{country_code}_util_pst_pt_s0_gppd_pp_powerplants.shp"
+
     os.makedirs(output_dir, exist_ok=True)
-    country_df.to_csv(output_name_csv)
-    gdf.to_file(output_name_shp)
+
+    gdf.to_file(output_name_shp, driver='ESRI Shapefile')
+    print(f"Shapefile saved successfully to {output_name_shp}")
+
 
 @task()
 def worldports(**kwargs):
@@ -528,24 +594,31 @@ def worldports(**kwargs):
 
 @task()
 def transform_worldports(**kwargs):
-    """ Development complete """
+    country_name = kwargs['country_name']
     country_code = kwargs['country_code']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     csv_filename = f"{data_in_directory}/worldports/worldports.csv"
     df = pandas.read_csv(csv_filename, low_memory=False)
-    country_df = df[df["Country Code"] == country_code.capitalize()]
-    gdf = geopandas.GeoDataFrame(
-        country_df, geometry=geopandas.points_from_xy(country_df.Longitude, country_df.Latitude)
-    )
+    country_df = df[df["Country Code"] == country_name.capitalize()]
+    country_df['Longitude'] = pandas.to_numeric(country_df['Longitude'], errors='coerce')
+    country_df['Latitude'] = pandas.to_numeric(country_df['Latitude'], errors='coerce')
+    country_df = country_df.dropna(subset=['Longitude', 'Latitude'])
+    if country_df.empty:
+        print("No data available for the specified country after filtering. Exiting task.")
+        return
+    geometry = geopandas.points_from_xy(country_df.Longitude, country_df.Latitude)
+    gdf = geopandas.GeoDataFrame(country_df, geometry=geometry, crs="EPSG:4326")
+    if not gdf.geometry.geom_type.eq('Point').all():
+        print("Error: Not all geometries are points.")
+        return
     print(gdf.head())
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/232_tran"
-    output_name_csv = f"{output_dir}/{country_code}_tran_por_pt_s0_worldports_pp_ports.csv"
     output_name_shp = f"{output_dir}/{country_code}_tran_por_pt_s0_worldports_pp_ports.shp"
     os.makedirs(output_dir, exist_ok=True)
-    country_df.to_csv(output_name_csv)
-    gdf.to_file(output_name_shp)
+    gdf.to_file(output_name_shp, driver='ESRI Shapefile')
+
 
 @task()
 def ourairports(**kwargs):
@@ -563,20 +636,19 @@ def transform_ourairports(**kwargs):
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
-
     csv_filename = f"{data_in_directory}/ourairports/ourairports.csv"
     df = pandas.read_csv(csv_filename, low_memory=False)
+    # Create a GeoDataFrame and set the CRS to WGS 84 (EPSG:4326)
     gdf = geopandas.GeoDataFrame(
-        df, geometry=geopandas.points_from_xy(df.longitude_deg, df.latitude_deg)
+        df,
+        geometry=geopandas.points_from_xy(df.longitude_deg, df.latitude_deg),
+        crs="EPSG:4326"  # Define the CRS as WGS 84
     )
-    # Use point inside polygon to select relevant rows
     country_poly = geopandas.read_file(country_geojson_filename)
     country_data = gdf[gdf.geometry.within(country_poly.geometry.iloc[0])]
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}/232_tran"
-    output_name_csv = f"{output_dir}/{country_code}_tran_air_pt_s0_ourairports_pp_airports.csv"
     output_name_shp = f"{output_dir}/{country_code}_tran_air_pt_s0_ourairports_pp_airports.shp"
     os.makedirs(output_dir, exist_ok=True)
-    country_data.to_csv(output_name_csv)
     country_data.to_file(output_name_shp)
 
 @task()
