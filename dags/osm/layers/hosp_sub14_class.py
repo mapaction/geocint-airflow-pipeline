@@ -31,19 +31,15 @@ class OSMHospitalDataDownloader:
         # Process geometries to centroid points
         gdf_hospitals = self.process_geometries(gdf_hospitals)
 
-        # Ensure required fields and create fclass2 column
+        # Ensure required fields
         gdf_hospitals = self.ensure_required_fields(gdf_hospitals)
 
-        # Add 'fclass' column
+        # Add 'fclass' column if not present
         if 'fclass' not in gdf_hospitals.columns:
             gdf_hospitals['fclass'] = 'hospital'
 
         # Reorder columns to make fclass the first column
         columns = ['fclass'] + [col for col in gdf_hospitals.columns if col != 'fclass']
-        gdf_hospitals = gdf_hospitals[columns]
-
-        # Reorder columns to make fclass2 the second column
-        columns = ['fclass'] + ['fclass2'] + [col for col in gdf_hospitals.columns if col not in ['fclass', 'fclass2']]
         gdf_hospitals = gdf_hospitals[columns]
 
         os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
@@ -61,7 +57,6 @@ class OSMHospitalDataDownloader:
 
         # Handle list-type fields
         for col in gdf.columns:
-            # Check if the column is of object type and contains lists
             if pd.api.types.is_object_dtype(gdf[col]) and gdf[col].apply(lambda x: isinstance(x, list) if x is not None else False).any():
                 gdf[col] = gdf[col].apply(lambda x: ', '.join(map(str, x)) if isinstance(x, list) else x)
 
@@ -70,12 +65,10 @@ class OSMHospitalDataDownloader:
         if missing_tags:
             print(f"Warning: The following tags are missing from the data and will not be included: {missing_tags}")
 
-        
         for tag in missing_tags:
             if tag not in gdf.columns:
                 gdf[tag] = None
 
-        
         columns_to_keep = ['geometry'] + [col for col in self.attributes if col in gdf.columns]
         gdf = gdf[columns_to_keep]
 
@@ -116,15 +109,9 @@ class OSMHospitalDataDownloader:
             if field not in gdf.columns:
                 gdf[field] = None
 
-        
-        gdf['fclass2'] = gdf.apply(
-            lambda row: ', '.join([field for field in required_fields if pd.notna(row[field])]) or 'hospital', axis=1
-        )
-
         return gdf
 
     def save_data(self, gdf):
-        
         os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
 
         try:
