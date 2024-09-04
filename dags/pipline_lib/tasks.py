@@ -161,7 +161,7 @@ def oceans_and_seas(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    extract_data("dags/static_data/downloaded_data/oceans_and_seas.zip", 'data/output/world', 'wrl_phys_ocn_py_s0_marineregions_pp_oceans.shp')
+    extract_data("dags/static_data/downloaded_data/oceans_and_seas.zip", 'data/output/world', 'wrl_phys_ocn_py_s0_marineregions_pp_oceans')
 
 @task()
 def hyrdrorivers(**kwargs):
@@ -665,6 +665,10 @@ def ne_10m_lakes(**kwargs):
 @task()
 def transform_ne_10m_lakes(**kwargs):
     """ Development complete """
+    import geopandas as gpd
+    import os
+    import logging
+
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
@@ -672,18 +676,39 @@ def transform_ne_10m_lakes(**kwargs):
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     shp_filename = data_in_directory + "/ne_10m_lakes/ne_10m_lakes.shp"
 
+    # Define the function to check for intersecting features
+    def check_intersecting_features(country_geojson_path, input_shp_path):
+        try:
+            country_gdf = gpd.read_file(country_geojson_path)
+            input_gdf = gpd.read_file(input_shp_path)
+            input_gdf = input_gdf.to_crs(country_gdf.crs)
+            intersecting_gdf = gpd.sjoin(input_gdf, country_gdf, op='intersects')
+            return not intersecting_gdf.empty
+        except Exception as e:
+            logging.error(f"Error during spatial intersection check: {e}")
+            return False
 
-    gdf = geopandas.read_file(shp_filename, encoding='utf-8')
-    print(gdf)
-    country_poly = geopandas.read_file(country_geojson_filename)
-    country_data = gdf[gdf.geometry.within(country_poly.geometry.iloc[0])]
-    print("country data::")
-    print(country_data)
-    output_dir = f"{docker_worker_working_dir}/{data_out_directory}/221_phys"
-    output_name_shp = f"{output_dir}/{country_code}_phys_lak_py_s0_naturalearth_pp_waterbodies.shp"
-    os.makedirs(output_dir, exist_ok=True)
-    country_data.to_file(output_name_shp)
-    # TODO: needs more testing - no features in output shapefile
+    # Check for intersecting features
+    if check_intersecting_features(country_geojson_filename, shp_filename):
+        # Proceed if there are intersecting features
+        gdf = gpd.read_file(shp_filename, encoding='utf-8')
+        country_poly = gpd.read_file(country_geojson_filename)
+        country_data = gdf[gdf.geometry.within(country_poly.geometry.iloc[0])]
+
+        print("country data::")
+        print(country_data)
+
+        # Prepare output directory and filename
+        output_dir = f"{docker_worker_working_dir}/{data_out_directory}/221_phys"
+        output_name_shp = f"{output_dir}/{country_code}_phys_lak_py_s0_naturalearth_pp_waterbodies.shp"
+        os.makedirs(output_dir, exist_ok=True)
+
+        # Save the intersecting data to a new shapefile
+        country_data.to_file(output_name_shp)
+    else:
+        # Skip output if no intersecting features are found
+        print(f"No intersecting features found for country: {country_code}. Skipping file creation.")
+
 
 # osm layer targets
 @task()

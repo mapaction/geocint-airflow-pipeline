@@ -32,13 +32,19 @@ def download_and_extract_zip(link, dest_folder):
 
     except Exception as e: 
         print(f" - Error downloading/extracting {filename}: {e}")
+
 def rename_and_copy_files(shapefiles_dir, dest_path, filename_prefix):
+    # List of possible shapefile extensions
+    shapefile_extensions = ['.shp', '.shx', '.dbf', '.prj', '.cpg']
+
     for filename in os.listdir(shapefiles_dir):
         src_path = os.path.join(shapefiles_dir, filename)
-        dest_filename = f"{filename_prefix}_{filename}" 
-        dest_path_with_filename = os.path.join(dest_path, dest_filename)
-        print(f"Copying: {src_path} to {dest_path_with_filename}") 
-        shutil.copy2(src_path, dest_path_with_filename)
+        file_extension = os.path.splitext(filename)[1].lower()
+        if file_extension in shapefile_extensions:
+            dest_filename = f"{filename_prefix}{file_extension}"
+            dest_path_with_filename = os.path.join(dest_path, dest_filename)
+            print(f"Copying: {src_path} to {dest_path_with_filename}")
+            shutil.copy2(src_path, dest_path_with_filename)
 
 def download_shapefiles_from_page(country_name, dest_path, filename_prefix):
     country_name = country_name.lower()
@@ -71,7 +77,8 @@ def download_shapefiles_from_page(country_name, dest_path, filename_prefix):
 
 if __name__ == "__main__":
     country_name = "zimbabwe"
+    country_code = "zwe"
     dest_path = f"data/{country_name}"
-    filename_prefix = f"{country_name}_heal_hea_pt_s3_osm_pp_healthsites" 
+    filename_prefix = f"{country_code}heal_hea_pt_s3_osm_pp_healthsites" 
 
     download_shapefiles_from_page(country_name, dest_path, filename_prefix)
