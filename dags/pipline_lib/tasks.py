@@ -672,7 +672,7 @@ def transform_ne_10m_lakes(**kwargs):
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     shp_filename = data_in_directory + "/ne_10m_lakes/ne_10m_lakes.shp"
 
-    print(shp_filename)
+
     gdf = geopandas.read_file(shp_filename, encoding='utf-8')
     print(gdf)
     country_poly = geopandas.read_file(country_geojson_filename)
@@ -783,8 +783,8 @@ def osm_healthfacilities(**kwargs):
     from osm.layers.health_fac_sub13_class import OSMHealthDataDownloader
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
-    downloader = OSMHealthDataDownloader(country_geojson_filename,crs_project=4326,crs_global=4326, country_code=country_code)
-    downloader.download_and_process_data()
+    #downloader = OSMHealthDataDownloader(country_geojson_filename,crs_project=4326,crs_global=4326, country_code=country_code)
+    #downloader.download_and_process_data()
 
 @task()
 def osm_hospital(**kwargs):
