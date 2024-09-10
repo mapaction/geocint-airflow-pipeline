@@ -164,16 +164,26 @@ def oceans_and_seas(**kwargs):
     extract_data("dags/static_data/downloaded_data/oceans_and_seas.zip", 'data/output/world', 'wrl_phys_ocn_py_s0_marineregions_pp_oceans')
 
 @task()
-def hyrdrorivers(**kwargs):
+def hyrdrorivers(**kwargs) -> str:
     """ Development complete """
-    from pipline_lib.extraction import extract_data
+    from pipline_lib.extraction_hydrorivers import clip_shapefile_by_country as _clip_by_country
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    extract_data("dags/static_data/downloaded_data/hydrorivers.zip", f'data/output/country_extractions/{country_code}', f'221_phys/{country_code}_phys_riv_ln_s1_hydrosheds_pp_rivers')
+    #input_shp_name = f"{docker_worker_working_dir}/data/hydrorivers/HydroRIVERS_v10.shp"
+    input_shp_name = f"{docker_worker_working_dir}/data/hydro_america/america_clipped.shp"
+    
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_riv_ln_s1_hydrosheds_pp_rivers"
+
+    logging.info(f"Clipping HydroRIVERS line shapefile to AOI from {country_geojson_filename} for {country_code}...")
+
+    _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+    logging.info(f"Clipped line shapefile saved to: {output_name}")
+    return output_name
+
 
 @task()
 def download_world_admin_boundaries(**kwargs):
@@ -827,7 +837,7 @@ def osm_border_control(**kwargs):
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
     downloader = OSMBorderControlDataDownloader(country_geojson_filename,crs_project=4326,crs_global=4326, country_code=country_code)
-    downloader.download_and_process_data()
+    #downloader.download_and_process_data()
 
 @task()
 def osm_settlement(**kwargs):
