@@ -14,6 +14,10 @@ def clip_shapefile_by_country(country_geojson_path, input_shp_path, output_name)
     logging.info("Reading input shapefile (lines)...")
     input_gdf = gpd.read_file(input_shp_path)
 
+   
+    logging.info(f"Country GeoJSON CRS: {country_gdf.crs}")
+    logging.info(f"HydroRIVERS shapefile CRS: {input_gdf.crs}")
+
     logging.info("Creating spatial index for input shapefile...")
     input_gdf.sindex  
 
@@ -22,15 +26,19 @@ def clip_shapefile_by_country(country_geojson_path, input_shp_path, output_name)
         logging.info(f"Reprojecting lines to match CRS of country boundary: {country_gdf.crs}")
         input_gdf = input_gdf.to_crs(country_gdf.crs)
 
-   
-    logging.info("Pre-filtering HydroRIVERS dataset using the bounding box of the country...")
-    bbox = country_gdf.total_bounds  # Get bounding box of the country
-    input_gdf = input_gdf[input_gdf.geometry.intersects(box(*bbox))]  
+
+    bbox = country_gdf.total_bounds  
+    logging.info(f"Bounding box for the country: {bbox}")
+
+    # comment out the bounding box filtering for debugging
+    # input_gdf = input_gdf[input_gdf.geometry.intersects(box(*bbox))]  
+    logging.info(f"Number of features in HydroRIVERS before filtering: {len(input_gdf)}")
 
     logging.info(f"Number of features after pre-filtering by bounding box: {len(input_gdf)}")
 
     logging.info("Clipping line features based on the country boundary...")
-    clipped_gdf = gpd.overlay(input_gdf, country_gdf, how='intersection')
+    # Use spatial join for more accurate clipping
+    clipped_gdf = gpd.sjoin(input_gdf, country_gdf, op='intersects')
 
     if clipped_gdf.empty:
         logging.warning(f"No line features found within the country boundary for {output_name}. No shapefile will be created.")
