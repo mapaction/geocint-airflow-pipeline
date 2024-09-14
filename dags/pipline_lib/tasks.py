@@ -200,6 +200,7 @@ def download_world_admin_boundaries(**kwargs):
 @task()
 def transform_world_admin_boundaries(**kwargs):
     """ Development complete """
+    import geopandas as gpd
     from pipline_lib.extraction import extract_data
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
@@ -207,7 +208,15 @@ def transform_world_admin_boundaries(**kwargs):
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    extract_data("data/input/world_admin_boundaries", 'data/output/world', 'wrl_admn_ad0_ln_s0_wfp_pp_worldcountries')
+    extract_data("data/input/world_admin_boundaries", 'data/output/world', 'wrl_admn_ad0_py_s0_wfp_pp_worldcountries')
+    polygon_shp = os.path.join(docker_worker_working_dir, 'data/output/world', 'wrl_admn_ad0_py_s0_wfp_pp_worldcountries.shp')
+    #Debugging: Check if the file exists
+    if not os.path.exists(polygon_shp):
+        raise FileNotFoundError(f"Shapefile not found: {polygon_shp}")
+    polygon_gdf = gpd.read_file(polygon_shp)
+    line_gdf = polygon_gdf.geometry.boundary
+    line_shp = os.path.join(docker_worker_working_dir, 'data/output/world', 'wrl_admn_ad0_ln_s0_wfp_pp_worldcountries.shp')
+    line_gdf.to_file(line_shp)
 
 @task()
 def download_world_coastline_data(**kwargs):
