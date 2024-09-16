@@ -203,36 +203,54 @@ def hyrdrorivers(**kwargs) -> str:
 
 @task()
 def download_world_admin_boundaries(**kwargs):
-    """ Development complete """
-    from pipline_lib.download_from_url import download_file
+    """ Downloads the world admin boundaries data from the ArcGIS REST service and saves it as shapefiles. """
+    import os
+    import requests
+    import geopandas as gpd
+    from io import BytesIO
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     cmf_directory = kwargs['cmf_directory']
-    download_file("https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=Europe%2FLondon", 'data/input/world_admin_boundaries')
+    # Query the admin boundaries as GeoJSON from the ArcGIS REST service
+    url = 'https://services3.arcgis.com/7J7WB6yJX0pYke9q/ArcGIS/rest/services/Admin_boundaries/FeatureServer/2/query'
+    params = {
+        'where': '1=1',  
+        'outFields': '*',  
+        'f': 'geojson'  
+    }
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        gdf = gpd.read_file(BytesIO(response.content))
+        polygon_directory = os.path.join(docker_worker_working_dir, 'data/output/world')
+        if not os.path.exists(polygon_directory):
+            os.makedirs(polygon_directory)
+        polygon_shp = os.path.join(polygon_directory, 'wrl_admn_ad0_py_s0_un_pp_worldcountries.shp')
+        gdf.to_file(polygon_shp)
+        print("Admin boundaries shapefile (polygons) saved successfully.")
+    else:
+        print(f"Failed to retrieve data. Status code: {response.status_code}")
 
 @task()
 def transform_world_admin_boundaries(**kwargs):
-    """ Development complete """
+    """ Transforms the downloaded world admin boundaries polygons into lines and saves them. """
+    import os
     import geopandas as gpd
-    from pipline_lib.extraction import extract_data
-    country_code = kwargs['country_code']
-    country_geojson_filename = kwargs['country_geojson_filename']
-    data_in_directory = kwargs["data_in_directory"]
-    data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
-    cmf_directory = kwargs['cmf_directory']
-    extract_data("data/input/world_admin_boundaries", 'data/output/world', 'wrl_admn_ad0_py_s0_wfp_pp_worldcountries')
-    polygon_shp = os.path.join(docker_worker_working_dir, 'data/output/world', 'wrl_admn_ad0_py_s0_wfp_pp_worldcountries.shp')
-    #Debugging: Check if the file exists
+    polygon_shp = os.path.join(docker_worker_working_dir, 'data/output/world', 'wrl_admn_ad0_py_s0_un_pp_worldcountries.shp')
     if not os.path.exists(polygon_shp):
         raise FileNotFoundError(f"Shapefile not found: {polygon_shp}")
     polygon_gdf = gpd.read_file(polygon_shp)
-    line_gdf = polygon_gdf.geometry.boundary
-    line_shp = os.path.join(docker_worker_working_dir, 'data/output/world', 'wrl_admn_ad0_ln_s0_wfp_pp_worldcountries.shp')
+    line_gdf = polygon_gdf.copy()
+    line_gdf['geometry'] = line_gdf.boundary  
+    line_directory = os.path.join(docker_worker_working_dir, 'data/output/world')
+    if not os.path.exists(line_directory):
+        os.makedirs(line_directory)
+    line_shp = os.path.join(line_directory, 'wrl_admn_ad0_ln_s0_un_pp_worldcountries.shp')
     line_gdf.to_file(line_shp)
+    print("Admin boundaries shapefile (lines) saved successfully.")
 
 @task()
 def download_world_coastline_data(**kwargs):
