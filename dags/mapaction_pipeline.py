@@ -231,13 +231,18 @@ def create_mapaction_pipeline(country_name, config):
                 download_healthsites_inst = healthsites(**task_args)
                 download_worldpop1km_inst = worldpop1km(**task_args)
                 download_worldpop100m_inst = worldpop100m(**task_args)
+                wfp_railroads_inst= wfp_railroads(**task_args)
+                wfp_boarder_crossings_inst = wfp_boarder_crossings(**task_args)
                 oceans_and_seas_inst,
                 hyrdrorivers_inst,
                 download_healthsites_inst,
                 download_worldpop1km_inst,
-                download_worldpop100m_inst
+                download_worldpop100m_inst,
+                wfp_railroads_inst,
+                wfp_boarder_crossings_inst
+                
 
-                for download_task in [oceans_and_seas_inst, hyrdrorivers_inst, download_healthsites_inst, download_worldpop1km_inst, download_worldpop100m_inst]:
+                for download_task in [oceans_and_seas_inst, hyrdrorivers_inst, download_healthsites_inst, download_worldpop1km_inst, download_worldpop100m_inst, wfp_railroads_inst, wfp_boarder_crossings_inst]:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
 
         # Split export_tasks into two groups

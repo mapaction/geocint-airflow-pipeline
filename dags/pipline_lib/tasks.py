@@ -71,17 +71,33 @@ def download_boarder_crossings_data(**kwargs):
 
 @task()
 def wfp_railroads(**kwargs):
-    # from pipline_lib.wfp_railroads import wfp_railroads as _wfp_railroads
-    # _wfp_railroads(data_in_directory, data_out_directory)
-    # TODO: haven't found any source for this file yet 🤷
-    pass
+    """ Development complete """
+    from pipline_lib.mapaction_extract_from_shp3 import clip_shapefile_by_country as _clip_by_country
+    country_code = kwargs['country_code']
+    country_geojson_filename = kwargs['country_geojson_filename']
+    data_in_directory = kwargs["data_in_directory"]
+    data_out_directory = kwargs["data_out_directory"]
+    docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    cmf_directory = kwargs['cmf_directory']
+    input_shp_name = f"{docker_worker_working_dir}/dags/static_data/railways/wrl_tran_rrd_ln_s2_wfp_pp_railways.shp"
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/232_tran/{country_code}_tran_rrd_ln_s2_wfp_pp_railways"
+    _clip_by_country(country_geojson_filename, input_shp_name, output_name)
 
 @task()
 def wfp_boarder_crossings(**kwargs):
-    # from pipline_lib.wfp_railroads import wfp_railroads as _wfp_railroads
-    # _wfp_railroads(data_in_directory, data_out_directory)
-    # TODO: haven't found any source for this file yet 🤷
-    pass
+    """ Development complete """
+    from pipline_lib.mapaction_extract_from_shp4 import clip_shapefile_by_country as _clip_by_country
+    
+    country_code = kwargs['country_code']
+    country_geojson_filename = kwargs['country_geojson_filename']
+    data_in_directory = kwargs["data_in_directory"]
+    data_out_directory = kwargs["data_out_directory"]
+    docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    cmf_directory = kwargs['cmf_directory']
+    input_shp_name = f"{docker_worker_working_dir}/dags/static_data/border_crossing/wrl_pois_bor_pt_s1_wfp_pp_bordercrossing.shp"
+    os.mkdir(f"{docker_worker_working_dir}/{data_out_directory}/222_pois")
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/222_pois/{country_code}_pois_bor_pt_s1_wfp_pp_bordercrossing.shp"
+    _clip_by_country(country_geojson_filename, input_shp_name, output_name)
 
 @task()
 def download_population_with_sadd(**kwargs):
@@ -464,7 +480,7 @@ def transform_admin_linework(**kwargs):
     poly_dir = f"{docker_worker_working_dir}/{data_in_directory}/ocha_admin_boundaries/Shapefiles"
     output_dir = f"{docker_worker_working_dir}/{data_out_directory}"
     print("////", poly_dir, output_dir)
-    _process_admin_boundaries(country_code, poly_dir, output_dir)
+   # _process_admin_boundaries(country_code, poly_dir, output_dir)
 
 @task()
 def healthsites(**kwargs):
