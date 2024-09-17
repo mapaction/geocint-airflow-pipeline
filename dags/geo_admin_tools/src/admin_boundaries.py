@@ -1,41 +1,23 @@
 import os
 import geopandas as gpd
+from geo_admin_tools.src.constants import REALNAME_MAPPING  # Import constants
 from geo_admin_tools.utils.metadata_utils import update_metadata
 from geo_admin_tools.src.admin_linework import generate_admin_linework, find_admlevel_column
 
-def process_admALL_files(mid_dir, iso_code, data_out_path):
-    """Process all shapefiles in the mid directory."""
-    for root, dirs, files in os.walk(mid_dir):
-        for file in files:
-            if file.endswith('.shp'):
-                file_path = os.path.join(root, file)
-                print(f"Processing {file_path} in /mid directory")
-                process_shapefiles(file_path, iso_code, data_out_path)
-
 def process_shapefiles(filepath, iso_code, base_download_directory):
     """Process shapefiles and extract relevant administrative boundary levels."""
-    
+
     # Update directory paths to match the new structure
     adm_level_out_dir = os.path.join(base_download_directory, "admin_level")
     linework_out_dir = os.path.join(base_download_directory, "admin_linework")
     disputed_out_dir = os.path.join(base_download_directory, "disputed_boundaries")
     coastline_out_dir = os.path.join(base_download_directory, "national_coastline")
 
-    source_abbr = "hdx"  
-
-    realname_mapping = {
-        0: "country",
-        1: "parish",  # Changed from "region"
-        2: "municipality",
-        3: "district",
-        4: "locality",
-    }
-
+    source_abbr = determine_source_abbr(filepath)
 
     try:
         gdf = gpd.read_file(filepath)
-
-        adm_column = find_admlevel_column(gdf) # admbndl
+        adm_column = find_admlevel_column(gdf)
 
         if adm_column:
             print(f"Found {adm_column} column in {filepath}. Available levels: {gdf[adm_column].unique()}")
@@ -44,7 +26,7 @@ def process_shapefiles(filepath, iso_code, base_download_directory):
                 output_dir = None
                 output_file = None
 
-                realname = realname_mapping.get(level, "Admin")
+                realname = REALNAME_MAPPING.get(level, "Admin")
 
                 if level == 0:
                     output_dir = adm_level_out_dir
@@ -74,3 +56,11 @@ def process_shapefiles(filepath, iso_code, base_download_directory):
             print(f"No 'admLevel' column found in {filepath}. Skipping processing.")
     except Exception as e:
         print(f"Error processing {filepath}: {e}")
+
+def determine_source_abbr(filepath):
+    """Determine the source abbreviation based on the filepath."""
+    filename = os.path.basename(filepath).lower()
+    if "zimstat" in filename:
+        return "zimstat"
+    else:
+        return "hdx"

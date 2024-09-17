@@ -1,5 +1,7 @@
 import os
 import logging
+#import geopandas as gpd
+#from geo_admin_tools.src.constants import REALNAME_MAPPING  # Import constants
 from geo_admin_tools.utils.metadata_utils import update_metadata
 
 def generate_admin_linework(gdf, linework_out_dir, iso_code, source_abbr, realname, level):
@@ -36,6 +38,7 @@ def save_linework_shapefiles(line_gdf, linework_out_dir, iso_code, source_abbr, 
             try:
                 line_gdf.to_file(line_outfile)
                 logging.info(f"Created linework: {line_outfile}")
+                update_metadata(iso_code, level, line_outfile)
             except Exception as e:
                 logging.error(f"Failed to save shapefile {line_outfile}: {e}")
         else:
@@ -52,5 +55,5 @@ def find_admlevel_column(gdf):
         if col.lower() == 'admlevel':
             logging.info(f"Found exact match for admLevel: {col}")
             return col  # Return the exact 'admLevel' match if found
-    
+
     return None  # Return None if no exact match is found
