@@ -1,7 +1,5 @@
 import os
 import logging
-#import geopandas as gpd
-#from geo_admin_tools.src.constants import REALNAME_MAPPING  # Import constants
 from geo_admin_tools.utils.metadata_utils import update_metadata
 
 def generate_admin_linework(gdf, linework_out_dir, iso_code, source_abbr, realname, level):

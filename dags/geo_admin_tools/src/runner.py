@@ -1,8 +1,6 @@
 import os
 import geopandas as gpd
-from geo_admin_tools.utils.file_operations import get_country_codes
 from geo_admin_tools.utils.download_utils import scrape_and_download_zip_files
-from geo_admin_tools.utils.metadata_utils import capture_metadata
 from geo_admin_tools.src.admin_linework import find_admlevel_column, generate_admin_linework
 from geo_admin_tools.src.constants import REALNAME_MAPPING, LEVEL_MAPPING  # Import constants
 import logging
@@ -92,6 +90,11 @@ def process_shapefiles(filepath, iso_code, data_out_path):
                 os.makedirs(output_dir, exist_ok=True)
                 level_gdf.to_file(level_outfile)
                 logging.info(f"Created {level_outfile}")
+                ########
+                # Skip generating linework for levels 86, 87, and 99
+                if level in [86, 87, 99]:
+                    logging.info(f"Skipping linework generation for level {level}")
+                    continue  # Skip to the next level
 
                 # Generate admin linework for the specific level
                 generate_admin_linework(level_gdf, linework_out_dir, iso_code, source_abbr, realname, level)
@@ -134,6 +137,11 @@ def process_shapefiles_by_filename(filepath, iso_code, data_out_path):
             os.makedirs(output_dir, exist_ok=True)
             gdf.to_file(os.path.join(output_dir, output_file))
             logging.info(f"Created {output_file} based on filename pattern.")
+            ########
+            # Skip generating linework for levels 86, 87, and 99
+            if level in [86, 87, 99]:
+                logging.info(f"Skipping linework generation for level {level}")
+                return  # Exit the function
 
             # Generate admin linework after processing
             generate_admin_linework(gdf, linework_out_dir, iso_code, source_abbr, realname, level)
