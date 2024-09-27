@@ -556,7 +556,7 @@ def transform_ne_10m_populated_places(**kwargs) -> str:
     data_out_directory = kwargs["data_out_directory"]
     docker_worker_working_dir = kwargs['docker_worker_working_dir']
     input_shp_name = f"{docker_worker_working_dir}/{data_in_directory}/ne_10m_populated_places/ne_10m_populated_places.shp"
-    output_name = f"{docker_worker_working_dir}/{data_out_directory}/229_stle/{country_code}_stle_stl_pt_s0_naturalearth_pp_maincities"
+    output_name = f"{docker_worker_working_dir}/{data_out_directory}/229_stle/{country_code}_stle_stl_pt_s1_naturalearth_pp_maincities"
     _clip_by_country(country_geojson_filename, input_shp_name, output_name)
 
 @task()
