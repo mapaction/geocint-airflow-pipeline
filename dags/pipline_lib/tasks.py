@@ -331,6 +331,8 @@ def download_elevation90_hsh(**kwargs):
     data_in_directory = os.path.join(kwargs["data_in_directory"], 'srtm_90' )
     data_out_directory = os.path.join(kwargs["data_out_directory"], '211_elev') 
     downloader = SRTMDownloader(country_geojson_filename, data_in_directory, data_out_directory, use_30m=False)
+    if not os.path.exists(data_out_directory):
+        os.makedirs(data_out_directory)
     downloader.download_srtm()
 
 @task()
