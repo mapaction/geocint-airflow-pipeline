@@ -170,3 +170,4 @@ dags/static_data/downloaded_data
 dags/static_data/credentials.json
 dags/static_data/railways
 dags/static_data/border_crossing
+AllAdmnBoundaries
