@@ -52,7 +52,7 @@ def create_mapaction_pipeline(country_name, config):
         default_args=default_args,
         schedule_interval=None,
         catchup=False,
-        tags=["mapaction"],
+        tags=["mapaction"], #country, admin type, etc, (tags for identification and filtering)
     ) as dag:
 
         message['text'] = f"[{datetime.now()}]: {dag_id} ---- Dag has started running !!!"
