@@ -31,21 +31,22 @@ class OSMPOIDataDownloader:
         if geometry.geom_type not in ['Polygon', 'MultiPolygon']:
             raise ValueError("Geometry type not supported. Please provide a Polygon or MultiPolygon.")
         
-        osm_tags = {
-            'amenity': self.osm_tags_pois_point
-        }
-       
-        gdf_points = ox.features_from_polygon(geometry, tags=osm_tags)
-        gdf_polygons = ox.features_from_polygon(geometry, tags=osm_tags)
-
+        osm_tags = {'amenity': self.osm_tags_pois_point}
         
+        # Fetch and process points
+        gdf_points = ox.features_from_polygon(geometry, tags=osm_tags)
         gdf_points = self.process_geometries(gdf_points, 'point')
-        gdf_polygons = self.process_geometries(gdf_polygons, 'polygon')
-
         gdf_points = self.ensure_unique_column_names(gdf_points)
-        gdf_polygons = self.ensure_unique_column_names(gdf_polygons)
-
         self.save_data(gdf_points, self.output_point_filename)
+        
+        # Update tags for polygons and fetch polygons
+        osm_tags = {'amenity': self.osm_tags_pois_polygon}
+        gdf_polygons = ox.features_from_polygon(geometry, tags=osm_tags)
+        
+        # Filter for polygons specifically
+        gdf_polygons = gdf_polygons[gdf_polygons.geometry.type.isin(['Polygon', 'MultiPolygon'])]
+        gdf_polygons = self.process_geometries(gdf_polygons, 'polygon')
+        gdf_polygons = self.ensure_unique_column_names(gdf_polygons)
         self.save_data(gdf_polygons, self.output_polygon_filename)
 
     def process_geometries(self, gdf, geometry_type):
@@ -63,9 +64,7 @@ class OSMPOIDataDownloader:
 
         columns_to_keep = ['geometry', 'fclass', 'name']  
         available_columns = gdf.columns.intersection(columns_to_keep)
-        gdf = gdf[available_columns]
-
-        return gdf
+        return gdf[available_columns]
 
     def ensure_unique_column_names(self, gdf):
         new_columns = {}
@@ -85,4 +84,3 @@ class OSMPOIDataDownloader:
             gdf.to_file(output_filename, driver='ESRI Shapefile')
         except Exception as e:
             print(f"An error occurred while saving the GeoDataFrame: {e}")
-
