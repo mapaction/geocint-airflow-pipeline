@@ -938,6 +938,25 @@ def osm_railway2(**kwargs):
     downloader = OSMRailwayStationDataDownloader(country_geojson_filename,crs_project=4326,crs_global=4326, country_code=country_code)
     downloader.download_and_process_data()
 
+@task()
+def osm_pois(**kwargs):
+    """Task for downloading and processing Points of Interest (POIs) data"""
+    from osm.layers.pois_class import OSMPOIDataDownloader
+    
+    country_code = kwargs['country_code']
+    country_geojson_filename = kwargs['country_geojson_filename']
+    docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    
+    downloader = OSMPOIDataDownloader(
+        geojson_path=country_geojson_filename,
+        crs_project=4326,
+        crs_global=4326,
+        country_code=country_code,
+        docker_worker_working_dir=docker_worker_working_dir
+    )
+    
+    downloader.download_and_process_data()
+
 @task(trigger_rule="all_done")
 def mapaction_export_s3(**kwargs):
     # from pipline_lib.s3 import upload_to_s3, create_file
