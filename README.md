@@ -1,32 +1,7 @@
-# Proof of Concept - MapAction Airflow pipeline 
+# MapAction Airflow pipeline 
 
-This is a proof of concept data pipeline using Apache Airflow to rebuild the 
+This is a data pipeline using Apache Airflow to rebuild the 
 [geocint mapaction pipeline](https://github.com/mapaction/geocint-mapaction/). 
-
-
-## TODO 
-
-- [In progress] Implement more pipeline steps
-- [x] Test deploying to AWS  
-  - [x] Make AWS VPC (creation in progress. It's slow...) 
-  - [x] Make S3 Bucket
-  - [x] Make MWAA
-    - Outcome - MWAA was very simple to setup, but may be too expensive for a non-profit. 
-      Likely around £5500/yr _as a lower bound_. 
-- [ ] Test deploying to GCP 
-- [ ] Test deploying to dagster 
-- [In progress] Estimate cloud costs 
-- [x] Connect to S3 / GCS for data output
-- [ ] Set up CI/CD
-- [ ] Generate slow / non changing data (particularly elevation) 
-- [ ] Find mechanism to check if country boundary has changed (hash / checksum?) for 
-conditional logic on whether to re-generate the country's elevation dataset (the slow step)
-- [ ] Fix bug where dynamic pipeline generation seems to always get "moz" (even for Afganistan?!)
-- [ ] 250m grid is 3Gb and takes around 5 mins to download on a fast internet connection
-  - Things to try: 
-  - [ ] Upload to S3 and see how fast that is to download from 
-
-
 
 ## Geocint <> Airflow POC mapping 
 
