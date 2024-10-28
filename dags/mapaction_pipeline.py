@@ -15,7 +15,7 @@ configs = COUNTRIES
 ######## Dag Creation ################
 ######################################
 def create_mapaction_pipeline(country_name, config):
-    dag_id = f"dynamic_generated_dag_{country_name}"
+    dag_id = f"National_DAG_{country_name}"
     country_code = config['code']
     data_in_directory = f"data/input/{country_code}"
     data_out_directory = f"data/output/country_extractions/{country_code}"
@@ -52,7 +52,7 @@ def create_mapaction_pipeline(country_name, config):
         default_args=default_args,
         schedule_interval=None,
         catchup=False,
-        tags=["mapaction"], #country, admin type, etc, (tags for identification and filtering)
+        tags=["Mapaction", "National"], #country, admin type, etc, (tags for identification and filtering)
     ) as dag:
 
         message['text'] = f"[{datetime.now()}]: {dag_id} ---- Dag has started running !!!"
