@@ -1,92 +1,84 @@
-from logging import getLogger, basicConfig
 import requests
-import argparse
-import shapefile
-from concurrent.futures import ThreadPoolExecutor, as_completed  # For parallel processing
-import time 
+from bs4 import BeautifulSoup
+import os
+import zipfile
+import io
+import shutil
+import time
 
-BASE_URL = "https://healthsites.io"
-
-basicConfig()
-logger = getLogger(__name__)
-logger.setLevel("DEBUG")
-
-# Constants for maximum retries and backoff
-MAX_RETRIES = 3
-RETRY_BACKOFF_FACTOR = 1.5
-
-def get_health_sites(country_name: str, api_key: str) -> list:
-    all_results = []
-    urls = [f"{BASE_URL}/api/v3/facilities/?api-key={api_key}&country={country_name}"]
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        futures = [executor.submit(fetch_url, url) for url in urls]
-        for future in as_completed(futures):
-            response = future.result()
-            if response.ok:
-                data = response.json()
-                all_results.extend(data)
-                if 'next' in response.links:
-                    urls.append(response.links['next']['url'])
-            else:
-                logger.error(f"Error fetching page: {response.status_code}, {response.text}")
-    return all_results
-
-def fetch_url(url, retry_count=0):
+def fetch_page(url, headers={'User-Agent': 'Mozilla/5.0'}):
+    """Fetches the page content from a URL with error handling."""
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
-        return response
+        return BeautifulSoup(response.content, "html.parser")
     except requests.exceptions.RequestException as e:
-        if retry_count < MAX_RETRIES:
-            logger.warning(f"Error fetching {url}: {e}. Retrying...")
-            time.sleep(RETRY_BACKOFF_FACTOR ** retry_count)
-            return fetch_url(url, retry_count + 1)
-        else:
-            logger.error(f"Max retries reached for {url}")
-            raise  # Re-raise the exception after max retries
+        print(f"Error fetching page: {e}")
+        return None
 
+def download_and_extract_zip(link, dest_folder):
+    """Downloads a zip file and extracts its contents."""
+    filename = link.find("span", class_="ga-download-resource-title").text.strip()
+    zip_url = link['href'] if link['href'].startswith('http') else "https://data.humdata.org" + link['href']
 
-def healthsites(country_name: str, api_key: str, save_location: str):
-    """ Main entry point to this module """
-    data = get_health_sites(country_name=country_name, api_key=api_key)
-    write_healthsites_shapefile(healthsites=data, output_path=save_location)
+    print(f"Downloading: {filename}")
+    try:
+        response = requests.get(zip_url)
+        response.raise_for_status()
 
-def write_healthsites_shapefile(healthsites: list, output_path: str) -> None:
-    """ Writes input data into a shapefile (.shp, .shx and .dbf) """
-    with shapefile.Writer(output_path, shapeType=shapefile.POINT) as w:
-        # Define shapefile field records
-        w.field('amenity', 'C')
-        w.field('name', 'C')
-        w.field('operator', 'C')
-        w.field('opening_hours', 'C')
-        w.field('wheelchair', 'C')
-        w.field('emergency', 'C')
-        w.field('addr_street', 'C')
-        w.field('addr_postcode', 'C')
-        w.field('addr_city', 'C')
-        w.field('uuid', 'C')
-        w.field('osm_id', 'N')
+        with zipfile.ZipFile(io.BytesIO(response.content)) as zf:
+            zf.extractall(dest_folder)
+            print(f" - Extracted to {dest_folder}")
 
-        # Write shapefile
-        for site in healthsites:
-            x, y = site['centroid']['coordinates']
-            w.point(x, y)
-            w.record(amenity=site['attributes'].get("amenity", None),
-                     name=site['attributes'].get('name', None),
-                     operator=site['attributes'].get('operator', None),
-                     opening_hours=site['attributes'].get('opening_hours', None),
-                     wheelchair=site['attributes'].get('wheelchair', None),
-                     emergency=site['attributes'].get('emergency', None),
-                     addr_street=site['attributes'].get('addr_street', None),
-                     addr_postcode=site['attributes'].get('addr_postcode', None),
-                     addr_city=site['attributes'].get('addr_city', None),
-                     uuid=site['attributes'].get('uuid', None),
-                     osm_id=site['osm_id'])
+    except Exception as e: 
+        print(f" - Error downloading/extracting {filename}: {e}")
+
+def rename_and_copy_files(shapefiles_dir, dest_path, filename_prefix):
+    # List of possible shapefile extensions
+    shapefile_extensions = ['.shp', '.shx', '.dbf', '.prj', '.cpg']
+
+    for filename in os.listdir(shapefiles_dir):
+        src_path = os.path.join(shapefiles_dir, filename)
+        file_extension = os.path.splitext(filename)[1].lower()
+        if file_extension in shapefile_extensions:
+            dest_filename = f"{filename_prefix}{file_extension}"
+            dest_path_with_filename = os.path.join(dest_path, dest_filename)
+            print(f"Copying: {src_path} to {dest_path_with_filename}")
+            shutil.copy2(src_path, dest_path_with_filename)
+
+def download_shapefiles_from_page(country_name, dest_path, filename_prefix):
+    country_name = country_name.lower()
+    base_url = f"https://data.humdata.org/dataset/{country_name}-healthsites"
+    print(f"\n----- Starting download from: {base_url} -----")
+
+    soup = fetch_page(base_url)
+    if soup is None: 
+        return
+
+    # Extract to a temporary 'shapefiles' subdirectory
+    shapefiles_dir = os.path.join(dest_path, "shapefiles")
+    os.makedirs(shapefiles_dir, exist_ok=True)
+
+    zip_links = soup.select("li.resource-item a.ga-download[href$='.zip']")
+    print(f"Found {len(zip_links)} ZIP download links.")
+    for link in zip_links:
+        download_and_extract_zip(link, dest_path)  
+
+    shapefiles_dir = os.path.join(dest_path, "shapefiles")
+
+   # Rename and copy files from the 'shapefiles' subdirectory
+    rename_and_copy_files(shapefiles_dir, dest_path, filename_prefix)
+
+    time.sleep(2)
+
+    # Remove the temporary 'shapefiles' directory
+    shutil.rmtree(shapefiles_dir)
+    print(f"Removed temporary directory: {shapefiles_dir}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Download health sites from healthsites.io")
-    parser.add_argument("--country_name", help="Country name", required=True)   
-    parser.add_argument("--api_key", help="Healthsites api key", required=True)     
-    args = parser.parse_args()
+    country_name = "zimbabwe"
+    country_code = "zwe"
+    dest_path = f"data/{country_name}"
+    filename_prefix = f"{country_code}heal_hea_pt_s3_osm_pp_healthsites" 
 
-    healthsites(args.country_name, args.api_key, f"{args.country_name}.shp")
+    download_shapefiles_from_page(country_name, dest_path, filename_prefix)

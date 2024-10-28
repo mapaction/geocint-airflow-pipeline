@@ -12,15 +12,23 @@ def process_pop_sadd(iso3_code, data_dir, metadata_path, output_dir):
     # Attempt to extract abbreviation (and convert to lowercase)
     abbreviation_parts = [word[0].lower() for word in full_source.split() if word[0].isupper()]  
     source = "".join(abbreviation_parts) if abbreviation_parts else full_source.split()[0].lower()
+    time_period = metadata.get('Time Period of the Dataset [?]', '')
+    date_range = time_period.split('-')
+    # Extract the end year, searching in earlier parts if necessary
+    end_date_parts = date_range[-1].split()
+    end_year = 'Not Found'
+    for part in reversed(end_date_parts):
+        if part.isdigit():
+            end_year = part
+            break
 
     os.makedirs(output_dir, exist_ok=True)
 
     for filename in os.listdir(data_dir):
         if filename.endswith(".csv"):
             scale = filename.split("_")[2]  
-            year_estimate = filename.split("_")[-1].split(".")[0] 
 
-            new_filename = f"{iso3_code}_popu_pop_tab_{scale}_{source.replace(' ', '_')}_{year_estimate}.csv"
+            new_filename = f"{iso3_code}_popu_pop_tab_{scale}_{source.replace(' ', '_')}_{end_year}.csv"
             old_path = os.path.join(data_dir, filename)
             new_path = os.path.join(output_dir, new_filename)
 

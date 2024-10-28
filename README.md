@@ -1,32 +1,7 @@
-# Proof of Concept - MapAction Airflow pipeline 
+# MapAction Airflow pipeline 
 
-This is a proof of concept data pipeline using Apache Airflow to rebuild the 
+This is a data pipeline using Apache Airflow to rebuild the 
 [geocint mapaction pipeline](https://github.com/mapaction/geocint-mapaction/). 
-
-
-## TODO 
-
-- [In progress] Implement more pipeline steps
-- [x] Test deploying to AWS  
-  - [x] Make AWS VPC (creation in progress. It's slow...) 
-  - [x] Make S3 Bucket
-  - [x] Make MWAA
-    - Outcome - MWAA was very simple to setup, but may be too expensive for a non-profit. 
-      Likely around £5500/yr _as a lower bound_. 
-- [ ] Test deploying to GCP 
-- [ ] Test deploying to dagster 
-- [In progress] Estimate cloud costs 
-- [x] Connect to S3 / GCS for data output
-- [ ] Set up CI/CD
-- [ ] Generate slow / non changing data (particularly elevation) 
-- [ ] Find mechanism to check if country boundary has changed (hash / checksum?) for 
-conditional logic on whether to re-generate the country's elevation dataset (the slow step)
-- [ ] Fix bug where dynamic pipeline generation seems to always get "moz" (even for Afganistan?!)
-- [ ] 250m grid is 3Gb and takes around 5 mins to download on a fast internet connection
-  - Things to try: 
-  - [ ] Upload to S3 and see how fast that is to download from 
-
-
 
 ## Geocint <> Airflow POC mapping 
 
@@ -76,3 +51,30 @@ remade / mapped in the POC pipeline with the same names, and this is currently w
 2. Follow the Airflow steps for using docker compose [here](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html).
 3. Note, you may need to force recreating images, e.g. `docker compose up --force-recreate`
 4. The default location for the webserver is [http://localhost:8080](http://localhost:8080). The default username and password is `airflow`. 
+
+## Start clean build 
+
+1. Ensure you have the AIRFLOW_UID with this command 
+
+### Make directories
+- `mkdir -p ./dags ./logs ./plugins ./config`
+### Get AIRFLOW_UID
+- `echo -e "AIRFLOW_UID=$(id -u)" > .env`
+
+### Append WebDAV variables
+- `echo "WEBDAV_HOSTNAME=" >> .env`
+- `echo "WEBDAV_LOGIN=" >> .env`
+- `echo "WEBDAV_PASSWORD=" >> .env`
+
+2. Clear all the the docker container using `docker system prune --all`
+Note this will remove all containers fron the suytem if you just wan to remove airflow containers, you can use `docker container prune`
+3. Run `docker compose up airflow-init`
+5. Run `docker compose up`
+6. Run `docker ps` to get the container ID of the airflow-worker container and copy it.
+7. Enter the container using the following `docker exec -it -u root <continer_id> bash`
+8. Create a group ID with the same code as the AIRFLOW_UID using `sudo groupadd <AIRFLOW_UID>`
+9. Give default user a password `sudo passwd default <password>`
+10. Add default user to sudoers `sudo usermod -aG sudo default`
+11. Add default user to the group `sudo usermod -aG <AIRFLOW_UID> default `
+12. Add peremission to /opt/airflow directory using `sudo chown -R default:<ARIFLOW_UID> /opt/airflow/`
+13. The default location for the webserver is [http://localhost:8080](http://localhost:8080). The default username and password

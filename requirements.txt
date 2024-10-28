@@ -179,3 +179,4 @@ pycountry
 quantulum3[classifier]
 slackclient
 slack
+rapidfuzz

@@ -4,6 +4,7 @@ import argparse
 import os
 import zipfile
 import io
+from concurrent.futures import ThreadPoolExecutor
 
 def fetch_page(url, headers={'User-Agent': 'Mozilla/5.0'}):
     """Fetches the page content from a URL with error handling."""
@@ -19,8 +20,13 @@ def download_and_extract_zip(link, dest_folder):
     """Downloads a zip file and extracts shapefiles from it."""
     filename = link.find("span", class_="ga-download-resource-title").text.strip()
     zip_url = link['href'] if link['href'].startswith('http') else "https://data.humdata.org" + link['href']
-    year = link.find_parent("li").find("div", class_="update-date").text.strip().split()[-1]
+    year = link.find_parent("li").find("div", {"class": "update-date"}).text.strip().split()[-1]
     filename_with_year = f"{filename.split('.')[0]}_{year}.zip"
+
+    filepath = os.path.join(dest_folder, filename_with_year)
+    if os.path.exists(filepath):
+        print(f"Skipping: {filename_with_year} already exists.")
+        return
 
     print(f"Downloading: {filename_with_year}")
     try:
@@ -28,14 +34,13 @@ def download_and_extract_zip(link, dest_folder):
         response.raise_for_status()
 
         with zipfile.ZipFile(io.BytesIO(response.content)) as zf:
-            # Check if the zip contains shapefiles (.shp)
-            if any(name.endswith('.shp') for name in zf.namelist()):
-                zf.extractall(dest_folder)
-                print(f" - Extracted to {dest_folder}")
-            else:
-                print(f" - Skipped: No shapefiles found in {filename_with_year}")
+            # Selective extraction
+            for member in zf.infolist():
+                if member.filename.endswith(('.shp', '.dbf', '.shx', '.prj')): 
+                    zf.extract(member, dest_folder)
+            print(f" - Extracted to {dest_folder}")
 
-    except Exception as e:  # Catch more specific exceptions if possible
+    except Exception as e:
         print(f" - Error downloading/extracting {filename_with_year}: {e}")
 
 
@@ -43,20 +48,19 @@ def download_zip_from_hdx(iso3_code, base_folder):
     base_url = f"https://data.humdata.org/dataset/cod-ab-{iso3_code}"
     print(f"\n----- Starting download for ISO3 code: {iso3_code} -----")
 
-    # Fetch and parse the page
     soup = fetch_page(base_url)
-    if soup is None:  # Handle fetch errors
+    if soup is None:
         return
 
-    # Create a directory for the downloaded files
     dest_folder = os.path.join(base_folder)
     os.makedirs(dest_folder, exist_ok=True)
 
-    # Download ZIP files that contain shapefiles (.shp)
     zip_links = soup.select("li.resource-item a.ga-download[href$='.zip']")
     print(f"Found {len(zip_links)} ZIP download links.")
-    for link in zip_links:
-        download_and_extract_zip(link, dest_folder)
+
+    # Use a ThreadPoolExecutor to download concurrently
+    with ThreadPoolExecutor(max_workers=5) as executor:  # Adjust max_workers as needed
+        executor.map(download_and_extract_zip, zip_links, [dest_folder] * len(zip_links))
 
 
 if __name__ == "__main__":

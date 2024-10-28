@@ -13,7 +13,7 @@ class OSMDamDataDownloader:
         self.crs_project = crs_project
         self.crs_global = crs_global
         ox.config(log_console=True, use_cache=True)
-        self.output_filename = f"data/output/country_extractions/{country_code}/221_phys/{country_code}_phys_dam_pt_s2_osm_pp_dam.gpkg"
+        self.output_filename = f"data/output/country_extractions/{country_code}/221_phys/{country_code}_phys_dam_pt_s2_osm_pp_dam.shp"
 
     def download_and_process_data(self):
         region_gdf = gpd.read_file(self.geojson_path)

@@ -7,6 +7,8 @@ __pycache__/
 # C extensions
 *.so
 
+
+
 # Distribution / packaging
 .Python
 build/
@@ -165,3 +167,12 @@ config
 .env
 data
 dags/static_data/downloaded_data
+dags/static_data/credentials.json
+dags/static_data/railways
+dags/static_data/border_crossing
+dags/static_data/pcodes
+dags/static_data/subnational_jsons
+Subnational_jsons
+AllAdmnBoundaries*
+AllAdminBoundaries*
+logs/

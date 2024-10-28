@@ -15,14 +15,13 @@ configs = COUNTRIES
 ######## Dag Creation ################
 ######################################
 def create_mapaction_pipeline(country_name, config):
-    dag_id = f"dynamic_generated_dag_{country_name}"
+    dag_id = f"National_DAG_{country_name}"
     country_code = config['code']
     data_in_directory = f"data/input/{country_code}"
     data_out_directory = f"data/output/country_extractions/{country_code}"
     cmf_directory = f"data/cmfs/{country_code}"
     docker_worker_working_dir = "/opt/airflow"
     country_geojson_filename = f"{docker_worker_working_dir}/dags/static_data/countries/{country_code}.json"
-    downloaded_data_path = f"{docker_worker_working_dir}/dags/static_data/downloaded_data"
 
     # message dict
     message = {
@@ -40,8 +39,7 @@ def create_mapaction_pipeline(country_name, config):
         "data_out_directory": data_out_directory,
         "country_code": country_code,
         "country_name": country_name,
-        "cmf_directory": cmf_directory,
-        "downloaded_data_path": downloaded_data_path
+        "cmf_directory": cmf_directory
     }
 
     default_args = {
@@ -54,7 +52,7 @@ def create_mapaction_pipeline(country_name, config):
         default_args=default_args,
         schedule_interval=None,
         catchup=False,
-        tags=["mapaction"],
+        tags=["Mapaction", "National"], #country, admin type, etc, (tags for identification and filtering)
     ) as dag:
 
         message['text'] = f"[{datetime.now()}]: {dag_id} ---- Dag has started running !!!"
@@ -68,11 +66,8 @@ def create_mapaction_pipeline(country_name, config):
             with dag:
                 download_population_with_sadd_inst = download_population_with_sadd(task_concurrency=3, **task_args)
                 transform_population_with_sadd_inst = transform_population_with_sadd(task_concurrency=3, **task_args)
-                download_hdx_admin_boundaries_inst = download_hdx_admin_boundaries(task_concurrency=3, **task_args)
-                transform_hdx_admin_boundaries_inst = transform_hdx_admin_boundaries(task_concurrency=3, **task_args)
                 download_population_with_sadd_inst >> transform_population_with_sadd_inst
-                download_hdx_admin_boundaries_inst >> transform_hdx_admin_boundaries_inst
-                
+
             for download_task in hdx_data_scrape_group:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
 
@@ -129,12 +124,18 @@ def create_mapaction_pipeline(country_name, config):
         # Elevation and Terrain
         with TaskGroup(group_id="elevation_terrain") as elevation_terrain_group:
             with dag:
-                download_elevation90_inst = download_elevation90(task_concurrency=1, **task_args)
-                download_gmdted250_inst = download_gmdted250(task_concurrency=1, **task_args)
-                transform_elevation90_inst = transform_elevation90(task_concurrency=1, **task_args)
-                transform_gmdted250_inst = transform_gmdted250(task_concurrency=1, **task_args)
-                download_elevation90_inst >> transform_elevation90_inst
-                download_gmdted250_inst >> transform_gmdted250_inst
+                download_elevation90_dtm_inst = download_elevation90_dtm(task_concurrency=1, **task_args)
+                download_gmdted250_dtm_inst = download_gmdted250_dtm(task_concurrency=1, **task_args)
+                transform_elevation90_dtm_inst = transform_elevation90_dtm(task_concurrency=1, **task_args)
+                transform_gmdted250_dtm_inst = transform_gmdted250_dtm(task_concurrency=1, **task_args)
+                download_elevation90_hsh_inst = download_elevation90_hsh(task_concurrency=1, **task_args)
+                download_gmdted250_hsh_inst = download_gmdted250_hsh(task_concurrency=1, **task_args)
+                transform_elevation90_hsh_inst = transform_elevation90_hsh(task_concurrency=1, **task_args)
+                transform_gmdted250_hsh_inst = transform_gmdted250_hsh(task_concurrency=1, **task_args)
+                download_elevation90_dtm_inst >> transform_elevation90_dtm_inst
+                download_gmdted250_dtm_inst >> transform_gmdted250_dtm_inst
+                download_elevation90_hsh_inst >> transform_elevation90_hsh_inst
+                download_gmdted250_hsh_inst >> transform_gmdted250_hsh_inst
 
             for download_task in elevation_terrain_group:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
@@ -157,19 +158,11 @@ def create_mapaction_pipeline(country_name, config):
         # Dams and Reservoirs (from Geodar)
         with TaskGroup(group_id="dams_reservoirs") as dams_reservoirs_group:
             with dag:
-                # download_geodar_data_inst = download_geodar_data(task_concurrency=3, **task_args)
-                # transform_dams_inst = transform_dams(task_concurrency=2, **task_args)
-                # transform_reservoirs_inst = transform_reservoirs(task_concurrency=2, **task_args)
+                download_geodar_data_inst = download_geodar_data(task_concurrency=3, **task_args)
+                transform_dams_inst = transform_dams(task_concurrency=2, **task_args)
+                transform_reservoirs_inst = transform_reservoirs(task_concurrency=2, **task_args)
 
-                # download_geodar_data_inst >> [transform_dams_inst, transform_reservoirs_inst]
-
-                transform_geodar_catchment_data_inst = transform_geodar_catchment_data(task_concurrency=3, **task_args)
-                transform_geodar_dam_data_inst = transform_geodar_dam_data(task_concurrency=3, **task_args)
-                transform_geodar_reservoir_data_inst = transform_geodar_reservoir_data(task_concurrency=3, **task_args)
-
-                transform_geodar_catchment_data_inst,
-                transform_geodar_dam_data_inst,
-                transform_geodar_reservoir_data_inst
+                download_geodar_data_inst >> [transform_dams_inst, transform_reservoirs_inst]
 
             for download_task in dams_reservoirs_group:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
@@ -179,7 +172,7 @@ def create_mapaction_pipeline(country_name, config):
             with dag:
                 download_world_coastline_data_inst = download_world_coastline_data(task_concurrency=3, **task_args)
                 transform_world_costline_data_inst = transform_world_costline_data(task_concurrency=2, **task_args)
-                extract_country_national_coastline_inst = extract_country_national_coastline(task_concurrency=2, **task_args)
+                extract_country_national_coastline_inst = extract_country_coastline_v2(task_concurrency=2, **task_args)
 
                 download_world_coastline_data_inst >> transform_world_costline_data_inst >> extract_country_national_coastline_inst
 
@@ -208,6 +201,7 @@ def create_mapaction_pipeline(country_name, config):
                 osm_phys_river_inst = osm_phys_river(task_concurrency=1,**task_args)
                 osm_canal_inst = osm_canal(task_concurrency=1,**task_args)
                 osm_railway2_inst = osm_railway2(task_concurrency=1,**task_args)
+                osm_pois_inst = osm_pois(task_concurrency=1,**task_args)
                 osm_dam_inst,
                 osm_school_inst,
                 osm_education_inst,
@@ -223,7 +217,8 @@ def create_mapaction_pipeline(country_name, config):
                 osm_large_river_inst,
                 osm_phys_river_inst,
                 osm_canal_inst,
-                osm_railway2_inst
+                osm_railway2_inst,
+                osm_pois_inst
 
                 for download_task in osm_group:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
@@ -238,17 +233,18 @@ def create_mapaction_pipeline(country_name, config):
                 download_healthsites_inst = healthsites(**task_args)
                 download_worldpop1km_inst = worldpop1km(**task_args)
                 download_worldpop100m_inst = worldpop100m(**task_args)
-                transform_elevation90_inst = transform_elevation90(task_concurrency=1, **task_args)
-                transform_gmdted250_inst = transform_gmdted250(task_concurrency=1, **task_args)
+                wfp_railroads_inst= wfp_railroads(**task_args)
+                wfp_boarder_crossings_inst = wfp_boarder_crossings(**task_args)
                 oceans_and_seas_inst,
                 hyrdrorivers_inst,
                 download_healthsites_inst,
                 download_worldpop1km_inst,
                 download_worldpop100m_inst,
-                transform_elevation90_inst,
-                transform_gmdted250_inst
+                wfp_railroads_inst,
+                wfp_boarder_crossings_inst
+                
 
-                for download_task in [oceans_and_seas_inst, hyrdrorivers_inst, download_healthsites_inst, download_worldpop1km_inst, download_worldpop100m_inst]:
+                for download_task in [oceans_and_seas_inst, hyrdrorivers_inst, download_healthsites_inst, download_worldpop1km_inst, download_worldpop100m_inst, wfp_railroads_inst, wfp_boarder_crossings_inst]:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
 
         # Split export_tasks into two groups
@@ -282,12 +278,13 @@ def create_mapaction_pipeline(country_name, config):
         # transform_elevation30_inst = transform_elevation30(task_concurrency=1, **task_args)
         
         # DAG Structure
-        send_slack_message_task >> make_data_dirs_task >> elevation_terrain_group >> [
+        send_slack_message_task >> make_data_dirs_task >> [
+            hdx_data_scrape_group,
             hdx_data_download_group,
             water_features_group, 
             dams_reservoirs_group,
             coastline_group,
-            hdx_data_scrape_group,
+            elevation_terrain_group,
             admin_boundaries_group,
             energy_infrastructure_group,
             roads_populated_places_group, 

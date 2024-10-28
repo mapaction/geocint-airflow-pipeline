@@ -36,7 +36,7 @@ class FeatherCreator:
             feather = gpd.overlay(global_background, local_admin, how='symmetric_difference')
             country_code = Path(admin_shapefile_path).stem.split("_")[0]
             fea_text = Path(admin_shapefile_path).stem.split("_")[7]
-            feather_name = f'{country_code}_carto_fea_py_mapaction_pp_faded_{fea_text}.shp'
+            feather_name = f'{country_code}_carto_fea_py_s0_mapaction_pp_feather.shp'
             # Change the output directory for the feather files
             feather_path = os.path.join(self.data_out_directory, '207_carto')
             os.makedirs(feather_path, exist_ok=True)
