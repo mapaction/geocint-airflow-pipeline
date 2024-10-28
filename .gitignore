@@ -175,3 +175,4 @@ dags/static_data/subnational_jsons
 Subnational_jsons
 AllAdmnBoundaries*
 AllAdminBoundaries*
+logs/

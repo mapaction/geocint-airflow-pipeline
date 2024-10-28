@@ -201,6 +201,7 @@ def create_mapaction_pipeline(country_name, config):
                 osm_phys_river_inst = osm_phys_river(task_concurrency=1,**task_args)
                 osm_canal_inst = osm_canal(task_concurrency=1,**task_args)
                 osm_railway2_inst = osm_railway2(task_concurrency=1,**task_args)
+                osm_pois_inst = osm_pois(task_concurrency=1,**task_args)
                 osm_dam_inst,
                 osm_school_inst,
                 osm_education_inst,
@@ -216,7 +217,8 @@ def create_mapaction_pipeline(country_name, config):
                 osm_large_river_inst,
                 osm_phys_river_inst,
                 osm_canal_inst,
-                osm_railway2_inst
+                osm_railway2_inst,
+                osm_pois_inst
 
                 for download_task in osm_group:
                     download_task.trigger_rule = TriggerRule.ALL_DONE
