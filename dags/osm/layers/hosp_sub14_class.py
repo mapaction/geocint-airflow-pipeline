@@ -2,6 +2,7 @@ import os
 import osmnx as ox
 import geopandas as gpd
 import pandas as pd
+from osm.utils.osm_utils import unique_column_names
 
 class OSMHospitalDataDownloader:
 
@@ -22,23 +23,14 @@ class OSMHospitalDataDownloader:
         if geometry.geom_type not in ['Polygon', 'MultiPolygon']:
             raise ValueError("Geometry type not supported. Please provide a Polygon or MultiPolygon.")
 
-        # Download hospital data
         gdf_hospitals = ox.geometries_from_polygon(geometry, tags=self.osm_tags_hospital)
-
-        # Ensure unique column names
-        gdf_hospitals = self.ensure_unique_column_names(gdf_hospitals)
-
-        # Process geometries to centroid points
+        gdf_hospitals = unique_column_names(gdf_hospitals)
         gdf_hospitals = self.process_geometries(gdf_hospitals)
-
-        # Ensure required fields
         gdf_hospitals = self.ensure_required_fields(gdf_hospitals)
 
-        # Add 'fclass' column if not present
         if 'fclass' not in gdf_hospitals.columns:
             gdf_hospitals['fclass'] = 'hospital'
 
-        # Reorder columns to make fclass the first column
         columns = ['fclass'] + [col for col in gdf_hospitals.columns if col != 'fclass']
         gdf_hospitals = gdf_hospitals[columns]
 
@@ -46,16 +38,15 @@ class OSMHospitalDataDownloader:
 
         if not gdf_hospitals.empty:
             gdf_hospitals.to_file(self.output_filename, driver='ESRI Shapefile')
+            print(f"Data successfully saved to {self.output_filename}")
         else:
             print("No data to save.")
 
     def process_geometries(self, gdf):
-        # Create centroids for polygon geometries and reproject
         gdf = gdf.to_crs(epsg=self.crs_project)
         gdf['geometry'] = gdf.apply(lambda row: row['geometry'].centroid if row['geometry'].geom_type != 'Point' else row['geometry'], axis=1)
         gdf = gdf.to_crs(epsg=self.crs_global)
 
-        # Handle list-type fields
         for col in gdf.columns:
             if pd.api.types.is_object_dtype(gdf[col]) and gdf[col].apply(lambda x: isinstance(x, list) if x is not None else False).any():
                 gdf[col] = gdf[col].apply(lambda x: ', '.join(map(str, x)) if isinstance(x, list) else x)
@@ -74,35 +65,6 @@ class OSMHospitalDataDownloader:
 
         return gdf
 
-    def ensure_unique_column_names(self, gdf):
-        truncated_columns = {}
-        final_columns = {}
-        unique_suffixes = {}
-
-        # Step 1: Truncate names
-        for col in gdf.columns:
-            truncated = col[:10]
-            if truncated not in truncated_columns:
-                truncated_columns[truncated] = 1
-            else:
-                truncated_columns[truncated] += 1
-            final_columns[col] = truncated
-
-        # Step 2: Resolve duplicates by adding a unique suffix
-        for original, truncated in final_columns.items():
-            if truncated_columns[truncated] > 1:
-                if truncated not in unique_suffixes:
-                    unique_suffixes[truncated] = 1
-                else:
-                    unique_suffixes[truncated] += 1
-                suffix = unique_suffixes[truncated]
-                suffix_length = len(str(suffix))
-                truncated_with_suffix = truncated[:10-suffix_length] + str(suffix)
-                final_columns[original] = truncated_with_suffix
-
-        gdf.rename(columns=final_columns, inplace=True)
-        return gdf
-
     def ensure_required_fields(self, gdf):
         required_fields = ['emergency', 'operator', 'operator_type', 'beds']
         for field in required_fields:
@@ -110,11 +72,3 @@ class OSMHospitalDataDownloader:
                 gdf[field] = None
 
         return gdf
-
-    def save_data(self, gdf):
-        os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
-
-        try:
-            gdf.to_file(self.output_filename, driver='ESRI Shapefile')
-        except Exception as e:
-            print(f"An error occurred while saving the GeoDataFrame: {e}")

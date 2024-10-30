@@ -1,6 +1,7 @@
 import os
 import osmnx as ox
 import geopandas as gpd
+from osm.utils.osm_utils import ensure_unique_column_names, save_data
 
 class OSMBankDataDownloader:
     def __init__(self, geojson_path, crs_project, crs_global, country_code):
@@ -50,30 +51,8 @@ class OSMBankDataDownloader:
         if 'element_ty' in gdf.columns:
             gdf.drop(columns=['element_ty'], inplace=True)
 
- 
-        self.ensure_unique_column_names(gdf)
-
-        
-        self.save_data(gdf)
-
-    def ensure_unique_column_names(self, gdf):
       
-        new_columns = {}
-        for col in gdf.columns:
-            new_col = col[:10]
-            counter = 1
-            while new_col in new_columns.values():
-                new_col = f"{col[:9]}{counter}"
-                counter += 1
-            new_columns[col] = new_col
-        gdf.rename(columns=new_columns, inplace=True)
-
-    def save_data(self, gdf):
-     
-        os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
+        gdf = ensure_unique_column_names(gdf)
 
        
-        try:
-            gdf.to_file(self.output_filename, driver='ESRI Shapefile')
-        except Exception as e:
-            print(f"An error occurred while saving the GeoDataFrame: {e}")
+        gdf = save_data(gdf, self.output_filename)
