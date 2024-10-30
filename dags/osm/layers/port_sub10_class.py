@@ -1,6 +1,7 @@
 import os
 import osmnx as ox
 import geopandas as gpd
+from osm.utils.osm_utils import unique_column_names
 
 class OSMPortDataDownloader:
     def __init__(self, geojson_path, crs_project, crs_global, country_code):
@@ -31,8 +32,6 @@ class OSMPortDataDownloader:
         for col in list_type_cols:
             gdf[col] = gdf[col].apply(lambda x: ', '.join(map(str, x)) if isinstance(x, list) else x)
 
-
-        # Make directories if they don't exist
         os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
 
 
@@ -46,38 +45,12 @@ class OSMPortDataDownloader:
         gdf = gdf[collumns_to_keep]
 
         
-        gdf = self.ensure_unique_column_names(gdf)
+        gdf = unique_column_names(gdf)
 
 
-        # Save the data to a GeoPackage
+        # Save the data to a shapefile
         try:
             gdf.to_file(self.output_filename, driver='ESRI Shapefile')
+            print(f"Data successfully saved to {self.output_filename}")
         except Exception as e:
             print(f"An error occurred while saving the GeoDataFrame: {e}")
-
-    def ensure_unique_column_names(self, gdf):
-        final_columns = {}
-        truncated_columns = {}
-        
-        # Step 1: Truncate names and count occurrences
-        for col in gdf.columns:
-            truncated = col[:10]
-            if truncated not in truncated_columns:
-                truncated_columns[truncated] = 0
-            truncated_columns[truncated] += 1
-            final_columns[col] = truncated
-
-        # Step 2: Ensure uniqueness by appending suffixes if necessary
-        unique_columns = {}
-        for original, truncated in final_columns.items():
-            if truncated_columns[truncated] > 1:
-                counter = truncated_columns[truncated]
-                while truncated in unique_columns:
-                    truncated = f"{truncated[:8]}_{counter}"
-                    counter += 1
-                truncated_columns[truncated] = 1
-            unique_columns[truncated] = original
-
-        # Rename columns in the GeoDataFrame
-        gdf.rename(columns=unique_columns, inplace=True)
-        return gdf

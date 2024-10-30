@@ -2,7 +2,7 @@ import os
 import osmnx as ox
 import geopandas as gpd
 import pandas as pd
-from osm.utils.osm_utils import unique_column_names, save_data
+from osm.utils.osm_utils import unique_column_names
 
 class OSMHospitalDataDownloader:
 

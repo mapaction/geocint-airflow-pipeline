@@ -1,7 +1,7 @@
 import os
 import osmnx as ox
 import geopandas as gpd
-import pandas as pd
+from osm.utils.osm_utils import save_data, ensure_unique_column_names
 
 class OSMRiverDataDownloader:
     def __init__(self, geojson_path, crs_project, crs_global, country_code):
@@ -37,10 +37,10 @@ class OSMRiverDataDownloader:
         gdf_projected = self.process_list_fields(gdf_projected)
 
         # Ensure unique column names
-        gdf_projected = self.ensure_unique_column_names(gdf_projected)
+        gdf_projected = ensure_unique_column_names(gdf_projected)
 
         # Save the GeoDataFrame
-        self.save_data(gdf_projected)
+        gdf_projected = save_data(gdf_projected, self.output_filename)
 
     def process_list_fields(self, gdf):
         for col in gdf.columns:
@@ -59,22 +59,3 @@ class OSMRiverDataDownloader:
         gdf = gdf[columns_to_keep]
 
         return gdf
-
-    def ensure_unique_column_names(self, gdf):
-        unique_columns = {}
-        for col in gdf.columns:
-            col_truncated = col[:10]
-            counter = 1
-            while col_truncated in unique_columns.values():
-                col_truncated = f"{col[:9]}{counter}"
-                counter += 1
-            unique_columns[col] = col_truncated
-        gdf.rename(columns=unique_columns, inplace=True)
-        return gdf
-
-    def save_data(self, gdf):
-        os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
-        try:
-            gdf.to_file(self.output_filename, driver='ESRI Shapefile')
-        except Exception as e:
-            print(f"An error occurred while saving the GeoDataFrame: {e}")
