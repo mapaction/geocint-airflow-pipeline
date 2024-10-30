@@ -1,6 +1,7 @@
 import os
 import osmnx as ox
 import geopandas as gpd
+from osm.utils.osm_utils import unique_column_names, save_data
 
 class OSMRailwayStationDataDownloader:
     def __init__(self, geojson_path, crs_project, crs_global, country_code):
@@ -33,9 +34,9 @@ class OSMRailwayStationDataDownloader:
             raise ValueError("No features to process after filtering.")
 
         gdf_projected = self.process_list_fields(gdf_projected)
-        gdf_projected = self.ensure_unique_column_names(gdf_projected)
+        gdf_projected = unique_column_names(gdf_projected)
 
-        self.save_data(gdf_projected)
+        gdf_projected = save_data(gdf_projected, self.output_filename)
     
     def process_list_fields(self, gdf):
         for col in gdf.columns:
@@ -57,26 +58,3 @@ class OSMRailwayStationDataDownloader:
         ## 
             
         return gdf
-
-    def ensure_unique_column_names(self, gdf):
-        unique_columns = {}
-        for col in gdf.columns:
-            col_truncated = col[:10]  # Truncate the column name to fit Shapefile limitation
-            # Ensure the truncated name is unique
-            if col_truncated in unique_columns.values():
-                suffix = 1
-                new_col_name = col_truncated
-                while new_col_name in unique_columns.values():
-                    new_col_name = f"{col_truncated[:9]}_{suffix}"
-                    suffix += 1
-                col_truncated = new_col_name
-            unique_columns[col] = col_truncated
-        gdf.rename(columns=unique_columns, inplace=True)
-        return gdf
-
-    def save_data(self, gdf):
-        os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
-        try:
-            gdf.to_file(self.output_filename, driver='ESRI Shapefile')
-        except Exception as e:
-            print(f"An error occurred while saving the GeoDataFrame: {e}")

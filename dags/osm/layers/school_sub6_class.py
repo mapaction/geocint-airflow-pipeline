@@ -2,6 +2,7 @@ import os
 import osmnx as ox
 import geopandas as gpd
 import pandas as pd
+from osm.utils.osm_utils import unique_column_names
 
 class OSMSchoolDataDownloader:
     osm_key = 'amenity'
@@ -35,69 +36,29 @@ class OSMSchoolDataDownloader:
         if 'fclass' not in gdf.columns:
             gdf['fclass'] = self.osm_value
 
-        # Ensure unique column names for Shapefile format
-        gdf = self.ensure_unique_column_names(gdf)
-
-        # Identify the tags actually present in the data
+        gdf = unique_column_names(gdf)
         actual_tags = gdf.columns.intersection(self.additional_tags)
         
-        # Add missing tags as new columns with missing values, if they are not present
         for tag in self.additional_tags:
             if tag not in actual_tags:
                 gdf[tag] = pd.NA
 
-        # Print a warning for any specified tags that are missing in the downloaded data
         missing_tags = set(self.additional_tags) - set(actual_tags)
         if missing_tags:
             print(f"Warning: The following tags are missing from the data and will not be included: {missing_tags}")
 
-        # Convert list fields to string
         list_type_cols = [col for col, dtype in gdf.dtypes.items() if dtype == object]
         for col in list_type_cols:
             gdf[col] = gdf[col].apply(lambda x: ', '.join(map(str, x)) if isinstance(x, list) else x)
 
         os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
-
-        # Keep only the geometry, fclass, and the actual present tags
         columns_to_keep = ['geometry', 'fclass'] + list(actual_tags)
         gdf = gdf[columns_to_keep]
-
-        # Ensure unique column names for Shapefile format
-        gdf = self.ensure_unique_column_names(gdf)
-
-        # Keep only the first 100 columns
+        gdf = unique_column_names(gdf)
         gdf = gdf.iloc[:, :100]
 
         if not gdf.empty:
             gdf.to_file(self.output_filename, driver='ESRI Shapefile')
+            print(f"Data successfully saved to {self.output_filename}")
         else:
             print("No data to save.")
-
-    def ensure_unique_column_names(self, gdf):
-        truncated_columns = {}
-        final_columns = {}
-        unique_suffixes = {}
-
-        # Step 1: Truncate names
-        for col in gdf.columns:
-            truncated = col[:10]
-            if truncated not in truncated_columns:
-                truncated_columns[truncated] = 1
-            else:
-                truncated_columns[truncated] += 1
-            final_columns[col] = truncated
-
-        # Step 2: Resolve duplicates by adding a unique suffix
-        for original, truncated in final_columns.items():
-            if truncated_columns[truncated] > 1:
-                if truncated not in unique_suffixes:
-                    unique_suffixes[truncated] = 1
-                else:
-                    unique_suffixes[truncated] += 1
-                suffix = unique_suffixes[truncated]
-                suffix_length = len(str(suffix))
-                truncated_with_suffix = truncated[:10-suffix_length] + str(suffix)
-                final_columns[original] = truncated_with_suffix
-
-        gdf.rename(columns=final_columns, inplace=True)
-        return gdf
