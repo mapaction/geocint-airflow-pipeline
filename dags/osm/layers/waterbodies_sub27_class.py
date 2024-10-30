@@ -2,6 +2,8 @@ import os
 import osmnx as ox
 import geopandas as gpd
 import logging
+from osm.utils.osm_utils import ensure_unique_column_names, save_data
+
 class OSMLakeDataDownloader:
     def __init__(self, geojson_path, crs_project, crs_global, country_code):
         self.geojson_path = geojson_path
@@ -51,10 +53,11 @@ class OSMLakeDataDownloader:
         gdf_polygons = self.process_list_fields(gdf_polygons)
 
         logging.info("Ensuring unique column names...")
-        gdf_polygons = self.ensure_unique_column_names(gdf_polygons)
+        gdf_polygons = ensure_unique_column_names(gdf_polygons)
 
         logging.info("Saving data...")
-        self.save_data(gdf_polygons)
+
+        gdf_polygons = save_data(gdf_polygons, self.output_filename)
         logging.info("Data download and processing completed successfully.")
 
     def process_list_fields(self, gdf):
@@ -75,22 +78,3 @@ class OSMLakeDataDownloader:
         ## 
 
         return gdf
-
-    def ensure_unique_column_names(self, gdf):
-        unique_columns = {}
-        for col in gdf.columns:
-            new_col = col[:10]
-            counter = 1
-            while new_col in unique_columns.values():
-                new_col = f"{col[:9]}{counter}"
-                counter += 1
-            unique_columns[col] = new_col
-        gdf.rename(columns=unique_columns, inplace=True)
-        return gdf
-
-    def save_data(self, gdf):
-        os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
-        try:
-            gdf.to_file(self.output_filename, driver='ESRI Shapefile')
-        except Exception as e:
-            print(f"An error occurred while saving the GeoDataFrame: {e}")
