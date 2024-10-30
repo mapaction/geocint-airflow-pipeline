@@ -2,6 +2,7 @@ import os
 import osmnx as ox
 import geopandas as gpd
 import pandas as pd
+from osm.utils.osm_utils import ensure_unique_column_names, save_data
 
 class OSMHealthDataDownloader:
     def __init__(self, geojson_path, crs_project, crs_global, country_code):
@@ -25,8 +26,8 @@ class OSMHealthDataDownloader:
 
         gdf_health = ox.geometries_from_polygon(geometry, tags=self.osm_tags_health)
         gdf_health = self.process_geometries(gdf_health)
-        gdf_health = self.ensure_unique_column_names(gdf_health)
-        self.save_data(gdf_health)
+        gdf_health = ensure_unique_column_names(gdf_health)
+        gdf_health = save_data(gdf_health, self.output_filename)
 
     def process_geometries(self, gdf):
         gdf = gdf.to_crs(epsg=self.crs_project)
@@ -51,22 +52,3 @@ class OSMHealthDataDownloader:
         gdf = gdf[columns_to_keep]
 
         return gdf
-
-    def ensure_unique_column_names(self, gdf):
-        new_columns = {}
-        for col in gdf.columns:
-            new_col = col[:10]
-            counter = 1
-            while new_col in new_columns.values():
-                new_col = f"{col[:9]}{counter}"
-                counter += 1
-            new_columns[col] = new_col
-        gdf.rename(columns=new_columns, inplace=True)
-        return gdf
-
-    def save_data(self, gdf):
-        os.makedirs(os.path.dirname(self.output_filename), exist_ok=True)
-        try:
-            gdf.to_file(self.output_filename, driver='ESRI Shapefile')
-        except Exception as e:
-            print(f"An error occurred while saving the GeoDataFrame: {e}")
