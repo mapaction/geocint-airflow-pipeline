@@ -233,6 +233,64 @@ def download_world_admin_boundaries(**kwargs):
     else:
         print(f"Failed to retrieve data. Status code: {response.status_code}")
 
+# logging version example
+# from mapaction_logging.logger import log_event
+# from mapaction_logging.status_codes import StatusCode
+
+# @task()
+# def download_world_admin_boundaries(**kwargs):
+#     """Downloads the world admin boundaries data from the ArcGIS REST service and saves it as shapefiles."""
+    
+#     country_code = kwargs['country_code']
+#     docker_worker_working_dir = kwargs['docker_worker_working_dir']
+    
+#     # Define the ArcGIS REST service URL and parameters
+#     url = 'https://services3.arcgis.com/7J7WB6yJX0pYke9q/ArcGIS/rest/services/Admin_boundaries/FeatureServer/2/query'
+#     params = {
+#         'where': '1=1',  
+#         'outFields': '*',  
+#         'f': 'geojson'  
+#     }
+    
+#     # Make the HTTP request
+#     response = requests.get(url, params=params)
+#     status_code = StatusCode.from_response(response)  # Get the status code as a StatusCode enum
+    
+#     # Check if the request was successful
+#     if status_code == StatusCode.OK:
+#         # Read the data into a GeoDataFrame
+#         gdf = gpd.read_file(BytesIO(response.content))
+        
+#         # Define the output directory and file path
+#         polygon_directory = os.path.join(docker_worker_working_dir, 'data/output/world')
+#         if not os.path.exists(polygon_directory):
+#             os.makedirs(polygon_directory)
+        
+#         polygon_shp = os.path.join(polygon_directory, 'wrl_admn_ad0_py_s0_un_pp_worldcountries.shp')
+        
+#         # Save the data as a shapefile
+#         gdf.to_file(polygon_shp)
+#         print("Admin boundaries shapefile (polygons) saved successfully.")
+        
+#         # Log the success
+#         log_event(
+#             country=country_code,
+#             task_name="download_world_admin_boundaries",
+#             status_code=status_code,
+#             log_message="Successfully downloaded and saved admin boundaries as shapefiles.",
+#             additional_data={"url": url, "params": params}
+#         )
+#     else:
+#         # Log the failure
+#         log_event(
+#             country=country_code,
+#             task_name="download_world_admin_boundaries",
+#             status_code=status_code,
+#             log_message=f"Failed to retrieve data. Status code: {status_code.name}",
+#             additional_data={"url": url, "params": params}
+#         )
+#         print(f"Failed to retrieve data. Status code: {response.status_code}")
+
 @task()
 def transform_world_admin_boundaries(**kwargs):
     """ Transforms the downloaded world admin boundaries polygons into lines and saves them. """

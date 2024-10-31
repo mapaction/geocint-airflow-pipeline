@@ -1,5 +1,6 @@
 COUNTRIES = {
     "Afghanistan": {"code": "afg"},
+    "Valencia": {"code": "es-v"},
     "Florida": {"code": "fl"},
     "Albania": {"code": "alb"},
     "Algeria": {"code": "dza"},
