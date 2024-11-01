@@ -87,8 +87,8 @@ def wfp_railroads(**kwargs):
 @task()
 def wfp_boarder_crossings(**kwargs):
     """ Development complete """
-    from pipline_lib.mapaction_extract_from_shp4 import clip_shapefile_by_country as _clip_by_country
-    
+    #from pipline_lib.mapaction_extract_from_shp4 import clip_shapefile_by_country as _clip_by_country
+    from pipline_lib.ma_extract_from_shp_utils import clip_shapefile_by_country_util as _clip_by_country
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
@@ -98,7 +98,7 @@ def wfp_boarder_crossings(**kwargs):
     input_shp_name = f"{docker_worker_working_dir}/dags/static_data/border_crossing/wrl_pois_bor_pt_s1_wfp_pp_bordercrossing.shp"
     os.mkdir(f"{docker_worker_working_dir}/{data_out_directory}/222_pois")
     output_name = f"{docker_worker_working_dir}/{data_out_directory}/222_pois/{country_code}_pois_bor_pt_s1_wfp_pp_bordercrossing.shp"
-    _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+    _clip_by_country(country_geojson_filename, input_shp_name, output_name, geometry_type="point")
 
 @task()
 def download_population_with_sadd(**kwargs):
@@ -157,7 +157,8 @@ def transform_dams(**kwargs) -> str:
 @task()
 def transform_reservoirs(**kwargs) -> str:
     """ Development complete """
-    from pipline_lib.mapaction_extract_from_shp2 import clip_shapefile_by_country as _clip_by_country
+    #from pipline_lib.mapaction_extract_from_shp2 import clip_shapefile_by_country as _clip_by_country
+    from pipline_lib.ma_extract_from_shp_utils import clip_shapefile_by_country_util as _clip_by_country
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
@@ -166,7 +167,7 @@ def transform_reservoirs(**kwargs) -> str:
     cmf_directory = kwargs['cmf_directory']
     input_shp_name = f"{docker_worker_working_dir}/data/input/geodar/reservoirs/GeoDAR_v11_reservoirs.shp"
     output_name = f"{docker_worker_working_dir}/{data_out_directory}/221_phys/{country_code}_phys_lak_py_s3_geodar_pp_reservoir"
-    _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+    _clip_by_country(country_geojson_filename, input_shp_name, output_name, geometry_type="polygon")
 
 @task()
 def oceans_and_seas(**kwargs):
