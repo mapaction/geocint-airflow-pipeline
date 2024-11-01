@@ -72,7 +72,8 @@ def download_boarder_crossings_data(**kwargs):
 @task()
 def wfp_railroads(**kwargs):
     """ Development complete """
-    from pipline_lib.mapaction_extract_from_shp3 import clip_shapefile_by_country as _clip_by_country
+    #from pipline_lib.mapaction_extract_from_shp3 import clip_shapefile_by_country as _clip_by_country
+    from pipline_lib.ma_extract_from_shp_utils import clip_shapefile_by_country_util as _clip_by_country
     country_code = kwargs['country_code']
     country_geojson_filename = kwargs['country_geojson_filename']
     data_in_directory = kwargs["data_in_directory"]
@@ -81,7 +82,7 @@ def wfp_railroads(**kwargs):
     cmf_directory = kwargs['cmf_directory']
     input_shp_name = f"{docker_worker_working_dir}/dags/static_data/railways/wrl_tran_rrd_ln_s2_wfp_pp_railways.shp"
     output_name = f"{docker_worker_working_dir}/{data_out_directory}/232_tran/{country_code}_tran_rrd_ln_s2_wfp_pp_railways"
-    _clip_by_country(country_geojson_filename, input_shp_name, output_name)
+    _clip_by_country(country_geojson_filename, input_shp_name, output_name, geometry_type="railway")
 
 @task()
 def wfp_boarder_crossings(**kwargs):
