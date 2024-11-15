@@ -205,7 +205,7 @@ def hyrdrorivers(**kwargs) -> str:
 
 @task()
 def download_world_admin_boundaries(**kwargs):
-    """ Downloads the world admin boundaries data from the ArcGIS REST service and saves it as shapefiles. """
+    """ Downloads world admin boundaries data and saves as shapefiles. """
     import os
     import requests
     import geopandas as gpd
